@@ -3,4 +3,12 @@
     <string name="txtBuscar">Buscar</string>
     <string name="txtEjemplo">ESTO ES UNA NOTA DE EJEMPLO</string>
     <string name="txtFecha">20/10/18</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="guardar">Guardar</string>
+    <string name="titulo">Título</string>
+    <string name="descripcion">Descripción</string>
+    <string name="color">Color</string>
+    <string name="rojo">Rojo</string>
+    <string name="azul">Azul</string>
+    <string name="verde">Verde</string>
 </resources>

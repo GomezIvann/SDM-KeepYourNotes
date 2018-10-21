@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void nuevaNota(View view) {
-        Intent mIntent = new Intent(MainActivity.this, NotaActivity.class);
-
+        Intent mIntent = new Intent(MainActivity.this, Main2Activity.class);
+        startActivity(mIntent);
     }
 }

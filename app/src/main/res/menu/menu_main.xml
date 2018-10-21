@@ -1,0 +1,15 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.elmer.myapplication.MainActivity">
+    <item
+        android:id="@+id/cancelar"
+        android:icon="@android:drawable/ic_delete"
+        android:title="@string/cancelar"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/Guardar"
+        android:icon="@android:drawable/ic_menu_save"
+        android:title="@string/guardar"
+        app:showAsAction="always" />
+</menu>

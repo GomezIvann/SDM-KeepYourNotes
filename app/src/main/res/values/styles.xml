@@ -8,4 +8,39 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="EditText" parent="AppTheme">
+        <!-- cursor y línea normal-->
+        <item name="colorControlNormal">@android:color/transparent</item>
+        <!-- cursor y línea con foco-->
+        <item name="colorControlActivated">@android:color/transparent</item>
+    </style>
+
+    <style name="switchAzul">
+        <item name="colorControlActivated">@color/azul</item>
+    </style>
+
+    <style name="switchVerde">
+        <item name="colorControlActivated">@color/verdeClaro</item>
+    </style>
+
+    <style name="switchNaranja">
+        <item name="colorControlActivated">@color/naranja</item>
+    </style>
+
+    <style name="switchAmarillo">
+        <item name="colorControlActivated">@color/amarillo</item>
+    </style>
+
+    <style name="switchMorado">
+        <item name="colorControlActivated">@color/morado</item>
+    </style>
+
+    <style name="switchRojo">
+        <item name="colorControlActivated">@color/rojo</item>
+    </style>
+
+    <style name="switchBlanco">
+        <item name="colorControlActivated">@color/blanco</item>
+    </style>
+
 </resources>

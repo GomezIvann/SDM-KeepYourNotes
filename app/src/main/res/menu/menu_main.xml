@@ -4,7 +4,7 @@
     tools:context="com.example.elmer.myapplication.MainActivity">
     <item
         android:id="@+id/cancelar"
-        android:icon="@android:drawable/ic_delete"
+        android:icon="@android:drawable/ic_menu_delete"
         android:title="@string/cancelar"
         app:showAsAction="always" />
     <item

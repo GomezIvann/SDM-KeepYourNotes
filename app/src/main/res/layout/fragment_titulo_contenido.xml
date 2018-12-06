@@ -11,18 +11,30 @@
     <!-- TODO: Update blank fragment layout -->
 
     <EditText
-        android:id="@+id/Titulo"
+        android:id="@+id/titulo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:hint="@string/titulo"
-        android:inputType="textPersonName" />
+        android:importantForAutofill="no"
+        android:inputType="text|textCapSentences"
+        android:textCursorDrawable="@drawable/cursor"
+        android:textSize="24sp"
+        android:theme="@style/EditText" />
 
     <EditText
-        android:id="@+id/Descripcion"
+        android:id="@+id/descripcion"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/descripcion"
-        android:inputType="textMultiLine" />
+        android:importantForAutofill="no"
+        android:inputType="textMultiLine|textCapSentences"
+        android:theme="@style/EditText"
+        android:textCursorDrawable="@drawable/cursor"
+        android:focusableInTouchMode="true"
+        android:focusable="true"
+        />
 </LinearLayout>

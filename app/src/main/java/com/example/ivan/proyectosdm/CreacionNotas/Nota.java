@@ -2,12 +2,8 @@ package com.example.ivan.proyectosdm.CreacionNotas;
 
 public class Nota<T> {
     private String Titulo;
-    private T Contenido;
-
-    public Nota(String titulo, T contenido) {
-        Titulo = titulo;
-        Contenido = contenido;
-    }
+    private String Contenido;
+    private String color;
 
     public String getTitulo() {
         return Titulo;
@@ -17,11 +13,25 @@ public class Nota<T> {
         Titulo = titulo;
     }
 
-    public T getContenido() {
+    public String getContenido() {
         return Contenido;
     }
 
-    public void setContenido(T contenido) {
+    public void setContenido(String contenido) {
         Contenido = contenido;
+    }
+
+    public Nota(String titulo, String contenido, String color) {
+        Titulo = titulo;
+        Contenido = contenido;
+        this.color = color;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 }

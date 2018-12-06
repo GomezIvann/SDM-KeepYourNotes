@@ -3,22 +3,45 @@ package com.example.ivan.proyectosdm;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.example.ivan.proyectosdm.CreacionNotas.CrearNota;
+import com.example.ivan.proyectosdm.Notas.Nota;
+import com.example.ivan.proyectosdm.Notas.NotaAdapter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
     private List<String> notas;
+    private RecyclerView mRVNotas;
+    private NotaAdapter adapter;
+    private GridLayoutManager glm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mRVNotas = (RecyclerView) findViewById(R.id.rvNotas);
+
+        glm = new GridLayoutManager(this, 1);
+        mRVNotas.setLayoutManager(glm);
+        adapter = new NotaAdapter(dataset());
+        mRVNotas.setAdapter(adapter);
+    }
+
+    private ArrayList<Nota> dataset() {
+        //Notas de prueba: aquí se haría la lectura de la bbdd
+        ArrayList<Nota> datos = new ArrayList<Nota>();
+        datos.add(new Nota("Ejemplo1", "Contenido de ejemplo"));
+        datos.add(new Nota("Ejemplo2", "Contenido de ejemplo 2"));
+        return datos;
     }
 
     /**

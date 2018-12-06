@@ -7,6 +7,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.example.ivan.proyectosdm.CreacionNotas.CrearNota;
+
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -38,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void nuevaNota(View view) {
-        Intent mIntent = new Intent(MainActivity.this, Main2Activity.class);
+        Intent mIntent = new Intent(MainActivity.this, CrearNota.class);
         startActivity(mIntent);
     }
 }

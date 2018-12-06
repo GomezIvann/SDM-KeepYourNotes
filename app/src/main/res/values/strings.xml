@@ -11,4 +11,11 @@
     <string name="rojo">Rojo</string>
     <string name="azul">Azul</string>
     <string name="verde">Verde</string>
+    <string name="title_activity_crear_nota">CrearNota</string>
+    <string name="Nota">Nota</string>
+    <string name="Color">Color</string>
+    <string name="Adjunto">Archivos adjuntos</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

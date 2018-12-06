@@ -1,4 +1,4 @@
-package com.example.ivan.proyectosdm;
+package com.example.ivan.proyectosdm.CreacionNotas;
 
 public class Nota<T> {
     private String Titulo;

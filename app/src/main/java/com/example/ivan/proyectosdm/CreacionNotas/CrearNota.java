@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ivan.proyectosdm.Notas.Nota;
 import com.example.ivan.proyectosdm.R;
 
 public class CrearNota extends AppCompatActivity {
@@ -57,13 +58,15 @@ public class CrearNota extends AppCompatActivity {
                     fragmentTransaction1.commit();
                     return true;
                 case R.id.navigation_color:
+                    setTitle("Color");
                     FragmentTransaction fragmentTransaction2 = getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction2.replace(R.id.frame, fragment2,"Nota" );
+                    fragmentTransaction2.replace(R.id.frame, fragment2,"Color" );
                     fragmentTransaction2.commit();
                     return true;
                 case R.id.navigation_adjunto:
+                    setTitle("Adjunto");
                     FragmentTransaction fragmentTransaction3 = getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction3.replace(R.id.frame, fragment3,"Nota" );
+                    fragmentTransaction3.replace(R.id.frame, fragment3,"Adjunto" );
                     fragmentTransaction3.commit();
                     return true;
             }

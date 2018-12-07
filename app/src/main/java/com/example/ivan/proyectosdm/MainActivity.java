@@ -39,8 +39,8 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Nota> dataset() {
         //Notas de prueba: aquí se haría la lectura de la bbdd
         ArrayList<Nota> datos = new ArrayList<Nota>();
-        datos.add(new Nota("Ejemplo1", "Contenido de ejemplo"));
-        datos.add(new Nota("Ejemplo2", "Contenido de ejemplo 2"));
+        datos.add(new Nota("Ejemplo1", "Contenido de ejemplo",""));
+        datos.add(new Nota("Ejemplo2", "Contenido de ejemplo 2",""));
         return datos;
     }
 

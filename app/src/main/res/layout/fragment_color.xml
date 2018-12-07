@@ -10,7 +10,7 @@
 
     <TextView
         android:id="@+id/textView4"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
@@ -27,33 +27,33 @@
 
     <Switch
         android:id="@+id/switchAmarillo"
-        android:layout_width="116dp"
+        android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="18dp"
         android:text="@string/amarillo"
-        android:textAlignment="center"
+        android:textAlignment="viewStart"
         android:textColorLink="@android:color/holo_blue_dark"
         android:textSize="18sp"
         android:theme="@style/switchAmarillo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.186"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.161" />
+        app:layout_constraintVertical_bias="0.123" />
 
     <Switch
         android:id="@+id/switchAzul"
-        android:layout_width="116dp"
+        android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="18dp"
         android:text="@string/azul"
-        android:textAlignment="center"
+        android:textAlignment="viewStart"
         android:textSize="18sp"
         android:theme="@style/switchAzul"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -61,17 +61,17 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/switchAmarillo"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.253" />
+        app:layout_constraintVertical_bias="0.215" />
 
     <Switch
         android:id="@+id/switchVerde"
-        android:layout_width="116dp"
+        android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="18dp"
         android:text="@string/verde"
-        android:textAlignment="center"
+        android:textAlignment="viewStart"
         android:textSize="18sp"
         android:theme="@style/switchVerde"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -79,17 +79,17 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/switchAzul"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.343" />
+        app:layout_constraintVertical_bias="0.305" />
 
     <Switch
         android:id="@+id/switchNaranja"
-        android:layout_width="116dp"
+        android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="18dp"
         android:text="@string/naranja"
-        android:textAlignment="center"
+        android:textAlignment="viewStart"
         android:textSize="18sp"
         android:theme="@style/switchNaranja"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -97,17 +97,17 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/switchVerde"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.433" />
+        app:layout_constraintVertical_bias="0.395" />
 
     <Switch
         android:id="@+id/switchMorado"
-        android:layout_width="116dp"
+        android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="18dp"
         android:text="@string/morado"
-        android:textAlignment="center"
+        android:textAlignment="viewStart"
         android:textSize="18sp"
         android:theme="@style/switchMorado"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -115,17 +115,17 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/switchNaranja"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.523" />
+        app:layout_constraintVertical_bias="0.485" />
 
     <Switch
         android:id="@+id/switchRojo"
-        android:layout_width="116dp"
+        android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="19dp"
         android:text="@string/rojo"
-        android:textAlignment="center"
+        android:textAlignment="viewStart"
         android:textSize="18sp"
         android:theme="@style/switchRojo"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -133,18 +133,18 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/switchMorado"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.614" />
+        app:layout_constraintVertical_bias="0.576" />
 
     <Switch
         android:id="@+id/switchBlanco"
-        android:layout_width="116dp"
+        android:layout_width="0dp"
         android:layout_height="40dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:shadowColor="@color/cardview_dark_background"
         android:text="@string/blanco"
-        android:textAlignment="center"
+        android:textAlignment="viewStart"
         android:textSize="18sp"
         android:theme="@style/switchBlanco"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -152,7 +152,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/switchRojo"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.687" />
+        app:layout_constraintVertical_bias="0.65" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline2"

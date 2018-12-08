@@ -14,6 +14,7 @@ import java.util.ArrayList;
 public class NotaAdapter extends Adapter<NotaAdapter.NotaViewHolder> {
 
     private ArrayList<Nota> notas;
+    private int posicion;
 
     public NotaAdapter(ArrayList<Nota> notas) {
         this.notas = notas;
@@ -30,11 +31,16 @@ public class NotaAdapter extends Adapter<NotaAdapter.NotaViewHolder> {
         Nota nota = notas.get(i);
         notaViewHolder.mTxTitulo.setText(nota.getTitulo());
         notaViewHolder.mTxContenido.setText(nota.getContenido().toString());
+        posicion = i;
     }
 
     @Override
     public int getItemCount() {
         return notas.size();
+    }
+
+    public int getPosicion() {
+        return posicion;
     }
 
     class NotaViewHolder extends RecyclerView.ViewHolder{

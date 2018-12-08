@@ -50,8 +50,11 @@ public class CrearNota extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Se han guardado los cambios", Toast.LENGTH_SHORT).show();
             }
             else {
-                // editar nota HACER
+                notaAModificar.setTitulo(fragment.getTitulo().getText().toString());
+                notaAModificar.setContenido(fragment.getDescripcion().getText().toString());
+                notaAModificar.setColor(fragment2.getColor());
                 nds.updateNote(notaAModificar); //actualizamos el objeto en la bbdd
+                Toast.makeText(getApplicationContext(), "Se ha modificado correctamente", Toast.LENGTH_SHORT).show();
             }
             nds.close();
             return true;

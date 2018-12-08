@@ -22,7 +22,7 @@ public class FragmentColor extends Fragment {
     private Switch Morado;
     private Switch Rojo;
     private Switch Blanco;
-    private String color = "Amarillo";
+    private String color = "";
     public FragmentColor() {
         // Required empty public constructor
     }
@@ -146,7 +146,29 @@ public class FragmentColor extends Fragment {
                 }
             }
         });
+        notaEditable();
         return v;
     }
 
+    private void notaEditable() {
+        if(color.equals(Azul.getText().toString())){
+            Azul.setChecked(true);
+        }else if(color.equals(Blanco.getText().toString())){
+            Blanco.setChecked(true);
+        }else if(color.equals(Verde.getText().toString())){
+            Verde.setChecked(true);
+        }else if(color.equals(Naranja.getText().toString())){
+            Naranja.setChecked(true);
+        }else if(color.equals(Morado.getText().toString())){
+            Morado.setChecked(true);
+        }else if(color.equals(Rojo.getText().toString())){
+            Rojo.setChecked(true);
+        }else if(color.equals(Amarillo.getText().toString())){
+            Amarillo.setChecked(true);
+        }
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
 }

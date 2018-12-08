@@ -1,9 +1,11 @@
 package com.example.ivan.proyectosdm.CreacionNotas;
 
+import android.content.DialogInterface;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,6 +13,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ivan.proyectosdm.MainActivity;
 import com.example.ivan.proyectosdm.Notas.Nota;
 import com.example.ivan.proyectosdm.R;
 
@@ -20,6 +23,8 @@ public class CrearNota extends AppCompatActivity {
     private FragmentTituloContenido fragment = new FragmentTituloContenido();
     private FragmentColor fragment2 = new FragmentColor();
     private FragmentAdjuntos fragment3 = new FragmentAdjuntos();
+
+    
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -30,7 +35,19 @@ public class CrearNota extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.cancelar) {
-            //sacar mensaje diciendo que si quiere salir sin guardar los cambios
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("¿Desea eliminar la nota?");
+            builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    // User clicked OK button
+                }
+            });
+            builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    // User cancelled the dialog
+                }
+            });
+            builder.show();
             return true;
         }
         else if (id == R.id.Guardar) {
@@ -83,6 +100,12 @@ public class CrearNota extends AppCompatActivity {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
+        Bundle notaAEditar = getIntent().getExtras();
+        if(notaAEditar != null){
+            Nota nota = (Nota) notaAEditar.getSerializable(MainActivity.OBJETO_NOTA);
+            fragment.setNota(nota);
+            fragment2.setColor(nota.getColor());
+        }
         setTitle("Nota");
         FragmentTransaction fragmentTransaction1 = getSupportFragmentManager().beginTransaction();
         fragmentTransaction1.replace(R.id.frame, fragment,"Nota" );

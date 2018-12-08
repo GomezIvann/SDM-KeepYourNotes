@@ -4,7 +4,6 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class Nota<T> implements Parcelable {
-
     private Long id;
     private String titulo;
     private String contenido;

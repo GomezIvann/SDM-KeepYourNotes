@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView mRVNotas;
     private NotaAdapter adapter;
     private GridLayoutManager glm;
-    private NoteDataSource ndb;
+    public NoteDataSource ndb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

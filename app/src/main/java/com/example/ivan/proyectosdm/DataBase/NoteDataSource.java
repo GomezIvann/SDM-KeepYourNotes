@@ -86,6 +86,18 @@ public class NoteDataSource {
     }
 
     /**
+     * Método que me actualiza una nota
+     */
+    public void updateNote(Nota note) {
+        ContentValues values = new ContentValues();
+        values.put(MyDBHelper.COLUMN_TITULO, note.getTitulo());
+        values.put(MyDBHelper.COLUMN_CONTENIDO, note.getContenido());
+        values.put(MyDBHelper.COLUMN_COLOR, note.getColor());
+
+        database.update(MyDBHelper.TABLE_NOTES, values, MyDBHelper.COLUMN_ID+"="+note.getId(), null);
+    }
+
+    /**
      * Obtiene todas las notas anadidas por los usuarios. Es análogo a lo que hemos visto en ri
      *
      * @return Lista de objetos de tipo Valoration

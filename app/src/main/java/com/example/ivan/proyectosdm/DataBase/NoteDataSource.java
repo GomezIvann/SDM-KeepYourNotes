@@ -81,8 +81,8 @@ public class NoteDataSource {
      *
      * @return devuelve un valor booleano indicando el éxito o no de la operación
      */
-    public boolean deleteNote(long _indiceFila) {
-        return database.delete(MyDBHelper.TABLE_NOTES, MyDBHelper.COLUMN_ID + "=" + _indiceFila, null) > 0;
+    public void deleteNote(long _indiceFila) {
+        database.delete(MyDBHelper.TABLE_NOTES, MyDBHelper.COLUMN_ID + "=" + _indiceFila, null);
     }
 
     /**
@@ -115,7 +115,7 @@ public class NoteDataSource {
             titulo = cursor.getString(1);
             contenido = cursor.getString(2);
             color = cursor.getString(3);
-            final Nota note = new Nota(titulo,contenido,color, id);
+            final Nota note = new Nota(titulo,contenido,color,id);
 
             noteList.add(note);
             cursor.moveToNext();

@@ -87,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
     public void editarNota(View view) {
         Intent mIntent = new Intent(MainActivity.this, CrearNota.class);
         Nota n = notas.get(adapter.getPosicion());
-        //Nota n = new Nota(((TextView) findViewById(R.id.txTitle)).getText().toString(), ((TextView) findViewById(R.id.txContent)).getText().toString(), getString(R.string.amarillo));
         Bundle bundle = new Bundle();
         bundle.putSerializable(MainActivity.OBJETO_NOTA, n);
         mIntent.putExtras(bundle);

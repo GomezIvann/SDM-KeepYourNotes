@@ -42,7 +42,7 @@ public class CrearNota extends AppCompatActivity {
                 builder.setTitle("¿Salir sin guardar?");
                 builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        // User clicked OK button
+                        finish();
                     }
                 });
                 builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
@@ -56,7 +56,8 @@ public class CrearNota extends AppCompatActivity {
                 builder.setTitle("¿Desea borrar la nota?");
                 builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        // User clicked OK button
+                        nds.deleteNote(notaAModificar.getId());
+                        finish();
                     }
                 });
                 builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {

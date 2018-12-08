@@ -39,9 +39,7 @@ public class NotaAdapter extends Adapter<NotaAdapter.NotaViewHolder> {
         return notas.size();
     }
 
-    public int getPosicion() {
-        return posicion;
-    }
+    public int getPosicion() { return posicion; }
 
     class NotaViewHolder extends RecyclerView.ViewHolder{
 

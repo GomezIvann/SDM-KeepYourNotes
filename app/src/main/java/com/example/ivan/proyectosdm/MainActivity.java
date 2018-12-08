@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void editarNota(View view) {
         Intent mIntent = new Intent(MainActivity.this, CrearNota.class);
-        Nota n = new Nota(findViewById(R.id.txTitle).toString(), findViewById(R.id.txContent).toString(), "yellow");
+        Nota n = new Nota(findViewById(R.id.txTitle).toString(), findViewById(R.id.txContent).toString(), getString(R.string.amarillo));
         mIntent.putExtra(OBJETO_NOTA, n);
         startActivity(mIntent);
     }

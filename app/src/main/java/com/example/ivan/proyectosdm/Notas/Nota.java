@@ -16,6 +16,29 @@ public class Nota<T> implements Parcelable {
         this.color = color;
     }
 
+    protected Nota(Parcel in) {
+        if (in.readByte() == 0) {
+            id = null;
+        } else {
+            id = in.readLong();
+        }
+        titulo = in.readString();
+        contenido = in.readString();
+        color = in.readString();
+    }
+
+    public static final Creator<Nota> CREATOR = new Creator<Nota>() {
+        @Override
+        public Nota createFromParcel(Parcel in) {
+            return new Nota(in);
+        }
+
+        @Override
+        public Nota[] newArray(int size) {
+            return new Nota[size];
+        }
+    };
+
     public Long getId() {
         return id;
     }

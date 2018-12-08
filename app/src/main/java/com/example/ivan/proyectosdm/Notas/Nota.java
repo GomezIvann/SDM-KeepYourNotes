@@ -1,6 +1,9 @@
 package com.example.ivan.proyectosdm.Notas;
 
-public class Nota<T> {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Nota<T> implements Parcelable {
 
     private Long id;
     private String titulo;
@@ -43,5 +46,17 @@ public class Nota<T> {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.titulo);
+        dest.writeString(this.contenido);
+        dest.writeString(this.color);
     }
 }

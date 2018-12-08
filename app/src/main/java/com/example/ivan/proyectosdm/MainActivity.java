@@ -1,6 +1,7 @@
 package com.example.ivan.proyectosdm;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -17,6 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+    public static final String OBJETO_NOTA = "nota";
 
     private List<String> notas;
     private RecyclerView mRVNotas;
@@ -64,6 +67,13 @@ public class MainActivity extends AppCompatActivity {
 
     public void nuevaNota(View view) {
         Intent mIntent = new Intent(MainActivity.this, CrearNota.class);
+        startActivity(mIntent);
+    }
+
+    public void editarNota(View view) {
+        Intent mIntent = new Intent(MainActivity.this, CrearNota.class);
+        Nota n = new Nota(findViewById(R.id.txTitle).toString(), findViewById(R.id.txContent).toString(), "yellow");
+        mIntent.putExtra(OBJETO_NOTA, n);
         startActivity(mIntent);
     }
 }

@@ -21,8 +21,12 @@ public class FragmentTituloContenido extends Fragment {
     private EditText titulo;
     private EditText descripcion;
     public FragmentTituloContenido() {
+
     }
 
+    public void setNota(Nota nota) {
+        this.nota = nota;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -31,8 +35,13 @@ public class FragmentTituloContenido extends Fragment {
         titulo = (EditText) v.findViewById(R.id.titulo);
         descripcion = (EditText) v.findViewById(R.id.descripcion);
         if(savedInstanceState == null){
-            titulo.setText("");
-            descripcion.setText("");
+            if(nota != null){
+                this.titulo.setText(nota.getTitulo());
+                this.descripcion.setText(nota.getContenido());
+            }else{
+                titulo.setText("");
+                descripcion.setText("");
+            }
         }else{
             titulo.setText(savedInstanceState.getString("t"));
             descripcion.setText(savedInstanceState.getString("d"));

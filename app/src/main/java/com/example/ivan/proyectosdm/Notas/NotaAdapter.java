@@ -48,4 +48,6 @@ public class NotaAdapter extends Adapter<NotaAdapter.NotaViewHolder> {
             mTxContenido = (TextView) itemView.findViewById(R.id.txContent);
         }
     }
+
+
 }

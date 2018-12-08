@@ -95,6 +95,15 @@ public class CrearNota extends AppCompatActivity {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
+        Bundle notaAEditar = getIntent().getExtras();
+        if(notaAEditar != null){
+//            Nota nota = (Nota) notaAEditar.getSerializable(MainActivity.OBJETO_NOTA);
+//            if(nota.getTitulo() != null){
+//                Toast.makeText(getApplicationContext(),"asdasd",Toast.LENGTH_LONG).show();
+//            }
+            fragment.setArguments(notaAEditar);
+            fragment2.setArguments(notaAEditar);
+        }
         setTitle("Nota");
         FragmentTransaction fragmentTransaction1 = getSupportFragmentManager().beginTransaction();
         fragmentTransaction1.replace(R.id.frame, fragment,"Nota" );

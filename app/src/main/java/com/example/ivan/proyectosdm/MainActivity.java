@@ -6,14 +6,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.ivan.proyectosdm.CreacionNotas.CrearNota;
 import com.example.ivan.proyectosdm.DataBase.NoteDataSource;
 import com.example.ivan.proyectosdm.Notas.Nota;
 import com.example.ivan.proyectosdm.Notas.NotaAdapter;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,8 +78,10 @@ public class MainActivity extends AppCompatActivity {
 
     public void editarNota(View view) {
         Intent mIntent = new Intent(MainActivity.this, CrearNota.class);
-        // sacar la nota seleccionada Nota n = notas
-        // mIntent.putExtra(OBJETO_NOTA, n);
+        Nota n = new Nota(((TextView) findViewById(R.id.txTitle)).getText().toString(), ((TextView) findViewById(R.id.txContent)).getText().toString(), getString(R.string.amarillo));
+        Bundle bundle = new Bundle();
+        bundle.putSerializable(MainActivity.OBJETO_NOTA, n);
+        mIntent.putExtras(bundle);
         startActivity(mIntent);
     }
 }

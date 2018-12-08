@@ -9,7 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.example.ivan.proyectosdm.MainActivity;
 import com.example.ivan.proyectosdm.Notas.Nota;
 import com.example.ivan.proyectosdm.R;
 
@@ -20,8 +22,8 @@ public class FragmentTituloContenido extends Fragment {
     private Nota nota;
     private EditText titulo;
     private EditText descripcion;
-    public FragmentTituloContenido() {
 
+    public FragmentTituloContenido() {
     }
 
     public void setNota(Nota nota) {
@@ -54,6 +56,14 @@ public class FragmentTituloContenido extends Fragment {
         super.onSaveInstanceState(outState);
         outState.putString("t",titulo.getText().toString());
         outState.putString("d",descripcion.getText().toString());
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if(getArguments() != null){
+           nota = (Nota) getArguments().getSerializable(MainActivity.OBJETO_NOTA);
+        }
     }
 
     public EditText getTitulo() {

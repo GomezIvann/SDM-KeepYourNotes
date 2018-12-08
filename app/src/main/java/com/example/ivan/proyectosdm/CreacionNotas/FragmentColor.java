@@ -2,6 +2,7 @@ package com.example.ivan.proyectosdm.CreacionNotas;
 
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
+import com.example.ivan.proyectosdm.MainActivity;
+import com.example.ivan.proyectosdm.Notas.Nota;
 import com.example.ivan.proyectosdm.R;
 
 /**
@@ -23,6 +26,7 @@ public class FragmentColor extends Fragment {
     private Switch Rojo;
     private Switch Blanco;
     private String color = "";
+    private Nota nota;
     public FragmentColor() {
         // Required empty public constructor
     }
@@ -151,24 +155,30 @@ public class FragmentColor extends Fragment {
     }
 
     private void notaEditable() {
-        if(color.equals(Azul.getText().toString())){
-            Azul.setChecked(true);
-        }else if(color.equals(Blanco.getText().toString())){
-            Blanco.setChecked(true);
-        }else if(color.equals(Verde.getText().toString())){
-            Verde.setChecked(true);
-        }else if(color.equals(Naranja.getText().toString())){
-            Naranja.setChecked(true);
-        }else if(color.equals(Morado.getText().toString())){
-            Morado.setChecked(true);
-        }else if(color.equals(Rojo.getText().toString())){
-            Rojo.setChecked(true);
-        }else if(color.equals(Amarillo.getText().toString())){
-            Amarillo.setChecked(true);
+        if(nota != null){
+            if(nota.getColor().equals(Azul.getText().toString())){
+                Azul.setChecked(true);
+            }else if(nota.getColor().equals(Blanco.getText().toString())){
+                Blanco.setChecked(true);
+            }else if(nota.getColor().equals(Verde.getText().toString())){
+                Verde.setChecked(true);
+            }else if(nota.getColor().equals(Naranja.getText().toString())){
+                Naranja.setChecked(true);
+            }else if(nota.getColor().equals(Morado.getText().toString())){
+                Morado.setChecked(true);
+            }else if(nota.getColor().equals(Rojo.getText().toString())){
+                Rojo.setChecked(true);
+            }else if(nota.getColor().equals(Amarillo.getText().toString())){
+                Amarillo.setChecked(true);
+            }
         }
     }
 
-    public void setColor(String color) {
-        this.color = color;
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if(getArguments() != null){
+            nota = (Nota) getArguments().getSerializable(MainActivity.OBJETO_NOTA);
+        }
     }
 }

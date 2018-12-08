@@ -3,7 +3,9 @@ package com.example.ivan.proyectosdm.Notas;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Nota<T> implements Parcelable {
+import java.io.Serializable;
+
+public class Nota<T> implements Serializable {
     private Long id;
     private String titulo;
     private String contenido;
@@ -25,18 +27,18 @@ public class Nota<T> implements Parcelable {
         contenido = in.readString();
         color = in.readString();
     }
-
-    public static final Creator<Nota> CREATOR = new Creator<Nota>() {
-        @Override
-        public Nota createFromParcel(Parcel in) {
-            return new Nota(in);
-        }
-
-        @Override
-        public Nota[] newArray(int size) {
-            return new Nota[size];
-        }
-    };
+//
+//    public static final Creator<Nota> CREATOR = new Creator<Nota>() {
+//        @Override
+//        public Nota createFromParcel(Parcel in) {
+//            return new Nota(in);
+//        }
+//
+//        @Override
+//        public Nota[] newArray(int size) {
+//            return new Nota[size];
+//        }
+//    };
 
     public Long getId() {
         return id;
@@ -70,15 +72,15 @@ public class Nota<T> implements Parcelable {
         this.color = color;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.titulo);
-        dest.writeString(this.contenido);
-        dest.writeString(this.color);
-    }
+//    @Override
+//    public int describeContents() {
+//        return 0;
+//    }
+//
+//    @Override
+//    public void writeToParcel(Parcel dest, int flags) {
+//        dest.writeString(this.titulo);
+//        dest.writeString(this.contenido);
+//        dest.writeString(this.color);
+//    }
 }

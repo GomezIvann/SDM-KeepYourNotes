@@ -17,6 +17,11 @@ public class Nota<T> implements Serializable {
         this.color = color;
     }
 
+    public Nota(String titulo, String contenido, String color, long id) {
+        this(titulo, contenido, color);
+        this.id = id;
+    }
+
     protected Nota(Parcel in) {
         if (in.readByte() == 0) {
             id = null;

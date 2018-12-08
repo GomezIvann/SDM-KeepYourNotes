@@ -115,7 +115,7 @@ public class NoteDataSource {
             titulo = cursor.getString(1);
             contenido = cursor.getString(2);
             color = cursor.getString(3);
-            final Nota note = new Nota(titulo,contenido,color);
+            final Nota note = new Nota(titulo,contenido,color, id);
 
             noteList.add(note);
             cursor.moveToNext();

@@ -97,17 +97,13 @@ public class CrearNota extends AppCompatActivity {
         nds = new NoteDataSource(getApplicationContext());
 
         Bundle b = getIntent().getExtras();
-        notaAModificar = b.getParcelable(MainActivity.OBJETO_NOTA);
 
         mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         if(b != null) {
-//            Nota nota = (Nota) notaAEditar.getSerializable(MainActivity.OBJETO_NOTA);
-//            if(nota.getTitulo() != null){
-//                Toast.makeText(getApplicationContext(),"asdasd",Toast.LENGTH_LONG).show();
-//            }
+            notaAModificar = (Nota) b.getSerializable(MainActivity.OBJETO_NOTA);
             fragment.setArguments(b);
             fragment2.setArguments(b);
         }

@@ -42,6 +42,18 @@ public class MainActivity extends AppCompatActivity {
         mRVNotas.setAdapter(adapter);
     }
 
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        adapter = new NotaAdapter(dataset());
+        mRVNotas.setAdapter(adapter);
+    }
+
+    public void load(){
+        mRVNotas.setAdapter(adapter);
+    }
+
     private ArrayList<Nota> dataset() {
         nds.open();
         notas = nds.getAllNotes();

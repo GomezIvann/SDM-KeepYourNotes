@@ -96,8 +96,10 @@ public class NoteDataSource {
                 null, null, null, null, null);
         cursor.moveToFirst();
 
+        long id = 0;
         String titulo, contenido, color = "";
         while (!cursor.isAfterLast()) {
+            id = cursor.getLong(0);
             titulo = cursor.getString(1);
             contenido = cursor.getString(2);
             color = cursor.getString(3);

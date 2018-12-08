@@ -1,5 +1,6 @@
 package com.example.ivan.proyectosdm.CreacionNotas;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ivan.proyectosdm.MainActivity;
 import com.example.ivan.proyectosdm.Notas.Nota;
 import com.example.ivan.proyectosdm.R;
 
@@ -20,6 +22,8 @@ public class CrearNota extends AppCompatActivity {
     private FragmentTituloContenido fragment = new FragmentTituloContenido();
     private FragmentColor fragment2 = new FragmentColor();
     private FragmentAdjuntos fragment3 = new FragmentAdjuntos();
+    private Nota notaAModificar;
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -34,12 +38,17 @@ public class CrearNota extends AppCompatActivity {
             return true;
         }
         else if (id == R.id.Guardar) {
-            String Titulo = fragment.getTitulo().getText().toString();
-            String Descripcion = fragment.getDescripcion().getText().toString();
-            String Colro = fragment2.getColor();
-            Nota nota = new Nota(Titulo, Descripcion, Colro);
-            Toast.makeText(getApplicationContext(), "Se han guardado los cambios", Toast.LENGTH_SHORT).show();
-            return true;
+            if ( notaAModificar == null ){
+                String titulo = fragment.getTitulo().getText().toString();
+                String descripcion = fragment.getDescripcion().getText().toString();
+                String color = fragment2.getColor();
+                Nota nota = new Nota(titulo, descripcion, color);
+                Toast.makeText(getApplicationContext(), "Se han guardado los cambios", Toast.LENGTH_SHORT).show();
+                return true;
+            }
+            else {
+                // lo que sea
+            }
         }
 
         return super.onOptionsItemSelected(item);
@@ -78,6 +87,9 @@ public class CrearNota extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crear_nota);
+
+        Bundle b = getIntent().getExtras();
+        notaAModificar = b.getParcelable(MainActivity.OBJETO_NOTA);
 
         mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);

@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.ivan.proyectosdm.CreacionNotas.CrearNota;
+import com.example.ivan.proyectosdm.DataBase.NoteDataSource;
 import com.example.ivan.proyectosdm.Notas.Nota;
 import com.example.ivan.proyectosdm.Notas.NotaAdapter;
 
@@ -21,18 +22,20 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String OBJETO_NOTA = "nota";
 
-    private List<String> notas;
+    private List<Nota> notas;
     private RecyclerView mRVNotas;
     private NotaAdapter adapter;
     private GridLayoutManager glm;
+    private NoteDataSource ndb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mRVNotas = (RecyclerView) findViewById(R.id.rvNotas);
+        ndb = new NoteDataSource(getApplicationContext());
 
+        mRVNotas = (RecyclerView) findViewById(R.id.rvNotas);
         glm = new GridLayoutManager(this, 1);
         mRVNotas.setLayoutManager(glm);
         adapter = new NotaAdapter(dataset());
@@ -40,11 +43,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private ArrayList<Nota> dataset() {
-        //Notas de prueba: aquí se haría la lectura de la bbdd
-        ArrayList<Nota> datos = new ArrayList<Nota>();
-        datos.add(new Nota("Ejemplo1", "Contenido de ejemplo",""));
-        datos.add(new Nota("Ejemplo2", "Contenido de ejemplo 2",""));
-        return datos;
+        ndb.open();
+        notas = ndb.getAllNotes();
+        ndb.close();
+        return new ArrayList<Nota>(notas);
     }
 
     /**
@@ -72,8 +74,8 @@ public class MainActivity extends AppCompatActivity {
 
     public void editarNota(View view) {
         Intent mIntent = new Intent(MainActivity.this, CrearNota.class);
-        Nota n = new Nota(findViewById(R.id.txTitle).toString(), findViewById(R.id.txContent).toString(), getString(R.string.amarillo));
-        mIntent.putExtra(OBJETO_NOTA, n);
+        // sacar la nota seleccionada Nota n = notas
+        // mIntent.putExtra(OBJETO_NOTA, n);
         startActivity(mIntent);
     }
 }

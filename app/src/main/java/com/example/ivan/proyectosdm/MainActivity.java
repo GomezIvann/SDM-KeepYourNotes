@@ -1,12 +1,10 @@
 package com.example.ivan.proyectosdm;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,8 +14,6 @@ import com.example.ivan.proyectosdm.CreacionNotas.CrearNota;
 import com.example.ivan.proyectosdm.DataBase.NoteDataSource;
 import com.example.ivan.proyectosdm.Notas.Nota;
 import com.example.ivan.proyectosdm.Notas.NotaAdapter;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,14 +26,14 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView mRVNotas;
     private NotaAdapter adapter;
     private GridLayoutManager glm;
-    public NoteDataSource ndb;
+    private NoteDataSource nds;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ndb = new NoteDataSource(getApplicationContext());
+        nds = new NoteDataSource(getApplicationContext());
 
         mRVNotas = (RecyclerView) findViewById(R.id.rvNotas);
         glm = new GridLayoutManager(this, 1);
@@ -47,9 +43,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private ArrayList<Nota> dataset() {
-        ndb.open();
-        notas = ndb.getAllNotes();
-        ndb.close();
+        nds.open();
+        notas = nds.getAllNotes();
+        nds.close();
         return new ArrayList<Nota>(notas);
     }
 

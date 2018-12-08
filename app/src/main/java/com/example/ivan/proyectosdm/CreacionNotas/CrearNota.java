@@ -1,6 +1,5 @@
 package com.example.ivan.proyectosdm.CreacionNotas;
 
-import android.os.Parcelable;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,10 +7,10 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.ivan.proyectosdm.DataBase.NoteDataSource;
 import com.example.ivan.proyectosdm.MainActivity;
 import com.example.ivan.proyectosdm.Notas.Nota;
 import com.example.ivan.proyectosdm.R;
@@ -23,6 +22,7 @@ public class CrearNota extends AppCompatActivity {
     private FragmentColor fragment2 = new FragmentColor();
     private FragmentAdjuntos fragment3 = new FragmentAdjuntos();
     private Nota notaAModificar;
+    private NoteDataSource nds;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -33,24 +33,30 @@ public class CrearNota extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+        nds.open();
         if (id == R.id.cancelar) {
             //sacar mensaje diciendo que si quiere salir sin guardar los cambios
+            nds.close();
             return true;
         }
         else if (id == R.id.Guardar) {
+            // dos casos, que sea una modificacion o que sea un guardado
             if (notaAModificar == null) {
-                String Titulo = fragment.getTitulo().getText().toString();
-                String Descripcion = fragment.getDescripcion().getText().toString();
-                String Colro = fragment2.getColor();
-                Nota nota = new Nota(Titulo, Descripcion, Colro);
+                String titulo = fragment.getTitulo().getText().toString();
+                String descripcion = fragment.getDescripcion().getText().toString();
+                String color = fragment2.getColor();
+                Nota nota = new Nota(titulo, descripcion, color);
+                nds.createNote(nota); // creamos el objeto y lo añadimos a la bbdd
                 Toast.makeText(getApplicationContext(), "Se han guardado los cambios", Toast.LENGTH_SHORT).show();
-                return true;
             }
             else {
-                // editar nota
+                // editar nota HACER
+                nds.updateNote(notaAModificar); //actualizamos el objeto en la bbdd
             }
+            nds.close();
+            return true;
         }
-
+        nds.close();
         return super.onOptionsItemSelected(item);
     }
 
@@ -88,6 +94,8 @@ public class CrearNota extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crear_nota);
 
+        nds = new NoteDataSource(getApplicationContext());
+
         Bundle b = getIntent().getExtras();
         notaAModificar = b.getParcelable(MainActivity.OBJETO_NOTA);
 
@@ -95,14 +103,13 @@ public class CrearNota extends AppCompatActivity {
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
-        Bundle notaAEditar = getIntent().getExtras();
-        if(notaAEditar != null){
+        if(b != null) {
 //            Nota nota = (Nota) notaAEditar.getSerializable(MainActivity.OBJETO_NOTA);
 //            if(nota.getTitulo() != null){
 //                Toast.makeText(getApplicationContext(),"asdasd",Toast.LENGTH_LONG).show();
 //            }
-            fragment.setArguments(notaAEditar);
-            fragment2.setArguments(notaAEditar);
+            fragment.setArguments(b);
+            fragment2.setArguments(b);
         }
         setTitle("Nota");
         FragmentTransaction fragmentTransaction1 = getSupportFragmentManager().beginTransaction();

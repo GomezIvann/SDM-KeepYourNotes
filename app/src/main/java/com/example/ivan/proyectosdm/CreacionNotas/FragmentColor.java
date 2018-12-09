@@ -4,6 +4,7 @@ package com.example.ivan.proyectosdm.CreacionNotas;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,13 +26,14 @@ public class FragmentColor extends Fragment {
     private Switch Morado;
     private Switch Rojo;
     private Switch Blanco;
-    private String color = "";
     private Nota nota;
+    private int color;
+
     public FragmentColor() {
         // Required empty public constructor
     }
 
-    public String getColor() {
+    public int getColor() {
         return color;
     }
 
@@ -49,7 +51,7 @@ public class FragmentColor extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked){
-                    color = Amarillo.getText().toString();
+                    color = ContextCompat.getColor(getContext(), R.color.amarillo);
                     Azul.setChecked(false);
                     Verde.setChecked(false);
                     Naranja.setChecked(false);
@@ -64,7 +66,7 @@ public class FragmentColor extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked) {
-                    color = Azul.getText().toString();
+                    color = ContextCompat.getColor(getContext(), R.color.azul);
                     Amarillo.setChecked(false);
                     Verde.setChecked(false);
                     Naranja.setChecked(false);
@@ -79,7 +81,7 @@ public class FragmentColor extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked) {
-                    color = Verde.getText().toString();
+                    color = ContextCompat.getColor(getContext(), R.color.verdeClaro);
                     Azul.setChecked(false);
                     Amarillo.setChecked(false);
                     Naranja.setChecked(false);
@@ -94,7 +96,7 @@ public class FragmentColor extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked) {
-                    color = Naranja.getText().toString();
+                    color = ContextCompat.getColor(getContext(), R.color.naranja);
                     Azul.setChecked(false);
                     Verde.setChecked(false);
                     Amarillo.setChecked(false);
@@ -109,7 +111,7 @@ public class FragmentColor extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked) {
-                    color = Morado.getText().toString();
+                    color = ContextCompat.getColor(getContext(), R.color.morado);
                     Azul.setChecked(false);
                     Verde.setChecked(false);
                     Naranja.setChecked(false);
@@ -124,7 +126,7 @@ public class FragmentColor extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked) {
-                    color = Rojo.getText().toString();
+                    color = ContextCompat.getColor(getContext(), R.color.rojo);
                     Azul.setChecked(false);
                     Verde.setChecked(false);
                     Naranja.setChecked(false);
@@ -139,7 +141,7 @@ public class FragmentColor extends Fragment {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if(isChecked) {
-                    color = Blanco.getText().toString();
+                    color = ContextCompat.getColor(getContext(), R.color.blanco);
                     Azul.setChecked(false);
                     Verde.setChecked(false);
                     Naranja.setChecked(false);
@@ -156,19 +158,19 @@ public class FragmentColor extends Fragment {
 
     private void notaEditable() {
         if(nota != null){
-            if(nota.getColor().equals(Azul.getText().toString())){
+            if(nota.getColor() == ContextCompat.getColor(getContext(), R.color.azul)){
                 Azul.setChecked(true);
-            }else if(nota.getColor().equals(Blanco.getText().toString())){
+            }else if(nota.getColor() == ContextCompat.getColor(getContext(), R.color.blanco)){
                 Blanco.setChecked(true);
-            }else if(nota.getColor().equals(Verde.getText().toString())){
+            }else if(nota.getColor() == ContextCompat.getColor(getContext(), R.color.verdeClaro)){
                 Verde.setChecked(true);
-            }else if(nota.getColor().equals(Naranja.getText().toString())){
+            }else if(nota.getColor() == ContextCompat.getColor(getContext(), R.color.naranja)){
                 Naranja.setChecked(true);
-            }else if(nota.getColor().equals(Morado.getText().toString())){
+            }else if(nota.getColor() == ContextCompat.getColor(getContext(), R.color.morado)){
                 Morado.setChecked(true);
-            }else if(nota.getColor().equals(Rojo.getText().toString())){
+            }else if(nota.getColor() == ContextCompat.getColor(getContext(), R.color.rojo)){
                 Rojo.setChecked(true);
-            }else if(nota.getColor().equals(Amarillo.getText().toString())){
+            }else if(nota.getColor() == ContextCompat.getColor(getContext(), R.color.amarillo)){
                 Amarillo.setChecked(true);
             }
         }

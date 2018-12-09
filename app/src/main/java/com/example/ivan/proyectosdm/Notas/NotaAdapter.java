@@ -1,5 +1,8 @@
 package com.example.ivan.proyectosdm.Notas;
 
+import android.graphics.Color;
+import android.support.constraint.ConstraintLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.Adapter;
 import android.view.LayoutInflater;
@@ -31,6 +34,7 @@ public class NotaAdapter extends Adapter<NotaAdapter.NotaViewHolder> {
         Nota nota = notas.get(i);
         notaViewHolder.mTxTitulo.setText(nota.getTitulo());
         notaViewHolder.mTxContenido.setText(nota.getContenido().toString());
+        notaViewHolder.background.setBackgroundColor(nota.getColor());
         posicion = i;
     }
 
@@ -45,11 +49,13 @@ public class NotaAdapter extends Adapter<NotaAdapter.NotaViewHolder> {
 
         TextView mTxTitulo;
         TextView mTxContenido;
+        ConstraintLayout background;
 
         public NotaViewHolder(View itemView) {
             super(itemView);
             mTxTitulo = (TextView) itemView.findViewById(R.id.txTitle);
             mTxContenido = (TextView) itemView.findViewById(R.id.txContent);
+            background = (ConstraintLayout) itemView.findViewById(R.id.idItemLayout);
         }
     }
 

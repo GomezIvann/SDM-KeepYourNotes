@@ -27,7 +27,7 @@ public class MyDBHelper extends SQLiteOpenHelper {
             + "( " + COLUMN_ID + " " +
             "integer primary key autoincrement, " + COLUMN_TITULO
             + " text not null, " + COLUMN_CONTENIDO + " text not null, " + COLUMN_COLOR +
-            " text not null" + ");";
+            " integer not null" + ");";
 
     /**
      * Sentencia para borrar la tabla notes

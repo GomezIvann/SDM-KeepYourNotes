@@ -9,15 +9,15 @@ public class Nota<T> implements Serializable {
     private Long id;
     private String titulo;
     private String contenido;
-    private String color;
+    private int color;
 
-    public Nota(String titulo, String contenido, String color) {
+    public Nota(String titulo, String contenido, int color) {
         this.titulo = titulo;
         this.contenido = contenido;
-        this.color = color == null || color.equals("")? "Blanco": color;
+        this.color = color;
     }
 
-    public Nota(String titulo, String contenido, String color, long id) {
+    public Nota(String titulo, String contenido, int color, long id) {
         this(titulo, contenido, color);
         this.id = id;
     }
@@ -30,7 +30,7 @@ public class Nota<T> implements Serializable {
         }
         titulo = in.readString();
         contenido = in.readString();
-        color = in.readString();
+        color = in.readInt();
     }
 //
 //    public static final Creator<Nota> CREATOR = new Creator<Nota>() {
@@ -69,11 +69,11 @@ public class Nota<T> implements Serializable {
         this.contenido = contenido;
     }
 
-    public String getColor() {
+    public int getColor() {
         return color;
     }
 
-    public void setColor(String color) {
+    public void setColor(int color) {
         this.color = color;
     }
 

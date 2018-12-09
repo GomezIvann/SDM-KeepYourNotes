@@ -12,12 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Ejemplo <b>SQLite</b>. Ejemplo de uso de SQLite.
- *
  * DAO para la tabla de valoracion.
  * Se encarga de abrir y cerrar la conexion, asi como hacer las consultas relacionadas con la tabla valoracion
  *
-
  */
 public class NoteDataSource {
     /**
@@ -109,12 +106,13 @@ public class NoteDataSource {
         cursor.moveToFirst();
 
         long id = 0;
-        String titulo, contenido, color = "";
+        String titulo, contenido = "";
+        int color = 0;
         while (!cursor.isAfterLast()) {
             id = cursor.getLong(0);
             titulo = cursor.getString(1);
             contenido = cursor.getString(2);
-            color = cursor.getString(3);
+            color = cursor.getInt(3);
             final Nota note = new Nota(titulo,contenido,color,id);
 
             noteList.add(note);

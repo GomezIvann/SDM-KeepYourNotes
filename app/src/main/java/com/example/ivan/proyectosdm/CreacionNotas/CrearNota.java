@@ -38,7 +38,7 @@ public class CrearNota extends AppCompatActivity {
         nds.open();
         if (id == R.id.cancelar) {
             if(notaAModificar == null){
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.CustomDialogTheme);
                 builder.setTitle("¿Salir sin guardar?");
                 builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
@@ -52,7 +52,7 @@ public class CrearNota extends AppCompatActivity {
                 });
                 builder.create().show();
             }else{
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.CustomDialogTheme);
                 builder.setTitle("¿Desea borrar la nota?");
                 builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
@@ -113,7 +113,7 @@ public class CrearNota extends AppCompatActivity {
                     fragmentTransaction2.commit();
                     return true;
                 case R.id.navigation_adjunto:
-                    setTitle("Adjunto");
+                    setTitle("Archivos adjuntos");
                     FragmentTransaction fragmentTransaction3 = getSupportFragmentManager().beginTransaction();
                     fragmentTransaction3.replace(R.id.frame, fragment3,"Adjunto" );
                     fragmentTransaction3.commit();

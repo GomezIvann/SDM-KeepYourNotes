@@ -14,7 +14,7 @@ public class Nota<T> implements Serializable {
     public Nota(String titulo, String contenido, String color) {
         this.titulo = titulo;
         this.contenido = contenido;
-        this.color = color;
+        this.color = color == null || color.equals("")? "Blanco": color;
     }
 
     public Nota(String titulo, String contenido, String color, long id) {

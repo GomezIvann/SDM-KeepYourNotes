@@ -35,43 +35,9 @@ public class CrearNota extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        nds.open();
-        if (id == R.id.cancelar) {
-            if(notaAModificar == null){
-                AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.CustomDialogTheme);
-                builder.setTitle("¿Salir sin guardar?");
-                builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        finish();
-                    }
-                });
-                builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        // User cancelled the dialog
-                    }
-                });
-                builder.create().show();
-            }else{
-                AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.CustomDialogTheme);
-                builder.setTitle("¿Desea borrar la nota?");
-                builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        nds.deleteNote(notaAModificar.getId());
-                        finish();
-                    }
-                });
-                builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        // User cancelled the dialog
-                    }
-                });
-                builder.create().show();
-            }
-            nds.close();
-            return true;
-        }
-        else if (id == R.id.Guardar) {
+        if (id == R.id.Guardar) {
             // dos casos, que sea una modificacion o que sea un guardado
+            nds.open();
             if (notaAModificar == null) {
                 String titulo = fragment.getTitulo().getText().toString();
                 String descripcion = fragment.getDescripcion().getText().toString();
@@ -93,7 +59,7 @@ public class CrearNota extends AppCompatActivity {
             nds.close();
             return true;
         }
-        nds.close();
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -138,7 +104,6 @@ public class CrearNota extends AppCompatActivity {
         mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
         if(b != null) {
             notaAModificar = (Nota) b.getSerializable(MainActivity.OBJETO_NOTA);
             fragment.setArguments(b);

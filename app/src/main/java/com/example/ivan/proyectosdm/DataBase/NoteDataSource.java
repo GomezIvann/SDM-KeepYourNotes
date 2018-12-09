@@ -78,8 +78,8 @@ public class NoteDataSource {
      *
      * @return devuelve un valor booleano indicando el éxito o no de la operación
      */
-    public void deleteNote(long _indiceFila) {
-        database.delete(MyDBHelper.TABLE_NOTES, MyDBHelper.COLUMN_ID + "=" + _indiceFila, null);
+    public void deleteNote(long _idFila) {
+        database.delete(MyDBHelper.TABLE_NOTES, MyDBHelper.COLUMN_ID + "=" + _idFila, null);
     }
 
     /**

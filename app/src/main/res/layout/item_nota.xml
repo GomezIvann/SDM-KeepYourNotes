@@ -15,8 +15,7 @@
         android:id="@+id/idItemLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/blanco"
-        android:onClick="editarNota">
+        android:background="@color/blanco">
 
         <TextView
             android:id="@+id/txTitle"

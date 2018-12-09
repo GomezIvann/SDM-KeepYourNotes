@@ -13,13 +13,14 @@ import android.widget.TextView;
 import com.example.ivan.proyectosdm.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class NotaAdapter extends Adapter<NotaAdapter.NotaViewHolder> {
 
-    private ArrayList<Nota> notas;
+    private List<Nota> notas;
     private int posicion;
 
-    public NotaAdapter(ArrayList<Nota> notas) {
+    public NotaAdapter(List<Nota> notas) {
         this.notas = notas;
     }
 

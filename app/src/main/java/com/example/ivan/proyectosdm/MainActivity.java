@@ -1,6 +1,8 @@
 package com.example.ivan.proyectosdm;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -9,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.ivan.proyectosdm.CreacionNotas.CrearNota;
 import com.example.ivan.proyectosdm.DataBase.NoteDataSource;
@@ -40,8 +43,45 @@ public class MainActivity extends AppCompatActivity {
         mRVNotas.setLayoutManager(glm);
         adapter = new NotaAdapter(dataset());
         mRVNotas.setAdapter(adapter);
+
+        mRVNotas.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), mRVNotas, new RecyclerTouchListener.ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                Intent mIntent = new Intent(MainActivity.this, CrearNota.class);
+                Nota n = notas.get(position);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable(MainActivity.OBJETO_NOTA, n);
+                mIntent.putExtras(bundle);
+                startActivity(mIntent);
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+                borrarNotaSeleccionada(position);
+            }
+        }));
     }
 
+    public void borrarNotaSeleccionada(int position) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.CustomDialogTheme);
+        builder.setTitle("¿Deseas borrar la nota?");
+        final Nota notaABorrar = notas.get(position);
+
+        builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                nds.open();
+                nds.deleteNote(notaABorrar.getId());
+                nds.close();
+                onResume();
+            }
+        });
+        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User cancelled the dialog
+            }
+        });
+        builder.create().show();
+    }
 
     @Override
     protected void onResume() {
@@ -81,15 +121,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void nuevaNota(View view) {
         Intent mIntent = new Intent(MainActivity.this, CrearNota.class);
-        startActivity(mIntent);
-    }
-
-    public void editarNota(View view) {
-        Intent mIntent = new Intent(MainActivity.this, CrearNota.class);
-        Nota n = notas.get(adapter.getPosicion());
-        Bundle bundle = new Bundle();
-        bundle.putSerializable(MainActivity.OBJETO_NOTA, n);
-        mIntent.putExtras(bundle);
         startActivity(mIntent);
     }
 }

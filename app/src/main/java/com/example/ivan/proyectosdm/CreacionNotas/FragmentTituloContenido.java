@@ -51,6 +51,28 @@ public class FragmentTituloContenido extends Fragment {
         return v;
     }
 
+//    @Override
+//    public void onPause() {
+//        super.onPause();
+//        nota = new Nota(titulo.getText().toString(),descripcion.getText().toString(),0);
+//
+//    }
+//
+//    @Override
+//    public void onDestroy() {
+//        super.onDestroy();
+//        nota = new Nota(titulo.getText().toString(),descripcion.getText().toString(),0);
+//    }
+//
+//    @Override
+//    public void onStop() {
+//        super.onStop();
+//        Bundle b = new Bundle();
+//        b.putString("t",titulo.getText().toString());
+//        b.putString("d",descripcion.getText().toString());
+//        onSaveInstanceState(b);
+//    }
+
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);

@@ -25,4 +25,8 @@
     <string name="morado">Morado</string>
     <string name="rojo">Rojo</string>
     <string name="blanco">Blanco</string>
+    <string name="vacio">No hay archivos adjuntos</string>
+    <string name="foto">Foto</string>
+    <string name="video">Vídeo</string>
+    <string name="ubi">Ubicación</string>
 </resources>

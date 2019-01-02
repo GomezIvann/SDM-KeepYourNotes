@@ -19,12 +19,15 @@ import com.example.ivan.proyectosdm.R;
 
 public class CrearNota extends AppCompatActivity {
 
+    public static final String OBJETO_NOTA = "nota";
+
     private TextView mTextMessage;
     private FragmentTituloContenido fragment = new FragmentTituloContenido();
     private FragmentColor fragment2 = new FragmentColor();
     private FragmentAdjuntos fragment3 = new FragmentAdjuntos();
     private Nota notaAModificar;
     private NoteDataSource nds;
+    private Nota notaActual; //nota que hay en el momento de girar la pantalla
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -115,4 +118,25 @@ public class CrearNota extends AppCompatActivity {
         fragmentTransaction1.commit();
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        String titulo = fragment.getTitulo().getText().toString();
+        String descripcion = fragment.getDescripcion().getText().toString();
+        int color = fragment2.getColor();
+        notaActual = new Nota(titulo, descripcion, color);
+        if (notaAModificar != null)
+            notaActual.setId(notaAModificar.getId());
+        outState.putSerializable(OBJETO_NOTA, notaActual);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        notaActual = (Nota) savedInstanceState.getSerializable(OBJETO_NOTA);
+        TextView mContent = (TextView) findViewById(R.id.descripcion);
+        TextView mTitle = (TextView) findViewById(R.id.titulo);
+        mContent.setText(notaActual.getContenido());
+        mTitle.setText(notaActual.getTitulo());
+    }
 }

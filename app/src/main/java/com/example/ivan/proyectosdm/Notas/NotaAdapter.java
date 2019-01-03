@@ -1,8 +1,6 @@
 package com.example.ivan.proyectosdm.Notas;
 
-import android.graphics.Color;
 import android.support.constraint.ConstraintLayout;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.Adapter;
 import android.view.LayoutInflater;
@@ -12,7 +10,6 @@ import android.widget.TextView;
 
 import com.example.ivan.proyectosdm.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class NotaAdapter extends Adapter<NotaAdapter.NotaViewHolder> {

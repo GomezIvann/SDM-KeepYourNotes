@@ -1,7 +1,6 @@
 package com.example.ivan.proyectosdm.Notas;
 
 import android.os.Parcel;
-import android.os.Parcelable;
 
 import java.io.Serializable;
 

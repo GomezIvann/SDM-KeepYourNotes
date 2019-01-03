@@ -29,4 +29,6 @@
     <string name="foto">Foto</string>
     <string name="video">Vídeo</string>
     <string name="ubi">Ubicación</string>
+    <string name="capturar">Capturar</string>
+    <string name="tomar">Tomar foto</string>
 </resources>

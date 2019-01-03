@@ -1,6 +1,7 @@
 package com.example.ivan.proyectosdm.CreacionNotas;
 
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -27,12 +28,15 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 import java.io.File;
 import java.net.URI;
+import com.frosquivel.magicalcamera.MagicalCamera;
+//import com.frosquivel.magicalcamera.Functionallities.PermissionGranted;
+import com.frosquivel.magicalcamera.MagicalPermissions;
+import com.frosquivel.magicalcamera.Objects.MagicalCameraObject;
 
 import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 import static android.app.Activity.RESULT_OK;
 import static android.support.v4.content.ContextCompat.checkSelfPermission;
-import static android.support.v4.content.FileProvider.getUriForFile;
 
 import com.example.ivan.proyectosdm.R;
 
@@ -51,8 +55,10 @@ public class FragmentAdjuntos extends Fragment {
     String path;
     final int COD_SELECCIONA=10;
     final int COD_FOTO=20;
-    ImageView imagen;
-    Button botonCargar;
+    private View mainView;
+    private View prueba;
+    private MagicalCamera magicalCamera;
+    private MagicalPermissions magicalPermissions;
 
     public FragmentAdjuntos() {
         // Required empty public constructor
@@ -62,10 +68,10 @@ public class FragmentAdjuntos extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         View fabFoto = inflater.inflate(R.layout.layout_fab_foto, container, false);
         View fabVideo = inflater.inflate(R.layout.layout_fab_video, container, false);
         View fabUbi = inflater.inflate(R.layout.layout_fab_ubicacion, container, false);
+        prueba = inflater.inflate(R.layout.prueba, container, false);
         container.addView(fabFoto);
         container.addView(fabVideo);
         container.addView(fabUbi);
@@ -98,6 +104,7 @@ public class FragmentAdjuntos extends Fragment {
                 validaPermisos();
             }
         });
+        mainView = v;
         return v;
     }
 
@@ -133,31 +140,55 @@ public class FragmentAdjuntos extends Fragment {
     }
 
     private void cargarImagen() {
-        final CharSequence[] opciones={"Tomar Foto","Cargar Imagen","Cancelar"};
-        final AlertDialog.Builder alertOpciones=new AlertDialog.Builder(getContext());
+        CharSequence[] opciones={"Tomar Foto","Cargar Imagen","Cancelar"};
+        AlertDialog.Builder alertOpciones=new AlertDialog.Builder(getContext());
         alertOpciones.setTitle("Seleccione una Opción");
-        alertOpciones.setItems(opciones, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                if (opciones[i].equals("Tomar Foto")){
-                    tomarFotografia();
-                }else{
-                    if (opciones[i].equals("Cargar Imagen")){
-                        Intent intent = new Intent();
-                        intent.setType("image/*");
-                        intent.setAction(Intent.ACTION_GET_CONTENT);
-                        startActivityForResult(Intent.createChooser(intent, ""), COD_SELECCIONA);
-                    }else{
-                        dialogInterface.dismiss();
+        alertOpciones.setTitle("Title");
+        alertOpciones.setItems(new CharSequence[]
+                        {"button 1", "button 2", "button 3", "button 4"},
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // The 'which' argument contains the index position
+                        // of the selected item
+                        switch (which) {
+                            case 0:
+                                closeSubMenusFab();
+                                lanzarCamara();
+                                Toast.makeText(getContext(), "FUNCIONA", Toast.LENGTH_LONG).show();
+                                break;
+                            case 1:
+                                Toast.makeText(getContext(), "clicked 2", Toast.LENGTH_LONG).show();
+                                break;
+                            case 2:
+                                Toast.makeText(getContext(), "clicked 3", Toast.LENGTH_LONG).show();
+                                break;
+                            case 3:
+                                Toast.makeText(getContext(), "clicked 4", Toast.LENGTH_LONG).show();
+                                break;
+                        }
                     }
-                }
-            }
-        });
-        alertOpciones.show();
+                });
+        alertOpciones.create().show();
 
     }
 
-    private void tomarFotografia() {
+    public void lanzarCamara(){
+        ViewGroup rootView = (ViewGroup) getView();
+        rootView.addView(prueba);
+        rootView.findViewById(R.id.fabAdjuntos).setVisibility(View.INVISIBLE);
+        Button cancelar = (Button) prueba.findViewById(R.id.botonCancelar);
+        cancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ViewGroup rootView = (ViewGroup) getView();
+                rootView.removeView(prueba);
+                rootView.findViewById(R.id.fabAdjuntos).setVisibility(View.VISIBLE);
+            }
+        });
+        ImageView image = (ImageView) rootView.findViewById(R.id.imageView);
+    }
+    public void tomarFotografia() {
+        Toast.makeText(getContext(),"1",Toast.LENGTH_LONG).show();
         File fileImagen=new File(Environment.getExternalStorageDirectory(),RUTA_IMAGEN);
         boolean isCreada=fileImagen.exists();
         String nombreImagen="";
@@ -209,7 +240,7 @@ public class FragmentAdjuntos extends Fragment {
                 case COD_SELECCIONA:
                     Uri miPath=data.getData();
                     if(miPath != null){
-                        Toast.makeText(getContext(),"hola",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(),miPath.toString(),Toast.LENGTH_LONG).show();
                     }else{
                         Toast.makeText(getContext(),"sdf",Toast.LENGTH_LONG).show();
 
@@ -236,12 +267,6 @@ public class FragmentAdjuntos extends Fragment {
 
 
         }
-    }
-
-
-    private void abrirCamaraFotos(){
-        Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivity(i);
     }
 
     private void closeSubMenusFab(){

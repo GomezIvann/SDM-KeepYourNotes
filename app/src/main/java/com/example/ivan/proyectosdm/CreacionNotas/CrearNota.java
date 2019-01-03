@@ -19,12 +19,16 @@ import com.example.ivan.proyectosdm.R;
 
 public class CrearNota extends AppCompatActivity {
 
+    public static final String OBJETO_NOTA = "nota";
+
     private TextView mTextMessage;
     private FragmentTituloContenido fragment = new FragmentTituloContenido();
     private FragmentColor fragment2 = new FragmentColor();
     private FragmentAdjuntos fragment3 = new FragmentAdjuntos();
     private Nota notaAModificar;
     private NoteDataSource nds;
+    private Nota notaActual; //nota que hay en el momento de girar la pantalla
+    private int currentTab;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -68,6 +72,7 @@ public class CrearNota extends AppCompatActivity {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            currentTab = item.getItemId();
             switch (item.getItemId()) {
                 case R.id.navigation_nota:
                     setTitle("Nota");
@@ -90,6 +95,8 @@ public class CrearNota extends AppCompatActivity {
             }
             return false;
         }
+
+
     };
 
     @Override
@@ -115,4 +122,47 @@ public class CrearNota extends AppCompatActivity {
         fragmentTransaction1.commit();
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        String titulo = fragment.getTitulo().getText().toString();
+        String descripcion = fragment.getDescripcion().getText().toString();
+        int color = fragment2.getColor();
+        notaActual = new Nota(titulo, descripcion, color);
+        if (notaAModificar != null)
+            notaActual.setId(notaAModificar.getId());
+        outState.putSerializable(OBJETO_NOTA, notaActual);
+        outState.putInt("CurrentTab", currentTab);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        currentTab = savedInstanceState.getInt("CurrentTab");
+        switch (currentTab) {
+            case R.id.navigation_nota:
+                setTitle("Nota");
+                FragmentTransaction fragmentTransaction1 = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction1.replace(R.id.frame, fragment,"Nota" );
+                fragmentTransaction1.commit();
+                break;
+            case R.id.navigation_color:
+                setTitle("Color");
+                FragmentTransaction fragmentTransaction2 = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction2.replace(R.id.frame, fragment2,"Color" );
+                fragmentTransaction2.commit();
+                break;
+            case R.id.navigation_adjunto:
+                setTitle("Archivos adjuntos");
+                FragmentTransaction fragmentTransaction3 = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction3.replace(R.id.frame, fragment3,"Adjunto" );
+                fragmentTransaction3.commit();
+                break;
+        }
+        notaActual = (Nota) savedInstanceState.getSerializable(OBJETO_NOTA);
+        TextView mContent = (TextView) findViewById(R.id.descripcion);
+        TextView mTitle = (TextView) findViewById(R.id.titulo);
+        mContent.setText(notaActual.getContenido());
+        mTitle.setText(notaActual.getTitulo());
+    }
 }

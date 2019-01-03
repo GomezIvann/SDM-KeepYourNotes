@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -16,6 +17,8 @@ import com.example.ivan.proyectosdm.DataBase.NoteDataSource;
 import com.example.ivan.proyectosdm.MainActivity;
 import com.example.ivan.proyectosdm.Notas.Nota;
 import com.example.ivan.proyectosdm.R;
+
+import java.util.Random;
 
 public class CrearNota extends AppCompatActivity {
 
@@ -46,6 +49,33 @@ public class CrearNota extends AppCompatActivity {
                 String titulo = fragment.getTitulo().getText().toString();
                 String descripcion = fragment.getDescripcion().getText().toString();
                 int color = fragment2.getColor();
+                if (color == 0) {
+                    Random r = new Random();
+                    int i = r.nextInt(7);
+                    switch (i) {
+                        case 0:
+                            color = ContextCompat.getColor(this, R.color.amarillo);
+                            break;
+                        case 1:
+                            color = ContextCompat.getColor(this, R.color.azul);
+                            break;
+                        case 2:
+                            color = ContextCompat.getColor(this, R.color.verdeClaro);
+                            break;
+                        case 3:
+                            color = ContextCompat.getColor(this, R.color.naranja);
+                            break;
+                        case 4:
+                            color = ContextCompat.getColor(this, R.color.morado);
+                            break;
+                        case 5:
+                            color = ContextCompat.getColor(this, R.color.rojo);
+                            break;
+                        case 6:
+                            color = ContextCompat.getColor(this, R.color.blanco);
+                            break;
+                    }
+                }
                 Nota nota = new Nota(titulo, descripcion, color);
                 nds.createNote(nota); // creamos el objeto y lo añadimos a la bbdd
                 Toast.makeText(getApplicationContext(),

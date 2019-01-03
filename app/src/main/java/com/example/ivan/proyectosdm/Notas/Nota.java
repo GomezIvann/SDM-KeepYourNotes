@@ -1,19 +1,24 @@
 package com.example.ivan.proyectosdm.Notas;
 
+import android.media.Image;
 import android.os.Parcel;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Nota<T> implements Serializable {
     private Long id;
     private String titulo;
     private String contenido;
+    private List<Imagen> imagenes;
     private int color;
 
     public Nota(String titulo, String contenido, int color) {
         this.titulo = titulo;
         this.contenido = contenido;
         this.color = color;
+        this.imagenes = new ArrayList<Imagen>();
     }
 
     public Nota(String titulo, String contenido, int color, long id) {
@@ -31,6 +36,15 @@ public class Nota<T> implements Serializable {
         contenido = in.readString();
         color = in.readInt();
     }
+
+    public void addImagen (Imagen img){
+        imagenes.add(img);
+    }
+
+    public void remove (Imagen img) {
+        imagenes.remove(img);
+    }
+
 //
 //    public static final Creator<Nota> CREATOR = new Creator<Nota>() {
 //        @Override
@@ -43,6 +57,12 @@ public class Nota<T> implements Serializable {
 //            return new Nota[size];
 //        }
 //    };
+
+    public void setImagenes(List<Imagen> imagenes) { this.imagenes = imagenes; }
+
+    public Imagen getImagen(int index) { return imagenes.get(index); }
+
+    public int getNumImagenes(){ return imagenes.size(); }
 
     public Long getId() {
         return id;

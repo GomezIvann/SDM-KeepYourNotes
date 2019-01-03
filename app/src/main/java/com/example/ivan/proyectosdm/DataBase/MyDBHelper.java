@@ -13,26 +13,40 @@ public class MyDBHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     
     public static final String TABLE_NOTES = "notes";
+    public static final String TABLE_IMAGES = "images";
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_TITULO = "title";
     public static final String COLUMN_CONTENIDO = "content";
     public static final String COLUMN_COLOR = "color";
+    public static final String COLUMN_ID_NOTA = "note_id";
+    public static final String COLUMN_IMG_NOMBRE = "name";
 
 
 
     /**
-     * Sentencia de creacion de la tabla notas
+     * Sentencia de creacion de la tabla de las notas
      */
-    private static final String DATABASE_CREATE = "create table " + TABLE_NOTES
+    private static final String DATABASE_CREATE_NOTES = "create table " + TABLE_NOTES
             + "( " + COLUMN_ID + " " +
             "integer primary key autoincrement, " + COLUMN_TITULO
             + " text not null, " + COLUMN_CONTENIDO + " text not null, " + COLUMN_COLOR +
-            " integer not null" + ");";
+            " integer not null " + ");";
 
     /**
-     * Sentencia para borrar la tabla notes
+     * Sentencia de creacion de la tabla de las imagenes
      */
-    private static final String DATABASE_DROP = "DROP TABLE IF EXISTS " + TABLE_NOTES;
+    private static final String DATABASE_CREATE_IMAGES = "create table " + TABLE_IMAGES
+            + "( " + COLUMN_ID + " " +
+            "integer primary key autoincrement, " + COLUMN_IMG_NOMBRE
+            + " text not null, " + COLUMN_ID_NOTA + " integer not null, "
+            + " foreign KEY("+COLUMN_ID_NOTA+") REFERENCES "+TABLE_NOTES+"("+ COLUMN_ID +"));";
+
+    /**
+     * Sentencia para borrar las tablas
+     */
+    private static final String DATABASE_DROP_NOTES = "DROP TABLE IF EXISTS " + TABLE_NOTES;
+    private static final String DATABASE_DROP_IMAGES = "DROP TABLE IF EXISTS " + TABLE_IMAGES;
+
 
     public MyDBHelper(Context context, String name, SQLiteDatabase.CursorFactory factory,
                       int version) {
@@ -41,12 +55,14 @@ public class MyDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(DATABASE_CREATE);
+        db.execSQL(DATABASE_CREATE_NOTES);
+        db.execSQL(DATABASE_CREATE_IMAGES);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL(DATABASE_DROP);
+        db.execSQL(DATABASE_DROP_NOTES);
+        db.execSQL(DATABASE_DROP_IMAGES);
         this.onCreate(db);
     }
 }

@@ -11,90 +11,94 @@
     <!-- TODO: Update blank fragment layout -->
 
     <TextView
+        android:id="@+id/textView4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textView4"
         android:text="@string/seleccione"
-        android:textSize="24sp"
-        />
+        android:textSize="24sp" />
 
-    <Switch
-        android:id="@+id/switchAmarillo"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:textSize="18sp"
-        android:theme="@style/switchAmarillo"
-        android:text="@string/amarillo"
-        android:layout_marginStart="3dp"
-        android:layout_marginTop="3dp"
-        />
+        android:layout_height="match_parent">
 
-    <Switch
-        android:id="@+id/switchAzul"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:text="@string/azul"
-        android:textSize="18sp"
-        android:theme="@style/switchAzul"
-        android:layout_marginStart="3dp"
-        android:layout_marginTop="3dp"
-        />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
 
-    <Switch
-        android:id="@+id/switchVerde"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:text="@string/verde"
-        android:textSize="18sp"
-        android:theme="@style/switchVerde"
-        android:layout_marginStart="3dp"
-        android:layout_marginTop="3dp"
-        />
+            <Switch
+                android:id="@+id/switchAmarillo"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="3dp"
+                android:text="@string/amarillo"
+                android:textSize="18sp"
+                android:theme="@style/switchAmarillo" />
 
-    <Switch
-        android:id="@+id/switchNaranja"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:text="@string/naranja"
-        android:textSize="18sp"
-        android:theme="@style/switchNaranja"
-        android:layout_marginStart="3dp"
-        android:layout_marginTop="3dp"
-        />
+            <Switch
+                android:id="@+id/switchAzul"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="3dp"
+                android:text="@string/azul"
+                android:textSize="18sp"
+                android:theme="@style/switchAzul" />
 
-    <Switch
-        android:id="@+id/switchMorado"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:text="@string/morado"
-        android:textSize="18sp"
-        android:theme="@style/switchMorado"
-        android:layout_marginStart="3dp"
-        android:layout_marginTop="3dp"
+            <Switch
+                android:id="@+id/switchVerde"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="3dp"
+                android:text="@string/verde"
+                android:textSize="18sp"
+                android:theme="@style/switchVerde" />
 
-        />
+            <Switch
+                android:id="@+id/switchNaranja"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="3dp"
+                android:text="@string/naranja"
+                android:textSize="18sp"
+                android:theme="@style/switchNaranja" />
 
-    <Switch
-        android:id="@+id/switchRojo"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:text="@string/rojo"
-        android:textSize="18sp"
-        android:theme="@style/switchRojo"
-        android:layout_marginStart="3dp"
-        android:layout_marginTop="3dp"
-         />
+            <Switch
+                android:id="@+id/switchMorado"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="3dp"
+                android:text="@string/morado"
+                android:textSize="18sp"
+                android:theme="@style/switchMorado"
 
-    <Switch
-        android:id="@+id/switchBlanco"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:shadowColor="@color/cardview_dark_background"
-        android:text="@string/blanco"
-        android:textSize="18sp"
-        android:theme="@style/switchBlanco"
-        android:layout_marginStart="3dp"
-        android:layout_marginTop="3dp"
-         />
+                />
+
+            <Switch
+                android:id="@+id/switchRojo"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="3dp"
+                android:text="@string/rojo"
+                android:textSize="18sp"
+                android:theme="@style/switchRojo" />
+
+            <Switch
+                android:id="@+id/switchBlanco"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="3dp"
+                android:shadowColor="@color/cardview_dark_background"
+                android:text="@string/blanco"
+                android:textSize="18sp"
+                android:theme="@style/switchBlanco" />
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

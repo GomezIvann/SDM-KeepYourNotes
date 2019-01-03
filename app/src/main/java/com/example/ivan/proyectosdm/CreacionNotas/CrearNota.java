@@ -164,5 +164,6 @@ public class CrearNota extends AppCompatActivity {
         TextView mTitle = (TextView) findViewById(R.id.titulo);
         mContent.setText(notaActual.getContenido());
         mTitle.setText(notaActual.getTitulo());
+        fragment2.setArguments(savedInstanceState);
     }
 }

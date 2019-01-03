@@ -50,31 +50,7 @@ public class CrearNota extends AppCompatActivity {
                 String descripcion = fragment.getDescripcion().getText().toString();
                 int color = fragment2.getColor();
                 if (color == 0) {
-                    Random r = new Random();
-                    int i = r.nextInt(7);
-                    switch (i) {
-                        case 0:
-                            color = ContextCompat.getColor(this, R.color.amarillo);
-                            break;
-                        case 1:
-                            color = ContextCompat.getColor(this, R.color.azul);
-                            break;
-                        case 2:
-                            color = ContextCompat.getColor(this, R.color.verdeClaro);
-                            break;
-                        case 3:
-                            color = ContextCompat.getColor(this, R.color.naranja);
-                            break;
-                        case 4:
-                            color = ContextCompat.getColor(this, R.color.morado);
-                            break;
-                        case 5:
-                            color = ContextCompat.getColor(this, R.color.rojo);
-                            break;
-                        case 6:
-                            color = ContextCompat.getColor(this, R.color.blanco);
-                            break;
-                    }
+                    color = colorAleatorio();
                 }
                 Nota nota = new Nota(titulo, descripcion, color);
                 nds.createNote(nota); // creamos el objeto y lo añadimos a la bbdd
@@ -97,6 +73,29 @@ public class CrearNota extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private int colorAleatorio() {
+        Random r = new Random();
+        int i = r.nextInt(7);
+        switch (i) {
+            case 0:
+                return ContextCompat.getColor(this, R.color.amarillo);
+            case 1:
+                return ContextCompat.getColor(this, R.color.azul);
+            case 2:
+                return ContextCompat.getColor(this, R.color.verdeClaro);
+            case 3:
+                return ContextCompat.getColor(this, R.color.naranja);
+            case 4:
+                return ContextCompat.getColor(this, R.color.morado);
+            case 5:
+                return ContextCompat.getColor(this, R.color.rojo);
+            case 6:
+                return ContextCompat.getColor(this, R.color.blanco);
+            default:
+                return 0;
+        }
+    }
+
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -105,22 +104,13 @@ public class CrearNota extends AppCompatActivity {
             currentTab = item.getItemId();
             switch (item.getItemId()) {
                 case R.id.navigation_nota:
-                    setTitle("Nota");
-                    FragmentTransaction fragmentTransaction1 = getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction1.replace(R.id.frame, fragment,"Nota" );
-                    fragmentTransaction1.commit();
+                    crearFragmentNota();
                     return true;
                 case R.id.navigation_color:
-                    setTitle("Color");
-                    FragmentTransaction fragmentTransaction2 = getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction2.replace(R.id.frame, fragment2,"Color" );
-                    fragmentTransaction2.commit();
+                    crearFragmentColor();
                     return true;
                 case R.id.navigation_adjunto:
-                    setTitle("Archivos adjuntos");
-                    FragmentTransaction fragmentTransaction3 = getSupportFragmentManager().beginTransaction();
-                    fragmentTransaction3.replace(R.id.frame, fragment3,"Adjunto" );
-                    fragmentTransaction3.commit();
+                    crearFragmentAdjuntos();
                     return true;
             }
             return false;
@@ -128,6 +118,27 @@ public class CrearNota extends AppCompatActivity {
 
 
     };
+
+    private void crearFragmentAdjuntos() {
+        setTitle("Archivos adjuntos");
+        FragmentTransaction fragmentTransaction3 = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction3.replace(R.id.frame, fragment3,"Adjunto" );
+        fragmentTransaction3.commit();
+    }
+
+    private void crearFragmentColor() {
+        setTitle("Color");
+        FragmentTransaction fragmentTransaction2 = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction2.replace(R.id.frame, fragment2,"Color" );
+        fragmentTransaction2.commit();
+    }
+
+    private void crearFragmentNota() {
+        setTitle("Nota");
+        FragmentTransaction fragmentTransaction1 = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction1.replace(R.id.frame, fragment,"Nota" );
+        fragmentTransaction1.commit();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,10 +157,7 @@ public class CrearNota extends AppCompatActivity {
             fragment.setArguments(b);
             fragment2.setArguments(b);
         }
-        setTitle("Nota");
-        FragmentTransaction fragmentTransaction1 = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction1.replace(R.id.frame, fragment,"Nota" );
-        fragmentTransaction1.commit();
+        crearFragmentNota();
     }
 
     @Override
@@ -171,22 +179,13 @@ public class CrearNota extends AppCompatActivity {
         currentTab = savedInstanceState.getInt("CurrentTab");
         switch (currentTab) {
             case R.id.navigation_nota:
-                setTitle("Nota");
-                FragmentTransaction fragmentTransaction1 = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction1.replace(R.id.frame, fragment,"Nota" );
-                fragmentTransaction1.commit();
+                crearFragmentNota();
                 break;
             case R.id.navigation_color:
-                setTitle("Color");
-                FragmentTransaction fragmentTransaction2 = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction2.replace(R.id.frame, fragment2,"Color" );
-                fragmentTransaction2.commit();
+                crearFragmentColor();
                 break;
             case R.id.navigation_adjunto:
-                setTitle("Archivos adjuntos");
-                FragmentTransaction fragmentTransaction3 = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction3.replace(R.id.frame, fragment3,"Adjunto" );
-                fragmentTransaction3.commit();
+                crearFragmentAdjuntos();
                 break;
         }
         notaActual = (Nota) savedInstanceState.getSerializable(OBJETO_NOTA);

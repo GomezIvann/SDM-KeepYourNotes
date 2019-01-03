@@ -28,6 +28,7 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 import static android.app.Activity.RESULT_OK;
 import static android.support.v4.content.ContextCompat.checkSelfPermission;
 
+import com.example.ivan.proyectosdm.DataBase.Save;
 import com.example.ivan.proyectosdm.R;
 
 /**
@@ -47,6 +48,7 @@ public class FragmentAdjuntos extends Fragment {
     final int COD_VIDEO_SELECCION=30;
     final int COD_VIDEO_CAPTURA=40;
     private boolean permisos;
+    private Save save = new Save();
     public FragmentAdjuntos() {
         // Required empty public constructor
     }
@@ -206,6 +208,7 @@ public class FragmentAdjuntos extends Fragment {
                     dialog.setMessage("Vuelve a seleccionar la foto");
                     dialog.create().show();
                 }
+                save.SaveImage(getContext(),bitmap);
             }else if(requestCode == COD_FOTO_CAPTURA){
                 MediaScannerConnection.scanFile(getContext(), new String[]{path}, null,
                         new MediaScannerConnection.OnScanCompletedListener() {
@@ -215,6 +218,7 @@ public class FragmentAdjuntos extends Fragment {
                             }
                         });
                 Bitmap bitmap= BitmapFactory.decodeFile(path);
+                save.SaveImage(getContext(),bitmap);
             }else if(requestCode == COD_VIDEO_CAPTURA){
                 MediaScannerConnection.scanFile(getContext(), new String[]{path}, null,
                         new MediaScannerConnection.OnScanCompletedListener() {

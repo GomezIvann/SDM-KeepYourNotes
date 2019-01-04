@@ -22,18 +22,16 @@ public class Save {
     private String NameOfFolder = "/NotasPics";
     private String NameOfFile = "IMG";
 
-    public String SaveImage(Context context, Bitmap ImageToSave) {
+    public void SaveImage(Context context, Bitmap ImageToSave,String fileName) {
 
         TheThis = context;
         String file_path = Environment.getExternalStorageDirectory().getAbsolutePath() + NameOfFolder;
-        String CurrentDateAndTime = getCurrentDateAndTime();
         File dir = new File(file_path);
 
         if (!dir.exists()) {
             dir.mkdirs();
         }
-
-        File file = new File(dir, NameOfFile + CurrentDateAndTime + ".jpg");
+        File file = new File(dir, fileName);
 
         try {
             FileOutputStream fOut = new FileOutputStream(file);
@@ -51,8 +49,10 @@ public class Save {
         catch(IOException e) {
             UnableToSave();
         }
-        return file.getName();
+    }
 
+    public String setFileName(){
+        return NameOfFile + getCurrentDateAndTime()+ ".jpg";
     }
 
     public String getImagen(){

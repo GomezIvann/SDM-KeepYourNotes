@@ -23,6 +23,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.List;
@@ -43,6 +44,7 @@ import com.example.ivan.proyectosdm.R;
  * A simple {@link Fragment} subclass.
  */
 public class FragmentAdjuntos extends Fragment {
+    private Nota nota;
     private boolean fabExpanded = false;
     private FloatingActionButton fabSettings;
     private LinearLayout layoutFabFoto;
@@ -57,7 +59,6 @@ public class FragmentAdjuntos extends Fragment {
     final int COD_VIDEO_CAPTURA=40;
     private boolean permisos;
     private Save save = new Save();
-    private Nota nota;
 
 
     private List<Imagen> imagenes;
@@ -116,6 +117,7 @@ public class FragmentAdjuntos extends Fragment {
             }
         });
         mRVImagen = (RecyclerView) v.findViewById(R.id.rvImagenes);
+        nota = new Nota("asd","asd",0);
         return v;
     }
 
@@ -233,25 +235,18 @@ public class FragmentAdjuntos extends Fragment {
                     dialog.setMessage("Vuelve a seleccionar la foto");
                     dialog.create().show();
                 }
-
-                String fileName = save.SaveImage(getContext(),bitmap);
-                Imagen imagen = new Imagen(nota.getId(), fileName);
+                String fileName = save.setFileName();
+                Imagen imagen = new Imagen(fileName,bitmap);
                 nota.addImagen(imagen);
-                cargarImagenes();
+//                cargarImagenes();
 
             }else if(requestCode == COD_FOTO_CAPTURA){
-                MediaScannerConnection.scanFile(getContext(), new String[]{path}, null,
-                        new MediaScannerConnection.OnScanCompletedListener() {
-                            @Override
-                            public void onScanCompleted(String path, Uri uri) {
-                                Log.i("Ruta de almacenamiento","Path: "+path);
-                            }
-                        });
-                Bitmap bitmap= BitmapFactory.decodeFile(path);
-                String fileName = save.SaveImage(getContext(),bitmap);
-                Imagen imagen = new Imagen(nota.getId(),fileName);
+                Bundle extras = data.getExtras();
+                Bitmap bitmap = (Bitmap) extras.get("data");
+                String fileName = save.setFileName();
+                Imagen imagen = new Imagen(fileName,bitmap);
                 nota.addImagen(imagen);
-                cargarImagenes();
+                //cargarImagenes();
             }else if(requestCode == COD_VIDEO_CAPTURA){
                 MediaScannerConnection.scanFile(getContext(), new String[]{path}, null,
                         new MediaScannerConnection.OnScanCompletedListener() {

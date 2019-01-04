@@ -78,6 +78,8 @@ public class NotesDataSource {
             if(img != null){
                 values = new ContentValues();
                 values.put(MyDBHelper.COLUMN_IMG_NOMBRE, img.getNombre());
+                Save save = new Save();
+                save.SaveImage(note.getContext(),img.getBitmap(),img.getNombre());
                 values.put(MyDBHelper.COLUMN_ID_NOTA, insertId);
                 database.insert(MyDBHelper.TABLE_IMAGES, null, values);
             }
@@ -162,7 +164,7 @@ public class NotesDataSource {
         while (!c.isAfterLast()) {
             id = c.getLong(0);
             name = c.getString(1);
-            final Imagen img = new Imagen(id, note_id, name);
+            final Imagen img = new Imagen(id, note_id, name,null);
 
             imagesList.add(img);
             c.moveToNext();

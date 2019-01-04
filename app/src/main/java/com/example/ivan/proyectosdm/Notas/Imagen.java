@@ -1,20 +1,24 @@
 package com.example.ivan.proyectosdm.Notas;
 
 
+import android.graphics.Bitmap;
+
 public class Imagen {
 
     private Long id;
     private Long nota_id;
     private String nombre;
+    private Bitmap bitmap;
 
-    public Imagen(Long id, Long nota_id, String nombre) {
+    public Imagen(Long id, Long nota_id, String nombre, Bitmap bitmap) {
         this.id = id;
         this.nota_id = nota_id;
         this.nombre = nombre;
+        this.bitmap = bitmap;
     }
-    public Imagen(Long nota_id, String nombre) {
-            this.nota_id = nota_id;
+    public Imagen(String nombre, Bitmap bitmap) {
             this.nombre = nombre;
+            this.bitmap = bitmap;
         }
 
     public String getNombre(){
@@ -31,5 +35,13 @@ public class Imagen {
 
     public void setId(final Long id) {
         this.id = id;
+    }
+
+    public Bitmap getBitmap() {
+        return bitmap;
+    }
+
+    public void setBitmap(Bitmap bitmap) {
+        this.bitmap = bitmap;
     }
 }

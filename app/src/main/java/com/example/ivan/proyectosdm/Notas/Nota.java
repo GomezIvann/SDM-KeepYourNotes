@@ -1,5 +1,6 @@
 package com.example.ivan.proyectosdm.Notas;
 
+import android.content.Context;
 import android.os.Parcel;
 
 import java.io.Serializable;
@@ -12,6 +13,7 @@ public class Nota<T> implements Serializable {
     private String contenido;
     private List<Imagen> imagenes;
     private int color;
+    private Context context;
 
     public Nota(String titulo, String contenido, int color) {
         this.titulo = titulo;
@@ -97,6 +99,18 @@ public class Nota<T> implements Serializable {
 
     public List<Imagen> getImagenes() {
         return imagenes;
+    }
+
+    public void setImagener(List<Imagen> imagenes){
+        this.imagenes = imagenes;
+    }
+
+    public Context getContext() {
+        return context;
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
     }
 
     //    @Override

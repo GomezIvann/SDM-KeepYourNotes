@@ -1,6 +1,5 @@
 package com.example.ivan.proyectosdm.Notas;
 
-import android.graphics.Bitmap;
 
 public class Imagen {
 

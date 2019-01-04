@@ -10,11 +10,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.ivan.proyectosdm.CreacionNotas.CrearNota;
-import com.example.ivan.proyectosdm.DataBase.NoteDataSource;
+import com.example.ivan.proyectosdm.DataBase.NotesDataSource;
 import com.example.ivan.proyectosdm.Notas.Nota;
 import com.example.ivan.proyectosdm.Notas.NotaAdapter;
 
@@ -29,14 +27,14 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView mRVNotas;
     private NotaAdapter adapter;
     private GridLayoutManager glm;
-    private NoteDataSource nds;
+    private NotesDataSource nds;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        nds = new NoteDataSource(getApplicationContext());
+        nds = new NotesDataSource(getApplicationContext());
 
         mRVNotas = (RecyclerView) findViewById(R.id.rvNotas);
         glm = new GridLayoutManager(this, 1);

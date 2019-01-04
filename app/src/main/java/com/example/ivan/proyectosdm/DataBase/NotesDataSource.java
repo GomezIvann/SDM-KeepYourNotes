@@ -17,7 +17,7 @@ import java.util.List;
  * Se encarga de abrir y cerrar la conexion, asi como hacer las consultas relacionadas con la tabla valoracion
  *
  */
-public class NoteDataSource {
+public class NotesDataSource {
     /**
      * Referencia para manejar la base de datos. Este objeto lo obtenemos a partir de MyDBHelper
      * y nos proporciona metodos para hacer operaciones
@@ -38,7 +38,7 @@ public class NoteDataSource {
      * Constructor
      * @param context
      */
-    public NoteDataSource(Context context) {
+    public NotesDataSource(Context context) {
         dbHelper = new MyDBHelper(context, null, null, 1);
     }
 
@@ -51,6 +51,7 @@ public class NoteDataSource {
      */
     public void open() throws SQLException {
         database = dbHelper.getWritableDatabase();
+        //dbHelper.onUpgrade(database, 0, 1); decomentad esta linea si cambias la base de datos o no esta en la ultima version MUCHO CUIDADO BORRA LA BASE DEL MOVIL
     }
 
     /**
@@ -140,7 +141,7 @@ public class NoteDataSource {
             color = cursor.getInt(3);
             final Nota note = new Nota(titulo,contenido,color,id);
 
-            //note.setImagenes(getImagesFromNote(note.getId()));
+            note.setImagenes(getImagesFromNote(note.getId()));
 
             noteList.add(note);
             cursor.moveToNext();

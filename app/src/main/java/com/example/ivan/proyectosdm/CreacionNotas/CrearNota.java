@@ -1,19 +1,17 @@
 package com.example.ivan.proyectosdm.CreacionNotas;
 
-import android.content.DialogInterface;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.ivan.proyectosdm.DataBase.NoteDataSource;
+import com.example.ivan.proyectosdm.DataBase.NotesDataSource;
 import com.example.ivan.proyectosdm.MainActivity;
 import com.example.ivan.proyectosdm.Notas.Imagen;
 import com.example.ivan.proyectosdm.Notas.Nota;
@@ -31,7 +29,7 @@ public class CrearNota extends AppCompatActivity {
     private FragmentColor fragment2 = new FragmentColor();
     private FragmentAdjuntos fragment3 = new FragmentAdjuntos();
     private Nota notaAModificar;
-    private NoteDataSource nds;
+    private NotesDataSource nds;
     private Nota notaActual; //nota que hay en el momento de girar la pantalla
     private int currentTab;
 
@@ -45,7 +43,7 @@ public class CrearNota extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.Guardar) {
-            // dos casos, que sea una modificacion o que sea un guardado
+            // dos casos, que sea una modificacion o que sea un guardado (nota nueva)
             nds.open();
             if (notaAModificar == null) {
                 String titulo = fragment.getTitulo().getText().toString();
@@ -151,7 +149,7 @@ public class CrearNota extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crear_nota);
 
-        nds = new NoteDataSource(getApplicationContext());
+        nds = new NotesDataSource(getApplicationContext());
 
         Bundle b = getIntent().getExtras();
 

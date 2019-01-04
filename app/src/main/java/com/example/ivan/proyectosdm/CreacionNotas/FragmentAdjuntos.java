@@ -32,13 +32,11 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 import static android.app.Activity.RESULT_OK;
 import static android.support.v4.content.ContextCompat.checkSelfPermission;
 
-import com.example.ivan.proyectosdm.DataBase.NoteDataSource;
 import com.example.ivan.proyectosdm.DataBase.Save;
 import com.example.ivan.proyectosdm.MainActivity;
 import com.example.ivan.proyectosdm.Notas.ArchivoAdapter;
 import com.example.ivan.proyectosdm.Notas.Imagen;
 import com.example.ivan.proyectosdm.Notas.Nota;
-import com.example.ivan.proyectosdm.Notas.NotaAdapter;
 import com.example.ivan.proyectosdm.R;
 
 /**
@@ -237,7 +235,7 @@ public class FragmentAdjuntos extends Fragment {
                 }
 
                 String fileName = save.SaveImage(getContext(),bitmap);
-                Imagen imagen = new Imagen(nota.getId(),fileName);
+                Imagen imagen = new Imagen(nota.getId(), fileName);
                 nota.addImagen(imagen);
                 cargarImagenes();
 

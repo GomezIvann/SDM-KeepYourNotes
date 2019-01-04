@@ -30,16 +30,15 @@ public class MyDBHelper extends SQLiteOpenHelper {
             + "( " + COLUMN_ID + " " +
             "integer primary key autoincrement, " + COLUMN_TITULO
             + " text not null, " + COLUMN_CONTENIDO + " text not null, " + COLUMN_COLOR +
-            " integer not null " + ");";
+            " integer not null );";
 
     /**
      * Sentencia de creacion de la tabla de las imagenes
      */
     private static final String DATABASE_CREATE_IMAGES = "create table " + TABLE_IMAGES
             + "( " + COLUMN_ID + " " +
-            "integer primary key autoincrement, " + COLUMN_IMG_NOMBRE
-            + " text not null, " + COLUMN_ID_NOTA + " integer not null, "
-            + " foreign KEY("+COLUMN_ID_NOTA+") REFERENCES "+TABLE_NOTES+"("+ COLUMN_ID +"));";
+            "integer primary key autoincrement, " + COLUMN_ID_NOTA
+            + " integer not null, " + COLUMN_IMG_NOMBRE + " text not null );";
 
     /**
      * Sentencia para borrar las tablas
@@ -56,7 +55,7 @@ public class MyDBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(DATABASE_CREATE_NOTES);
-        //db.execSQL(DATABASE_CREATE_IMAGES);
+        db.execSQL(DATABASE_CREATE_IMAGES);
     }
 
     @Override

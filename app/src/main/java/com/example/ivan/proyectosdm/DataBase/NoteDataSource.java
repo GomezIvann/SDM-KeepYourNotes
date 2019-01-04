@@ -151,7 +151,7 @@ public class NoteDataSource {
 
     private List<Imagen> getImagesFromNote(Long note_id) {
         List<Imagen> imagesList = new ArrayList<Imagen>();
-        Cursor c = database.rawQuery(" SELECT * , name FROM " +MyDBHelper.TABLE_IMAGES+" WHERE _id="+note_id,null);
+        Cursor c = database.rawQuery(" SELECT _id , name FROM " +MyDBHelper.TABLE_IMAGES+" WHERE _id="+note_id,null);
         c.moveToFirst();
 
         long id = 0;

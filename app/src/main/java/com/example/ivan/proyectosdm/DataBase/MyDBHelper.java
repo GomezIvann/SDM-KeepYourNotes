@@ -56,7 +56,7 @@ public class MyDBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(DATABASE_CREATE_NOTES);
-        db.execSQL(DATABASE_CREATE_IMAGES);
+        //db.execSQL(DATABASE_CREATE_IMAGES);
     }
 
     @Override

@@ -15,9 +15,11 @@ import android.widget.Toast;
 
 import com.example.ivan.proyectosdm.DataBase.NoteDataSource;
 import com.example.ivan.proyectosdm.MainActivity;
+import com.example.ivan.proyectosdm.Notas.Imagen;
 import com.example.ivan.proyectosdm.Notas.Nota;
 import com.example.ivan.proyectosdm.R;
 
+import java.util.List;
 import java.util.Random;
 
 public class CrearNota extends AppCompatActivity {
@@ -53,6 +55,10 @@ public class CrearNota extends AppCompatActivity {
                     color = colorAleatorio();
                 }
                 Nota nota = new Nota(titulo, descripcion, color);
+                List<Imagen> imagenes = fragment3.getImagenes();
+                if(imagenes != null){
+                    nota.setImagenes(imagenes);
+                }
                 nds.createNote(nota); // creamos el objeto y lo añadimos a la bbdd
                 Toast.makeText(getApplicationContext(),
                         "La nota se ha guardado correctamente", Toast.LENGTH_SHORT).show();
@@ -156,6 +162,7 @@ public class CrearNota extends AppCompatActivity {
             notaAModificar = (Nota) b.getSerializable(MainActivity.OBJETO_NOTA);
             fragment.setArguments(b);
             fragment2.setArguments(b);
+            fragment3.setArguments(b);
         }
         crearFragmentNota();
     }
@@ -194,5 +201,6 @@ public class CrearNota extends AppCompatActivity {
         mContent.setText(notaActual.getContenido());
         mTitle.setText(notaActual.getTitulo());
         fragment2.setArguments(savedInstanceState);
+        fragment3.setArguments(savedInstanceState);
     }
 }

@@ -74,10 +74,12 @@ public class NoteDataSource {
 
         for( int i = 0; i < note.getNumImagenes(); i++ ) {
             img = note.getImagen(i);
-            values = new ContentValues();
-            values.put(MyDBHelper.COLUMN_ID_NOTA, insertId);
-            values.put(MyDBHelper.COLUMN_IMG_NOMBRE, img.getNombre());
-            database.insert(MyDBHelper.TABLE_IMAGES, null, values);
+            if(img != null){
+                values = new ContentValues();
+                values.put(MyDBHelper.COLUMN_IMG_NOMBRE, img.getNombre());
+                values.put(MyDBHelper.COLUMN_ID_NOTA, insertId);
+                database.insert(MyDBHelper.TABLE_IMAGES, null, values);
+            }
         }
 
         return insertId;
@@ -149,7 +151,7 @@ public class NoteDataSource {
 
     private List<Imagen> getImagesFromNote(Long note_id) {
         List<Imagen> imagesList = new ArrayList<Imagen>();
-        Cursor c = database.rawQuery(" SELECT _id, name FROM Images WHERE _id="+note_id,null);
+        Cursor c = database.rawQuery(" SELECT * , name FROM " +MyDBHelper.TABLE_IMAGES+" WHERE _id="+note_id,null);
         c.moveToFirst();
 
         long id = 0;

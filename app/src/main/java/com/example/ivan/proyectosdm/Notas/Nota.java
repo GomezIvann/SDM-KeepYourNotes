@@ -1,6 +1,5 @@
 package com.example.ivan.proyectosdm.Notas;
 
-import android.media.Image;
 import android.os.Parcel;
 
 import java.io.Serializable;
@@ -96,7 +95,11 @@ public class Nota<T> implements Serializable {
         this.color = color;
     }
 
-//    @Override
+    public List<Imagen> getImagenes() {
+        return imagenes;
+    }
+
+    //    @Override
 //    public int describeContents() {
 //        return 0;
 //    }

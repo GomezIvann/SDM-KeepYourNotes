@@ -2,10 +2,13 @@ package com.example.ivan.proyectosdm.DataBase;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Environment;
 import android.widget.Toast;
+
+import com.example.ivan.proyectosdm.Notas.Imagen;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -19,7 +22,7 @@ public class Save {
     private String NameOfFolder = "/NotasPics";
     private String NameOfFile = "IMG";
 
-    public void SaveImage(Context context, Bitmap ImageToSave) {
+    public String SaveImage(Context context, Bitmap ImageToSave) {
 
         TheThis = context;
         String file_path = Environment.getExternalStorageDirectory().getAbsolutePath() + NameOfFolder;
@@ -48,7 +51,12 @@ public class Save {
         catch(IOException e) {
             UnableToSave();
         }
+        return file.getName();
 
+    }
+
+    public String getImagen(){
+        return Environment.getExternalStorageDirectory().getAbsolutePath() + NameOfFolder;
     }
 
     private void MakeSureFileWasCreatedThenMakeAvabile(File file){

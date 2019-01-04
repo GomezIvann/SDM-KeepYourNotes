@@ -51,7 +51,7 @@ public class NotaAdapter extends Adapter<NotaAdapter.NotaViewHolder> {
 
         public NotaViewHolder(View itemView) {
             super(itemView);
-            mTxTitulo = (TextView) itemView.findViewById(R.id.txTitle);
+            mTxTitulo = (TextView) itemView.findViewById(R.id.txImageName);
             mTxContenido = (TextView) itemView.findViewById(R.id.txContent);
             background = (ConstraintLayout) itemView.findViewById(R.id.idItemLayout);
         }

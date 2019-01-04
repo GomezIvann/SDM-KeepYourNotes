@@ -13,6 +13,10 @@ public class Imagen {
         this.nota_id = nota_id;
         this.nombre = nombre;
     }
+    public Imagen(Long nota_id, String nombre) {
+            this.nota_id = nota_id;
+            this.nombre = nombre;
+        }
 
     public String getNombre(){
         return nombre;

@@ -12,9 +12,12 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,13 +25,20 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import java.io.IOException;
+import java.util.List;
 
 import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 import static android.app.Activity.RESULT_OK;
 import static android.support.v4.content.ContextCompat.checkSelfPermission;
 
+import com.example.ivan.proyectosdm.DataBase.NoteDataSource;
 import com.example.ivan.proyectosdm.DataBase.Save;
+import com.example.ivan.proyectosdm.MainActivity;
+import com.example.ivan.proyectosdm.Notas.ArchivoAdapter;
+import com.example.ivan.proyectosdm.Notas.Imagen;
+import com.example.ivan.proyectosdm.Notas.Nota;
+import com.example.ivan.proyectosdm.Notas.NotaAdapter;
 import com.example.ivan.proyectosdm.R;
 
 /**
@@ -49,8 +59,24 @@ public class FragmentAdjuntos extends Fragment {
     final int COD_VIDEO_CAPTURA=40;
     private boolean permisos;
     private Save save = new Save();
+    private Nota nota;
+
+
+    private List<Imagen> imagenes;
+    private RecyclerView mRVImagen;
+    private ArchivoAdapter adapter;
+    private GridLayoutManager glm;
+
     public FragmentAdjuntos() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if(getArguments() != null){
+            nota = (Nota) getArguments().getSerializable(MainActivity.OBJETO_NOTA);
+        }
     }
 
 
@@ -91,6 +117,12 @@ public class FragmentAdjuntos extends Fragment {
                 validaPermisos(1);
             }
         });
+
+        mRVImagen = (RecyclerView) v.findViewById(R.id.rvImagenes);
+        glm = new GridLayoutManager(getContext(), 1);
+        mRVImagen.setLayoutManager(glm);
+        adapter = new ArchivoAdapter(nota.getImagenes());
+        mRVImagen.setAdapter(adapter);
         return v;
     }
 
@@ -208,7 +240,10 @@ public class FragmentAdjuntos extends Fragment {
                     dialog.setMessage("Vuelve a seleccionar la foto");
                     dialog.create().show();
                 }
-                save.SaveImage(getContext(),bitmap);
+
+                String fileName = save.SaveImage(getContext(),bitmap);
+                Imagen imagen = new Imagen(nota.getId(),fileName);
+                nota.addImagen(imagen);
             }else if(requestCode == COD_FOTO_CAPTURA){
                 MediaScannerConnection.scanFile(getContext(), new String[]{path}, null,
                         new MediaScannerConnection.OnScanCompletedListener() {
@@ -218,7 +253,9 @@ public class FragmentAdjuntos extends Fragment {
                             }
                         });
                 Bitmap bitmap= BitmapFactory.decodeFile(path);
-                save.SaveImage(getContext(),bitmap);
+                String fileName = save.SaveImage(getContext(),bitmap);
+                Imagen imagen = new Imagen(nota.getId(),fileName);
+                nota.addImagen(imagen);
             }else if(requestCode == COD_VIDEO_CAPTURA){
                 MediaScannerConnection.scanFile(getContext(), new String[]{path}, null,
                         new MediaScannerConnection.OnScanCompletedListener() {
@@ -268,5 +305,9 @@ public class FragmentAdjuntos extends Fragment {
     public void onResume() {
         super.onResume();
         closeSubMenusFab();
+    }
+
+    public List getImagenes(){
+        return nota.getImagenes().size() == 0? null:nota.getImagenes();
     }
 }

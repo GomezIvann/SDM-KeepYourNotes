@@ -16,7 +16,7 @@ import com.example.ivan.proyectosdm.R;
 import java.io.File;
 import java.util.List;
 
-public class ArchivoAdapter<T> extends Adapter<ArchivoAdapter.ArchivoViewHolder> {
+public class ArchivoAdapter extends Adapter<ArchivoAdapter.ArchivoViewHolder> {
 
     private List<Imagen> imagenes;
     private int posicion;
@@ -30,6 +30,9 @@ public class ArchivoAdapter<T> extends Adapter<ArchivoAdapter.ArchivoViewHolder>
         return new ArchivoViewHolder(LayoutInflater.from(viewGroup.getContext()).inflate(
                 R.layout.item_imagen, viewGroup, false));
     }
+
+
+
 
     @Override
     public void onBindViewHolder(ArchivoViewHolder notaViewHolder, int i) {

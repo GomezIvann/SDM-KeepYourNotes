@@ -117,12 +117,7 @@ public class FragmentAdjuntos extends Fragment {
                 validaPermisos(1);
             }
         });
-
         mRVImagen = (RecyclerView) v.findViewById(R.id.rvImagenes);
-        glm = new GridLayoutManager(getContext(), 1);
-        mRVImagen.setLayoutManager(glm);
-        adapter = new ArchivoAdapter(nota.getImagenes());
-        mRVImagen.setAdapter(adapter);
         return v;
     }
 
@@ -244,6 +239,8 @@ public class FragmentAdjuntos extends Fragment {
                 String fileName = save.SaveImage(getContext(),bitmap);
                 Imagen imagen = new Imagen(nota.getId(),fileName);
                 nota.addImagen(imagen);
+                cargarImagenes();
+
             }else if(requestCode == COD_FOTO_CAPTURA){
                 MediaScannerConnection.scanFile(getContext(), new String[]{path}, null,
                         new MediaScannerConnection.OnScanCompletedListener() {
@@ -256,6 +253,7 @@ public class FragmentAdjuntos extends Fragment {
                 String fileName = save.SaveImage(getContext(),bitmap);
                 Imagen imagen = new Imagen(nota.getId(),fileName);
                 nota.addImagen(imagen);
+                cargarImagenes();
             }else if(requestCode == COD_VIDEO_CAPTURA){
                 MediaScannerConnection.scanFile(getContext(), new String[]{path}, null,
                         new MediaScannerConnection.OnScanCompletedListener() {
@@ -275,6 +273,13 @@ public class FragmentAdjuntos extends Fragment {
                 }
             }
         }
+    }
+
+    public void cargarImagenes(){
+        glm = new GridLayoutManager(getContext(), 1);
+        mRVImagen.setLayoutManager(glm);
+        adapter = new ArchivoAdapter(nota.getImagenes());
+        mRVImagen.setAdapter(adapter);
     }
 
     private void closeSubMenusFab(){

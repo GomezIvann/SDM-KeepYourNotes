@@ -140,7 +140,7 @@ public class NoteDataSource {
             color = cursor.getInt(3);
             final Nota note = new Nota(titulo,contenido,color,id);
 
-            note.setImagenes(getImagesFromNote(note.getId()));
+            //note.setImagenes(getImagesFromNote(note.getId()));
 
             noteList.add(note);
             cursor.moveToNext();

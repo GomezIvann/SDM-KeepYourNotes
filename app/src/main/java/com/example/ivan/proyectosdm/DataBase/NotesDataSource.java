@@ -50,7 +50,7 @@ public class NotesDataSource {
      */
     public void open() throws SQLException {
         database = dbHelper.getWritableDatabase();
-        //dbHelper.onUpgrade(database, 0, 1); //decomentad esta linea si cambias la base de datos o no esta en la ultima version MUCHO CUIDADO BORRA LA BASE DEL MOVIL
+//        dbHelper.onUpgrade(database, 0, 1); //decomentad esta linea si cambias la base de datos o no esta en la ultima version MUCHO CUIDADO BORRA LA BASE DEL MOVIL
     }
 
     /**
@@ -72,7 +72,7 @@ public class NotesDataSource {
 
         long insertId = database.insert(MyDBHelper.TABLE_NOTES, null, values);
 
-        for( int i = 0; i < note.getNumImagenes(); i++ ) {
+        for( int i = 0; i < note.getImagenes().size(); i++ ) {
             img = note.getImagen(i);
             if(img != null){
                 values = new ContentValues();

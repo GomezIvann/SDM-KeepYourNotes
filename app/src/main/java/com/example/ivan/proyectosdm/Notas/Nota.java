@@ -2,6 +2,7 @@ package com.example.ivan.proyectosdm.Notas;
 
 import android.content.Context;
 import android.os.Parcel;
+import android.widget.Toast;
 
 import java.io.Serializable;
 import java.util.ArrayList;

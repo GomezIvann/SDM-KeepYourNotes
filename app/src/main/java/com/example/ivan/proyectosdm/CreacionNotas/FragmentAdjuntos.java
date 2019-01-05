@@ -82,13 +82,14 @@ public class FragmentAdjuntos extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.fragment_fragment_adjuntos, container, false);
         View fabFoto = inflater.inflate(R.layout.layout_fab_foto, container, false);
         View fabVideo = inflater.inflate(R.layout.layout_fab_video, container, false);
         View fabUbi = inflater.inflate(R.layout.layout_fab_ubicacion, container, false);
+
         container.addView(fabFoto);
         container.addView(fabVideo);
         container.addView(fabUbi);
-        View v = inflater.inflate(R.layout.fragment_fragment_adjuntos, container, false);
         fabSettings = (FloatingActionButton) v.findViewById(R.id.fabAdjuntos);
         layoutFabFoto = (LinearLayout) fabFoto.findViewById(R.id.layoutFabFoto);
         layoutFabVideo = (LinearLayout) fabVideo.findViewById(R.id.layoutFabVideo);
@@ -103,7 +104,6 @@ public class FragmentAdjuntos extends Fragment {
                 }
             }
         });
-        closeSubMenusFab();
         layoutFabFoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -117,7 +117,12 @@ public class FragmentAdjuntos extends Fragment {
             }
         });
         mRVImagen = (RecyclerView) v.findViewById(R.id.rvImagenes);
-        nota = new Nota("asd","asd",0);
+        if(nota == null){
+            nota = new Nota("asd","asd",0);
+        }
+        cargarImagenes();
+        closeSubMenusFab();
+
         return v;
     }
 
@@ -238,7 +243,7 @@ public class FragmentAdjuntos extends Fragment {
                 String fileName = save.setFileName();
                 Imagen imagen = new Imagen(fileName,bitmap);
                 nota.addImagen(imagen);
-//                cargarImagenes();
+                cargarImagenes();
 
             }else if(requestCode == COD_FOTO_CAPTURA){
                 Bundle extras = data.getExtras();
@@ -246,7 +251,7 @@ public class FragmentAdjuntos extends Fragment {
                 String fileName = save.setFileName();
                 Imagen imagen = new Imagen(fileName,bitmap);
                 nota.addImagen(imagen);
-                //cargarImagenes();
+                cargarImagenes();
             }else if(requestCode == COD_VIDEO_CAPTURA){
                 MediaScannerConnection.scanFile(getContext(), new String[]{path}, null,
                         new MediaScannerConnection.OnScanCompletedListener() {
@@ -306,6 +311,9 @@ public class FragmentAdjuntos extends Fragment {
     }
 
     public List getImagenes(){
+        if(nota == null){
+            return null;
+        }
         return nota.getImagenes().size() == 0? null:nota.getImagenes();
     }
 }

@@ -41,7 +41,6 @@ public class NotesDataSource {
     public NotesDataSource(Context context) {
         dbHelper = new MyDBHelper(context, null, null, 1);
     }
-
     /**
      * Abre una conexion para escritura con la base de datos.
      * Esto lo hace a traves del helper con la llamada a getWritableDatabase. Si la base de
@@ -51,7 +50,7 @@ public class NotesDataSource {
      */
     public void open() throws SQLException {
         database = dbHelper.getWritableDatabase();
-        //dbHelper.onUpgrade(database, 0, 1); decomentad esta linea si cambias la base de datos o no esta en la ultima version MUCHO CUIDADO BORRA LA BASE DEL MOVIL
+        //dbHelper.onUpgrade(database, 0, 1); //decomentad esta linea si cambias la base de datos o no esta en la ultima version MUCHO CUIDADO BORRA LA BASE DEL MOVIL
     }
 
     /**

@@ -3,7 +3,9 @@ package com.example.ivan.proyectosdm.Notas;
 
 import android.graphics.Bitmap;
 
-public class Imagen {
+import java.io.Serializable;
+
+public class Imagen implements Serializable {
 
     private Long id;
     private Long nota_id;

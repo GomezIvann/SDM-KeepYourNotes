@@ -60,7 +60,7 @@ public class Nota<T> implements Serializable {
 //        }
 //    };
 
-    public void setImagenes(List<Imagen> imagenes) { this.imagenes = imagenes; }
+    public void setImagenes(List<Imagen> imagenes) { this.imagenes.addAll(imagenes); }
 
     public Imagen getImagen(int index) { return imagenes.get(index); }
 

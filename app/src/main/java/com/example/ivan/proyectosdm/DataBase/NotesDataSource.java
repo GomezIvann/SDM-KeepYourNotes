@@ -74,14 +74,15 @@ public class NotesDataSource {
 
         for( int i = 0; i < note.getImagenes().size(); i++ ) {
             img = note.getImagen(i);
-            if(img != null){
-                values = new ContentValues();
-                values.put(MyDBHelper.COLUMN_IMG_NOMBRE, img.getNombre());
-                Save save = new Save();
-                save.SaveImage(note.getContext(),img.getBitmap(),img.getNombre());
-                values.put(MyDBHelper.COLUMN_ID_NOTA, insertId);
-                database.insert(MyDBHelper.TABLE_IMAGES, null, values);
-            }
+            values = new ContentValues();
+            values.put(MyDBHelper.COLUMN_ID_NOTA, insertId);
+            values.put(MyDBHelper.COLUMN_IMG_NOMBRE, img.getNombre());
+
+            /*Almacena en una carpeta local las imagenes, en la base de datos solo almacena la referencia a la nota*/
+            Save save = new Save();
+            save.SaveImage(note.getContext(),img.getBitmap(),img.getNombre());
+
+            database.insert(MyDBHelper.TABLE_IMAGES, null, values);
         }
 
         return insertId;
@@ -142,7 +143,7 @@ public class NotesDataSource {
             color = cursor.getInt(3);
             final Nota note = new Nota(titulo,contenido,color,id);
 
-            note.setImagenes(getImagesFromNote(note.getId()));
+            note.setImagenes(getImagesFromNote(id));
 
             noteList.add(note);
             cursor.moveToNext();
@@ -153,12 +154,11 @@ public class NotesDataSource {
 
     private List<Imagen> getImagesFromNote(Long note_id) {
         List<Imagen> imagesList = new ArrayList<Imagen>();
-        Cursor c = database.rawQuery(" SELECT _id , name FROM " +MyDBHelper.TABLE_IMAGES+" WHERE _id="+note_id,null);
+        Cursor c = database.rawQuery(" SELECT _id , name FROM " +MyDBHelper.TABLE_IMAGES+" WHERE note_id="+note_id,null);
         c.moveToFirst();
 
         long id = 0;
         String name = "";
-        int color = 0;
         List<Imagen> imagenes = null;
         while (!c.isAfterLast()) {
             id = c.getLong(0);

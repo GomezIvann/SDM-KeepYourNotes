@@ -61,13 +61,14 @@ public class CrearNota extends AppCompatActivity {
 
                 Nota nota = new Nota(titulo, descripcion, color);
                 List<Imagen> imagenes = fragment3.getImagenes();
-                if(imagenes != null)
+                if(imagenes != null){
                     nota.setImagenes(imagenes);
-
+                    Toast.makeText(getApplicationContext(),
+                            imagenes.size()+"", Toast.LENGTH_SHORT).show();
+                }
+                nota.setImagenes(new ArrayList<Imagen>());
                 nota.setContext(getApplicationContext());
                 nds.createNote(nota); // creamos el objeto y lo añadimos a la bbdd
-                Toast.makeText(getApplicationContext(),
-                        "La nota se ha guardado correctamente", Toast.LENGTH_SHORT).show();
                 finish();
             }
             else {

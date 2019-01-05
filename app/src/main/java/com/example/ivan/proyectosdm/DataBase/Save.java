@@ -83,4 +83,15 @@ public class Save {
     private void AbleToSave() {
         Toast.makeText(TheThis, "Imagen guardada en la galería.", Toast.LENGTH_SHORT).show();
     }
+
+    public void deleteStoredImage(String fileName){
+        String file_path = Environment.getExternalStorageDirectory().getAbsolutePath() + NameOfFolder;
+        File dir = new File(file_path);
+
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+        File file = new File(dir, fileName);
+        file.delete();
+    }
 }

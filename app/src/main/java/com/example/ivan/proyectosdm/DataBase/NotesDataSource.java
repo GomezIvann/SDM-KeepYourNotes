@@ -110,11 +110,16 @@ public class NotesDataSource {
     }
 
     /**
-     * Elimina las imagenes asociadas a una nota
+     * Elimina las imagenes asociadas a una nota y del sistema
      *
      * @param note_id
      */
     public void deleteImagesFromNote(long note_id){
+        List<Imagen> imagenes = getImagesFromNote(note_id);
+        Save save = new Save();
+        for (Imagen i: imagenes)
+            save.deleteStoredImage(i.getNombre());
+
         database.delete(MyDBHelper.TABLE_IMAGES, MyDBHelper.COLUMN_ID_NOTA + "=" + note_id, null);
     }
 

@@ -62,7 +62,7 @@ public class FragmentAdjuntos extends Fragment {
     private Save save = new Save();
 
 
-    private List<Imagen> imagenes;
+    private List<Imagen> imagenes = new ArrayList<Imagen>();
     private RecyclerView mRVImagen;
     private ArchivoAdapter adapter;
     private GridLayoutManager glm;

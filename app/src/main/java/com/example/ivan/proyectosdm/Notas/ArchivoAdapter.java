@@ -37,16 +37,21 @@ public class ArchivoAdapter extends Adapter<ArchivoAdapter.ArchivoViewHolder> {
     @Override
     public void onBindViewHolder(ArchivoViewHolder notaViewHolder, int i) {
         Imagen imagen = imagenes.get(i);
-        Save save = new Save();
-        File dir = new File(save.getImagen());
-        if (dir.exists()) {
-            File file = new File(dir, imagen.getNombre());
-            if (file.exists()) {
-                String filePath = file.getPath();
-                Bitmap bitmap = BitmapFactory.decodeFile(filePath);
-                notaViewHolder.image.setImageBitmap(bitmap);
+        if(imagen.getBitmap() == null){
+            Save save = new Save();
+            File dir = new File(save.getImagen());
+            if (dir.exists()) {
+                File file = new File(dir, imagen.getNombre());
+                if (file.exists()) {
+                    String filePath = file.getPath();
+                    Bitmap bitmap = BitmapFactory.decodeFile(filePath);
+                    notaViewHolder.image.setImageBitmap(bitmap);
+                }
             }
+        }else{
+            notaViewHolder.image.setImageBitmap(imagen.getBitmap());
         }
+
         notaViewHolder.mTxTitulo.setText(imagen.getNombre());
         posicion = i;
     }

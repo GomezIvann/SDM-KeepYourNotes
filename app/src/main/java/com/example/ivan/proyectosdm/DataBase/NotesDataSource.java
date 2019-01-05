@@ -65,12 +65,25 @@ public class NotesDataSource {
      */
     public long createNote(Nota note) {
         ContentValues values = new ContentValues();
-        Imagen img = null;
         values.put(MyDBHelper.COLUMN_TITULO, note.getTitulo());
         values.put(MyDBHelper.COLUMN_CONTENIDO, note.getContenido());
         values.put(MyDBHelper.COLUMN_COLOR, note.getColor());
 
         long insertId = database.insert(MyDBHelper.TABLE_NOTES, null, values);
+
+        createImages(note, insertId);
+
+        return insertId;
+    }
+
+    /**
+     * Crea las imagenes asociadas a una nota
+     * @param note
+     * @param insertId
+     */
+    public void createImages(Nota note, long insertId) {
+        Imagen img = null;
+        ContentValues values = null;
 
         for( int i = 0; i < note.getImagenes().size(); i++ ) {
             img = note.getImagen(i);
@@ -84,8 +97,6 @@ public class NotesDataSource {
 
             database.insert(MyDBHelper.TABLE_IMAGES, null, values);
         }
-
-        return insertId;
     }
     
     /* 
@@ -99,6 +110,24 @@ public class NotesDataSource {
     }
 
     /**
+     * Elimina las imagenes asociadas a una nota
+     *
+     * @param note_id
+     */
+    public void deleteImagesFromNote(long note_id){
+        database.delete(MyDBHelper.TABLE_IMAGES, MyDBHelper.COLUMN_ID_NOTA + "=" + note_id, null);
+    }
+
+    /**
+     * Elimina una imagen de la base de datos
+     *
+     * @param _idFila
+     */
+    public void deleteImage(long _idFila){
+        database.delete(MyDBHelper.TABLE_IMAGES, MyDBHelper.COLUMN_ID + "=" + _idFila, null);
+    }
+
+    /**
      * Método que me actualiza una nota
      */
     public void updateNote(Nota note) {
@@ -108,17 +137,10 @@ public class NotesDataSource {
         values.put(MyDBHelper.COLUMN_COLOR, note.getColor());
 
         database.update(MyDBHelper.TABLE_NOTES, values, MyDBHelper.COLUMN_ID+"="+note.getId(), null);
-    }
 
-    /**
-     * Método que me actualiza una imagen
-     */
-    public void updateImage(Imagen img) {
-        ContentValues values = new ContentValues();
-        values.put(MyDBHelper.COLUMN_ID_NOTA, img.getNota_id());
-        values.put(MyDBHelper.COLUMN_IMG_NOMBRE, img.getNombre());
-
-        database.update(MyDBHelper.TABLE_IMAGES, values, MyDBHelper.COLUMN_ID+"="+img.getId(), null);
+        //actualizamos tambien sus fotos (borrar y reinsertar)
+        deleteImagesFromNote(note.getId());
+        createImages(note, note.getId());
     }
 
     /**

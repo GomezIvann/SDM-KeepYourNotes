@@ -56,14 +56,14 @@ public class CrearNota extends AppCompatActivity {
                 String titulo = fragment.getTitulo().getText().toString();
                 String descripcion = fragment.getDescripcion().getText().toString();
                 int color = fragment2.getColor();
-                if (color == 0) {
+                if (color == 0)
                     color = colorAleatorio();
-                }
+
                 Nota nota = new Nota(titulo, descripcion, color);
                 List<Imagen> imagenes = fragment3.getImagenes();
-                if(imagenes != null){
+                if(imagenes != null)
                     nota.setImagenes(imagenes);
-                }
+
                 nota.setContext(getApplicationContext());
                 nds.createNote(nota); // creamos el objeto y lo añadimos a la bbdd
                 Toast.makeText(getApplicationContext(),
@@ -75,6 +75,7 @@ public class CrearNota extends AppCompatActivity {
                 notaAModificar.setContenido(fragment.getDescripcion().getText().toString());
                 notaAModificar.setColor(fragment2.getColor());
                 notaAModificar.setContext(getApplicationContext());
+                notaAModificar.setImagenes(fragment3.getImagenes());
                 nds.updateNote(notaAModificar); //actualizamos el objeto en la bbdd
                 Toast.makeText(getApplicationContext(),
                         "La nota ha sido modificada correctamente", Toast.LENGTH_SHORT).show();

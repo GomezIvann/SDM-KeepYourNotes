@@ -15,5 +15,9 @@
         android:id="@+id/navigation_adjunto"
         android:icon="@android:drawable/ic_menu_gallery"
         android:title="@string/Adjunto" />
+    <item
+        android:id="@+id/navitacion_dibujo"
+        android:icon="@drawable/ic_gesture_white_24dp"
+        android:title="@string/dibujar" />
 
 </menu>

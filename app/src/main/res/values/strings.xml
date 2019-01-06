@@ -31,4 +31,5 @@
     <string name="ubi">Ubicación</string>
     <string name="capturar">Capturar</string>
     <string name="tomar">Tomar foto</string>
+    <string name="dibujar">Dibujo</string>
 </resources>

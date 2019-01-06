@@ -23,8 +23,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +40,7 @@ import com.example.ivan.proyectosdm.Notas.ArchivoAdapter;
 import com.example.ivan.proyectosdm.Notas.Imagen;
 import com.example.ivan.proyectosdm.Notas.Nota;
 import com.example.ivan.proyectosdm.R;
+import com.example.ivan.proyectosdm.RecyclerTouchListener;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -76,7 +77,23 @@ public class FragmentAdjuntos extends Fragment {
         super.onCreate(savedInstanceState);
         if(getArguments() != null){
             nota = (Nota) getArguments().getSerializable(MainActivity.OBJETO_NOTA);
-            imagenes = nota.getImagenes();
+            this.imagenes = new ArrayList<>(nota.getImagenes());
+            Save save = new Save();
+            File dir = new File(save.getImagen());
+            if (dir.exists()) {
+                for (int i = 0; i<this.imagenes.size();i++) {
+                    Imagen img = this.imagenes.get(i);
+                   if(img != null){
+                       File file = new File(dir, img.getNombre());
+                       if (file.exists()) {
+                           String filePath = file.getPath();
+                           Bitmap bitmap = BitmapFactory.decodeFile(filePath);
+                           img.setBitmap(bitmap);
+                       }
+
+                   }
+                }
+            }
         }
     }
 
@@ -91,7 +108,7 @@ public class FragmentAdjuntos extends Fragment {
         mRVImagen = (RecyclerView) v.findViewById(R.id.rvImagenes);
         if(nota == null){
             nota = new Nota("asd","asd",0);
-            imagenes = new ArrayList<Imagen>();
+            this.imagenes = new ArrayList<Imagen>();
         }
         //
         cargarImagenes();
@@ -128,8 +145,36 @@ public class FragmentAdjuntos extends Fragment {
         container.addView(fabVideo);
         container.addView(fabUbi);
         closeSubMenusFab();
+        mRVImagen.addOnItemTouchListener(new RecyclerTouchListener(getContext(), mRVImagen, new RecyclerTouchListener.ClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+            }
 
+            @Override
+            public void onLongClick(View view, final int position) {
+                borrarImagen(position);
+            }
+        }));
         return v;
+    }
+
+    public void borrarImagen(final int i){
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext(),R.style.CustomDialogTheme);
+        builder.setTitle("¿Deseas borrar la nota?");
+
+        builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                imagenes.get(i).borrarFoto();
+                Log.d("LONG",imagenes.size()+"");
+                cargarImagenes();
+            }
+        });
+        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User cancelled the dialog
+            }
+        });
+        builder.create().show();
     }
 
     private boolean validaPermisos(int seleccion) {
@@ -249,16 +294,14 @@ public class FragmentAdjuntos extends Fragment {
                 String fileName = save.setFileName();
                 Imagen imagen = new Imagen(fileName,bitmap);
                 imagenes.add(imagen);
-                Toast.makeText(getContext(),imagenes.size()+"",Toast.LENGTH_LONG).show();
                 cargarImagenes();
 
             }else if(requestCode == COD_FOTO_CAPTURA){
                 Bundle extras = data.getExtras();
-                Bitmap bitmap = (Bitmap) extras.get("data");
-                String fileName = save.setFileName();
-                Imagen imagen = new Imagen(fileName,bitmap);
-                imagenes.add(imagen);
-                Toast.makeText(getContext(),imagenes.size()+"",Toast.LENGTH_LONG).show();
+                Bitmap bitmap1 = (Bitmap) extras.get("data");
+                String fileName1 = save.setFileName();
+                Imagen imagen1 = new Imagen(fileName1,bitmap1);
+                imagenes.add(imagen1);
                 cargarImagenes();
             }else if(requestCode == COD_VIDEO_CAPTURA){
                 MediaScannerConnection.scanFile(getContext(), new String[]{path}, null,
@@ -282,10 +325,10 @@ public class FragmentAdjuntos extends Fragment {
     }
 
     public void cargarImagenes(){
-        Toast.makeText(getContext(),imagenes.size()+"",Toast.LENGTH_LONG).show();
+        ArrayList<Imagen> aux = new ArrayList<Imagen>(imagenes);
         glm = new GridLayoutManager(getContext(), 1);
         mRVImagen.setLayoutManager(glm);
-        adapter = new ArchivoAdapter(imagenes);
+        adapter = new ArchivoAdapter(aux);
         mRVImagen.setAdapter(adapter);
     }
 
@@ -320,6 +363,10 @@ public class FragmentAdjuntos extends Fragment {
     }
 
     public List<Imagen> getImagenes(){
-        return imagenes.size() == 0? null:imagenes;
+        if(this.imagenes.size() == 0){
+            return null;
+        }else{
+            return this.imagenes;
+        }
     }
 }

@@ -2,6 +2,8 @@ package com.example.ivan.proyectosdm.Notas;
 
 import android.content.Context;
 import android.os.Parcel;
+import android.os.Parcelable;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.io.Serializable;
@@ -43,28 +45,45 @@ public class Nota<T> implements Serializable {
         imagenes.add(img);
     }
 
-    public void remove (Imagen img) {
-        imagenes.remove(img);
+    public void remove (int img) {
+        imagenes.get(img).borrarFoto();
     }
 
-//
-//    public static final Creator<Nota> CREATOR = new Creator<Nota>() {
-//        @Override
-//        public Nota createFromParcel(Parcel in) {
-//            return new Nota(in);
-//        }
-//
-//        @Override
-//        public Nota[] newArray(int size) {
-//            return new Nota[size];
-//        }
-//    };
+    public void setImagenes(List<Imagen> imagenes) {
+        for (int i = 0;i<imagenes.size();i++){
+            Imagen img = imagenes.get(i);
+            int pos = containsIgm(img);
+            if(pos != -1){
+                if(img.isBorrado()){
+                    this.imagenes.get(pos).borrarFoto();
+                }
+                imagenes.remove(img);
+            }
+        }
+        this.imagenes.addAll(imagenes);
+    }
 
-    public void setImagenes(List<Imagen> imagenes) { this.imagenes.addAll(imagenes); }
+    public void asociarIds(String nombre, long id){
+        for (int i = 0; i < imagenes.size(); i++) {
+            Imagen imagene = imagenes.get(i);
+            if(imagene.getNombre().equals(nombre)){
+                imagene.setId(id);
+            }
+        }
+
+    }
+
+    private int containsIgm(Imagen imagn){
+        for (int i = 0; i < imagenes.size(); i++) {
+            Imagen img = imagenes.get(i);
+            if (img.getNombre().equals(imagn.getNombre())) {
+                return i;
+            }
+        }
+        return -1;
+    }
 
     public Imagen getImagen(int index) { return imagenes.get(index); }
-
-    public int getNumImagenes(){ return imagenes.size(); }
 
     public Long getId() {
         return id;
@@ -114,7 +133,7 @@ public class Nota<T> implements Serializable {
         this.context = context;
     }
 
-    //    @Override
+//        @Override
 //    public int describeContents() {
 //        return 0;
 //    }
@@ -123,6 +142,18 @@ public class Nota<T> implements Serializable {
 //    public void writeToParcel(Parcel dest, int flags) {
 //        dest.writeString(this.titulo);
 //        dest.writeString(this.contenido);
-//        dest.writeString(this.color);
+//        dest.writeInt(this.color);
 //    }
+//
+//    public static final Creator<Nota> CREATOR = new Creator<Nota>() {
+//        @Override
+//        public Nota createFromParcel(Parcel in) {
+//            return new Nota(in);
+//        }
+//
+//        @Override
+//        public Nota[] newArray(int size) {
+//            return new Nota[size];
+//        }
+//    };
 }

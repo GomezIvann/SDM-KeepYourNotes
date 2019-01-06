@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import com.example.ivan.proyectosdm.Notas.Imagen;
 import com.example.ivan.proyectosdm.Notas.Nota;
@@ -76,6 +77,7 @@ public class NotesDataSource {
         return insertId;
     }
 
+
     /**
      * Crea las imagenes asociadas a una nota
      * @param note
@@ -86,16 +88,16 @@ public class NotesDataSource {
         ContentValues values = null;
 
         for( int i = 0; i < note.getImagenes().size(); i++ ) {
-            img = note.getImagen(i);
-            values = new ContentValues();
-            values.put(MyDBHelper.COLUMN_ID_NOTA, insertId);
-            values.put(MyDBHelper.COLUMN_IMG_NOMBRE, img.getNombre());
-
-            /*Almacena en una carpeta local las imagenes, en la base de datos solo almacena la referencia a la nota*/
             Save save = new Save();
-            save.SaveImage(note.getContext(),img.getBitmap(),img.getNombre());
-
-            database.insert(MyDBHelper.TABLE_IMAGES, null, values);
+            img = note.getImagen(i);
+            if(!save.existImage(img.getNombre()) && !img.isBorrado()){
+                values = new ContentValues();
+                values.put(MyDBHelper.COLUMN_ID_NOTA, insertId);
+                values.put(MyDBHelper.COLUMN_IMG_NOMBRE, img.getNombre());
+                /*Almacena en una carpeta local las imagenes, en la base de datos solo almacena la referencia a la nota*/
+                save.SaveImage(note.getContext(),img.getBitmap(),img.getNombre());
+                database.insert(MyDBHelper.TABLE_IMAGES, null, values);
+            }
         }
     }
     
@@ -107,20 +109,36 @@ public class NotesDataSource {
     public void deleteNote(long _idFila) {
         database.delete(MyDBHelper.TABLE_IMAGES, MyDBHelper.COLUMN_ID_NOTA + "=" + _idFila, null);
         database.delete(MyDBHelper.TABLE_NOTES, MyDBHelper.COLUMN_ID + "=" + _idFila, null);
+
+        //OJO esto implica eliminar las imagenes de una nota tambien
     }
 
     /**
      * Elimina las imagenes asociadas a una nota y del sistema
      *
-     * @param note_id
+     * @param note
      */
-    public void deleteImagesFromNote(long note_id){
-        List<Imagen> imagenes = getImagesFromNote(note_id);
+    public void deleteImagesFromNote(Nota note){
+        List<Imagen> imagenes = note.getImagenes();
         Save save = new Save();
-        for (Imagen i: imagenes)
-            save.deleteStoredImage(i.getNombre());
-
-        database.delete(MyDBHelper.TABLE_IMAGES, MyDBHelper.COLUMN_ID_NOTA + "=" + note_id, null);
+        Cursor c = database.rawQuery(" SELECT _id , name FROM " +MyDBHelper.TABLE_IMAGES+" WHERE note_id="+note.getId(),null);
+        c.moveToFirst();
+        long id = 0;
+        String name = "";
+        while (!c.isAfterLast()) {
+            id = c.getLong(0);
+            name = c.getString(1);
+            note.asociarIds(name,id);
+            c.moveToNext();
+        }
+        c.close();
+        for (int i = 0; i < imagenes.size(); i++) {
+            Imagen imagene = imagenes.get(i);
+            if(imagene.isBorrado()){
+                deleteImage(imagene.getId());
+                save.deleteImagen(imagene);
+            }
+        }
     }
 
     /**
@@ -144,7 +162,7 @@ public class NotesDataSource {
         database.update(MyDBHelper.TABLE_NOTES, values, MyDBHelper.COLUMN_ID+"="+note.getId(), null);
 
         //actualizamos tambien sus fotos (borrar y reinsertar)
-        deleteImagesFromNote(note.getId());
+        deleteImagesFromNote(note);
         createImages(note, note.getId());
     }
 

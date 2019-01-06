@@ -51,6 +51,24 @@ public class Save {
         }
     }
 
+    public void deleteImagen(Imagen img){
+        String file_path = Environment.getExternalStorageDirectory().getAbsolutePath() + NameOfFolder;
+        File dir = new File(file_path);
+        File file = new File(dir, img.getNombre());
+        file.delete();
+    }
+
+    public void deleteStoredImage(String fileName){
+        String file_path = Environment.getExternalStorageDirectory().getAbsolutePath() + NameOfFolder;
+        File dir = new File(file_path);
+
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+        File file = new File(dir, fileName);
+        file.delete();
+    }
+
     public String setFileName(){
         return NameOfFile + getCurrentDateAndTime()+ ".jpg";
     }
@@ -84,14 +102,15 @@ public class Save {
         Toast.makeText(TheThis, "Imagen guardada en la galería.", Toast.LENGTH_SHORT).show();
     }
 
-    public void deleteStoredImage(String fileName){
+
+
+    public boolean existImage(String fileName){
         String file_path = Environment.getExternalStorageDirectory().getAbsolutePath() + NameOfFolder;
         File dir = new File(file_path);
-
         if (!dir.exists()) {
             dir.mkdirs();
         }
         File file = new File(dir, fileName);
-        file.delete();
+        return file.exists();
     }
 }

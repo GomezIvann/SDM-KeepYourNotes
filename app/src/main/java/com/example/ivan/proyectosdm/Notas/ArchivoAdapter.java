@@ -22,6 +22,11 @@ public class ArchivoAdapter extends Adapter<ArchivoAdapter.ArchivoViewHolder> {
     private int posicion;
 
     public ArchivoAdapter(List<Imagen> imagenes) {
+        for (Imagen imagene : imagenes) {
+            if(imagene.isBorrado()){
+                imagenes.remove(imagene);
+            }
+        }
         this.imagenes = imagenes;
     }
 
@@ -50,6 +55,10 @@ public class ArchivoAdapter extends Adapter<ArchivoAdapter.ArchivoViewHolder> {
     @Override
     public int getItemCount() {
         return imagenes.size();
+    }
+
+    public List<Imagen> getImagenes() {
+        return imagenes;
     }
 
     public int getPosicion() { return posicion; }

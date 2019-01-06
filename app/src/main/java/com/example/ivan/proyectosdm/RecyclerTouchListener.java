@@ -1,6 +1,7 @@
 package com.example.ivan.proyectosdm;
 // Esta clase se la pasas a los alumnos
 import android.content.Context;
+import android.os.Vibrator;
 import android.support.v7.widget.RecyclerView;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
@@ -18,6 +19,8 @@ public class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {
             public boolean onSingleTapUp(MotionEvent e) {
                 return true;
             }
+
+
 
             @Override
             public void onLongPress(MotionEvent e) {

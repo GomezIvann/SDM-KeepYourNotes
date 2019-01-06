@@ -131,7 +131,7 @@ public class CrearNota extends AppCompatActivity {
                     return true;
                 case R.id.navigation_adjunto:
                     crearFragmentAdjuntos();
-                    menuItem.setVisible(false);
+//                    menuItem.setVisible(false);
                     return true;
             }
             return false;

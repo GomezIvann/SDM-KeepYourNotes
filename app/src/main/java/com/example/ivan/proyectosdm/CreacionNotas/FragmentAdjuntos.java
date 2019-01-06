@@ -1,6 +1,7 @@
 package com.example.ivan.proyectosdm.CreacionNotas;
 
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -10,6 +11,8 @@ import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -153,6 +156,12 @@ public class FragmentAdjuntos extends Fragment {
 
             @Override
             public void onLongClick(View view, final int position) {
+                Vibrator v = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    v.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE));
+                } else {
+                    v.vibrate(200);
+                }
                 borrarImagen(position);
             }
         }));
@@ -165,6 +174,13 @@ public class FragmentAdjuntos extends Fragment {
 
         builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
+                for (int i1 = 0; i1 < imagenes.size(); i1++) {
+                    Imagen imagene = imagenes.get(i1);
+                    if(adapter.getImagenes().get(i).getNombre().equals(imagene.getNombre())){
+                        imagene.borrarFoto();
+                    }
+                }
+
                 imagenes.get(i).borrarFoto();
                 Log.d("LONG",imagenes.size()+"");
                 cargarImagenes();
@@ -326,7 +342,13 @@ public class FragmentAdjuntos extends Fragment {
     }
 
     public void cargarImagenes(){
-        ArrayList<Imagen> aux = new ArrayList<Imagen>(imagenes);
+        ArrayList<Imagen> aux = new ArrayList<Imagen>();
+        for (int i = 0; i < imagenes.size(); i++) {
+            Imagen imagene = imagenes.get(i);
+            if(!imagene.isBorrado()){
+                aux.add(imagene);
+            }
+        }
         glm = new GridLayoutManager(getContext(), 1);
         mRVImagen.setLayoutManager(glm);
         adapter = new ArchivoAdapter(aux);

@@ -22,11 +22,6 @@ public class ArchivoAdapter extends Adapter<ArchivoAdapter.ArchivoViewHolder> {
     private int posicion;
 
     public ArchivoAdapter(List<Imagen> imagenes) {
-        for(int i = 0;i<imagenes.size();i++){
-            if(imagenes.get(i).isBorrado()){
-                imagenes.remove(imagenes.get(i));
-            }
-        }
         this.imagenes = imagenes;
     }
 
@@ -44,8 +39,13 @@ public class ArchivoAdapter extends Adapter<ArchivoAdapter.ArchivoViewHolder> {
         Imagen imagen = imagenes.get(i);
         notaViewHolder.image.setImageBitmap(imagen.getBitmap());
         notaViewHolder.mTxTitulo.setText(imagen.getNombre());
+        if(imagen.isBorrado()){
+            notaViewHolder.visible=false;
+        }
         posicion = i;
     }
+
+
 
     @Override
     public int getItemCount() {
@@ -58,11 +58,16 @@ public class ArchivoAdapter extends Adapter<ArchivoAdapter.ArchivoViewHolder> {
 
         TextView mTxTitulo;
         ImageView image;
+        boolean visible;
 
         public ArchivoViewHolder(View itemView) {
             super(itemView);
             mTxTitulo = (TextView) itemView.findViewById(R.id.txImageName);
             image = (ImageView) itemView.findViewById(R.id.imageView2);
+//            if(!visible){
+//                itemView.setVisibility(View.GONE);
+//                itemView.setLayoutParams(new RecyclerView.LayoutParams(0, 0));
+//            }
         }
     }
 

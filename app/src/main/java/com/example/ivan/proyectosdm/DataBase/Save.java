@@ -58,17 +58,6 @@ public class Save {
         file.delete();
     }
 
-    public void deleteStoredImage(String fileName){
-        String file_path = Environment.getExternalStorageDirectory().getAbsolutePath() + NameOfFolder;
-        File dir = new File(file_path);
-
-        if (!dir.exists()) {
-            dir.mkdirs();
-        }
-        File file = new File(dir, fileName);
-        file.delete();
-    }
-
     public String setFileName(){
         return NameOfFile + getCurrentDateAndTime()+ ".jpg";
     }

@@ -40,10 +40,12 @@ public class CrearNota extends AppCompatActivity {
     private NotesDataSource nds;
     private Nota notaActual; //nota que hay en el momento de girar la pantalla
     private int currentTab;
+    private MenuItem menuItem;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
+        menuItem = menu.findItem(R.id.Guardar);
         return true;
     }
 
@@ -121,12 +123,15 @@ public class CrearNota extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_nota:
                     crearFragmentNota();
+                    menuItem.setVisible(true);
                     return true;
                 case R.id.navigation_color:
                     crearFragmentColor();
+                    menuItem.setVisible(true);
                     return true;
                 case R.id.navigation_adjunto:
                     crearFragmentAdjuntos();
+                    menuItem.setVisible(false);
                     return true;
             }
             return false;

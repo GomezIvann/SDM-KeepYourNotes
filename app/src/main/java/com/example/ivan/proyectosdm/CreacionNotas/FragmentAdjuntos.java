@@ -34,6 +34,7 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 import static android.app.Activity.RESULT_OK;
 import static android.support.v4.content.ContextCompat.checkSelfPermission;
 
+import com.example.ivan.proyectosdm.DataBase.NotesDataSource;
 import com.example.ivan.proyectosdm.DataBase.Save;
 import com.example.ivan.proyectosdm.MainActivity;
 import com.example.ivan.proyectosdm.Notas.ArchivoAdapter;
@@ -329,6 +330,7 @@ public class FragmentAdjuntos extends Fragment {
         glm = new GridLayoutManager(getContext(), 1);
         mRVImagen.setLayoutManager(glm);
         adapter = new ArchivoAdapter(aux);
+//        adapter.notifyDataSetChanged();
         mRVImagen.setAdapter(adapter);
     }
 

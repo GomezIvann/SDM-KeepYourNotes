@@ -132,11 +132,13 @@ public class NotesDataSource {
             c.moveToNext();
         }
         c.close();
+
+        //Elimina las imagenes del sistema
         for (int i = 0; i < imagenes.size(); i++) {
-            Imagen imagene = imagenes.get(i);
-            if(imagene.isBorrado()){
-                deleteImage(imagene.getId());
-                save.deleteImagen(imagene);
+            Imagen imagen = imagenes.get(i);
+            if(imagen.isBorrado()){
+                deleteImage(imagen.getId());
+                save.deleteImagen(imagen);
             }
         }
     }

@@ -65,9 +65,9 @@ public class Nota<T> implements Serializable {
 
     public void asociarIds(String nombre, long id){
         for (int i = 0; i < imagenes.size(); i++) {
-            Imagen imagene = imagenes.get(i);
-            if(imagene.getNombre().equals(nombre)){
-                imagene.setId(id);
+            Imagen imagen = imagenes.get(i);
+            if(imagen.getNombre().equals(nombre)){
+                imagen.setId(id);
             }
         }
 

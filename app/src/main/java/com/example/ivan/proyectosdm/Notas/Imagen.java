@@ -9,7 +9,7 @@ public class Imagen implements Serializable {
     private Long id;
     private Long nota_id;
     private String nombre;
-    private Bitmap bitmap;
+    private transient Bitmap bitmap;
     private boolean borrado;
 
     public Imagen(Long id, Long nota_id, String nombre, Bitmap bitmap) {

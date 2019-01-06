@@ -106,10 +106,9 @@ public class NotesDataSource {
      *
      * @return devuelve un valor booleano indicando el éxito o no de la operación
      */
-    public void deleteNote(long _idFila) {
-        database.delete(MyDBHelper.TABLE_IMAGES, MyDBHelper.COLUMN_ID_NOTA + "=" + _idFila, null);
-        database.delete(MyDBHelper.TABLE_NOTES, MyDBHelper.COLUMN_ID + "=" + _idFila, null);
-
+    public void deleteNote(Nota note) {
+        deleteImagesFromNote(note);
+        database.delete(MyDBHelper.TABLE_NOTES, MyDBHelper.COLUMN_ID + "=" + note.getId(), null);
         //OJO esto implica eliminar las imagenes de una nota tambien
     }
 

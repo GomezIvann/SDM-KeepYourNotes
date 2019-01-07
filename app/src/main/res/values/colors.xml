@@ -3,12 +3,13 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574b</color>
     <color name="colorAccent">#D81B60</color>
-    <color name="azul">#0099cc</color>
+    <color name="azul">#AFECFF</color>
     <color name="verdeOscuro">#FF669900</color>
-    <color name="verdeClaro">#FF99CC00</color>
-    <color name="naranja">#FFFF8800</color>
-    <color name="amarillo">#ffbb33</color>
-    <color name="morado">#FFAA66CC</color>
-    <color name="rojo">#FFCC0000</color>
+    <color name="verdeClaro">#C7FFAB</color>
+    <color name="naranja">#FFB374</color>
+    <color name="amarillo">#FFF879</color>
+    <color name="amarilloOscuro">#ffbb33</color>
+    <color name="morado">#B596E8</color>
+    <color name="rojo">#FF6D68</color>
     <color name="blanco">#ffffff</color>
 </resources>

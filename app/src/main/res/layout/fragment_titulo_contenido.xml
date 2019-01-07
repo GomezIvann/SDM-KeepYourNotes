@@ -53,7 +53,7 @@
             android:clickable="true"
             android:src="@android:drawable/ic_btn_speak_now"
             android:tint="@color/blanco"
-            app:backgroundTint="@color/amarillo"
+            app:backgroundTint="@color/amarilloOscuro"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"

@@ -27,6 +27,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.example.ivan.proyectosdm.DataBase.Save;
+import com.example.ivan.proyectosdm.MainActivity;
+import com.example.ivan.proyectosdm.Notas.ArchivoAdapter;
+import com.example.ivan.proyectosdm.Notas.Imagen;
+import com.example.ivan.proyectosdm.Notas.Nota;
+import com.example.ivan.proyectosdm.R;
+import com.example.ivan.proyectosdm.RecyclerTouchListener;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -37,15 +45,6 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 import static android.app.Activity.RESULT_OK;
 import static android.support.v4.content.ContextCompat.checkSelfPermission;
 
-import com.example.ivan.proyectosdm.DataBase.NotesDataSource;
-import com.example.ivan.proyectosdm.DataBase.Save;
-import com.example.ivan.proyectosdm.MainActivity;
-import com.example.ivan.proyectosdm.Notas.ArchivoAdapter;
-import com.example.ivan.proyectosdm.Notas.Imagen;
-import com.example.ivan.proyectosdm.Notas.Nota;
-import com.example.ivan.proyectosdm.R;
-import com.example.ivan.proyectosdm.RecyclerTouchListener;
-
 /**
  * A simple {@link Fragment} subclass.
  */
@@ -55,7 +54,6 @@ public class FragmentAdjuntos extends Fragment {
     private FloatingActionButton fabSettings;
     private LinearLayout layoutFabFoto;
     private LinearLayout layoutFabVideo;
-    private LinearLayout layoutFabUbi;
     private final String CARPETA_RAIZ = "misImagenesPrueba/";
     private final String RUTA_IMAGEN = CARPETA_RAIZ + "misFotos";
     String path;
@@ -65,6 +63,7 @@ public class FragmentAdjuntos extends Fragment {
     final int COD_VIDEO_CAPTURA=40;
     private boolean permisos;
     private Save save = new Save();
+    public static final String OBJETO_IMAGEN = "imagen";
 
 
     private List<Imagen> imagenes = new ArrayList<Imagen>();
@@ -107,7 +106,6 @@ public class FragmentAdjuntos extends Fragment {
                              Bundle savedInstanceState) {
         View fabFoto = inflater.inflate(R.layout.layout_fab_foto, container, false);
         View fabVideo = inflater.inflate(R.layout.layout_fab_video, container, false);
-        View fabUbi = inflater.inflate(R.layout.layout_fab_ubicacion, container, false);
         View v = inflater.inflate(R.layout.fragment_fragment_adjuntos, container, false);
         mRVImagen = (RecyclerView) v.findViewById(R.id.rvImagenes);
         if(nota == null){
@@ -119,7 +117,6 @@ public class FragmentAdjuntos extends Fragment {
         fabSettings = (FloatingActionButton) v.findViewById(R.id.fabAdjuntos);
         layoutFabFoto = (LinearLayout) fabFoto.findViewById(R.id.layoutFabFoto);
         layoutFabVideo = (LinearLayout) fabVideo.findViewById(R.id.layoutFabVideo);
-        layoutFabUbi = (LinearLayout) fabUbi.findViewById(R.id.layoutFabUbi);
         fabSettings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -147,11 +144,24 @@ public class FragmentAdjuntos extends Fragment {
         layoutFabVideo.setZ(1);
         container.addView(fabFoto);
         container.addView(fabVideo);
-        container.addView(fabUbi);
         closeSubMenusFab();
         mRVImagen.addOnItemTouchListener(new RecyclerTouchListener(getContext(), mRVImagen, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
+                Intent intent = new Intent(getActivity(), Imagenes.class);
+                Bundle bundle = new Bundle();
+                Imagen img = null;
+                for (int i1 = 0; i1 < imagenes.size(); i1++) {
+                    Imagen imagene = imagenes.get(i1);
+                    if(adapter.getImagenes().get(position).getNombre().equals(imagene.getNombre())){
+                        img = adapter.getImagenes().get(position);
+                    }
+                }
+//                bundle.putSerializable(OBJETO_IMAGEN, img);
+                intent.putExtra("BitmapImage", img.getBitmap());
+                intent.putExtra("title",img.getNombre());
+//                intent.putExtras(bundle);
+                startActivity(intent);
             }
 
             @Override
@@ -352,24 +362,19 @@ public class FragmentAdjuntos extends Fragment {
         glm = new GridLayoutManager(getContext(), 1);
         mRVImagen.setLayoutManager(glm);
         adapter = new ArchivoAdapter(aux);
-//        adapter.notifyDataSetChanged();
         mRVImagen.setAdapter(adapter);
     }
 
     private void closeSubMenusFab(){
         layoutFabFoto.setVisibility(View.GONE);
         layoutFabVideo.setVisibility(View.GONE);
-        layoutFabUbi.setVisibility(View.GONE);
         fabSettings.setImageResource(R.drawable.ic_add_white_24dp);
         fabExpanded = false;
     }
 
-    //Opens FAB submenus
     private void openSubMenusFab(){
         layoutFabFoto.setVisibility(View.VISIBLE);
         layoutFabVideo.setVisibility(View.VISIBLE);
-        layoutFabUbi.setVisibility(View.VISIBLE);
-        //Change settings icon to 'X' icon
         fabSettings.setImageResource(R.drawable.ic_close_black_24dp);
         fabExpanded = true;
     }

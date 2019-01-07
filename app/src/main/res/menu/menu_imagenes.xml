@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.elmer.myapplication.MainActivity">
+    <item
+        android:id="@+id/Salir"
+        android:icon="@drawable/ic_close_white_24dp"
+        android:title="@string/app_name"
+        app:showAsAction="always" />
+</menu>

@@ -189,6 +189,7 @@ public class CrearNota extends AppCompatActivity {
         String descripcion = fragment.getDescripcion().getText().toString();
         int color = fragment2.getColor();
         notaActual = new Nota(titulo, descripcion, color);
+        notaActual.setImagenes(fragment3.getImagenes());
         if (notaAModificar != null)
             notaActual.setId(notaAModificar.getId());
         outState.putSerializable(OBJETO_NOTA, notaActual);

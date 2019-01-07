@@ -1,5 +1,6 @@
 package com.example.ivan.proyectosdm;
 
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -129,6 +130,6 @@ public class MainActivity extends AppCompatActivity {
 
     public void nuevaNota(View view) {
         Intent mIntent = new Intent(MainActivity.this, CrearNota.class);
-        startActivity(mIntent);
+        startActivity(mIntent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
     }
 }

@@ -130,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void nuevaNota(View view) {
         Intent mIntent = new Intent(MainActivity.this, CrearNota.class);
+        // overridePendingTransition(android.R.anim.cycle_interpolator, android.R.anim.slide_out_right); //transiciones
         startActivity(mIntent, ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
     }
 }

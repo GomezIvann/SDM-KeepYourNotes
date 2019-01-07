@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.Image;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Build;
@@ -35,6 +36,7 @@ import com.example.ivan.proyectosdm.Notas.Nota;
 import com.example.ivan.proyectosdm.R;
 import com.example.ivan.proyectosdm.RecyclerTouchListener;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -108,11 +110,12 @@ public class FragmentAdjuntos extends Fragment {
         View fabVideo = inflater.inflate(R.layout.layout_fab_video, container, false);
         View v = inflater.inflate(R.layout.fragment_fragment_adjuntos, container, false);
         mRVImagen = (RecyclerView) v.findViewById(R.id.rvImagenes);
+
         if(nota == null){
             nota = new Nota("asd","asd",0);
             this.imagenes = new ArrayList<Imagen>();
         }
-        //
+
         cargarImagenes();
         fabSettings = (FloatingActionButton) v.findViewById(R.id.fabAdjuntos);
         layoutFabFoto = (LinearLayout) fabFoto.findViewById(R.id.layoutFabFoto);
@@ -150,17 +153,14 @@ public class FragmentAdjuntos extends Fragment {
             public void onClick(View view, int position) {
                 Intent intent = new Intent(getActivity(), Imagenes.class);
                 Bundle bundle = new Bundle();
-                Imagen img = null;
+                Imagen imgAdapter = null;
                 for (int i1 = 0; i1 < imagenes.size(); i1++) {
-                    Imagen imagene = imagenes.get(i1);
-                    if(adapter.getImagenes().get(position).getNombre().equals(imagene.getNombre())){
-                        img = adapter.getImagenes().get(position);
-                    }
+                    Imagen imagen = imagenes.get(i1);
+                    if(adapter.getImagenes().get(position).getNombre().equals(imagen.getNombre()))
+                        imgAdapter = adapter.getImagenes().get(position);
                 }
-//                bundle.putSerializable(OBJETO_IMAGEN, img);
-                intent.putExtra("BitmapImage", img.getBitmap());
-                intent.putExtra("title",img.getNombre());
-//                intent.putExtras(bundle);
+                bundle.putSerializable(OBJETO_IMAGEN, imgAdapter);
+                intent.putExtras(bundle);
                 startActivity(intent);
             }
 
@@ -168,9 +168,9 @@ public class FragmentAdjuntos extends Fragment {
             public void onLongClick(View view, final int position) {
                 Vibrator v = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                    v.vibrate(VibrationEffect.createOneShot(200, VibrationEffect.DEFAULT_AMPLITUDE));
+                    v.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE));
                 } else {
-                    v.vibrate(200);
+                    v.vibrate(50);
                 }
                 borrarImagen(position);
             }
@@ -354,9 +354,9 @@ public class FragmentAdjuntos extends Fragment {
     public void cargarImagenes(){
         ArrayList<Imagen> aux = new ArrayList<Imagen>();
         for (int i = 0; i < imagenes.size(); i++) {
-            Imagen imagene = imagenes.get(i);
-            if(!imagene.isBorrado()){
-                aux.add(imagene);
+            Imagen imagen = imagenes.get(i);
+            if(!imagen.isBorrado()){
+                aux.add(imagen);
             }
         }
         glm = new GridLayoutManager(getContext(), 1);
@@ -392,10 +392,9 @@ public class FragmentAdjuntos extends Fragment {
     }
 
     public List<Imagen> getImagenes(){
-        if(this.imagenes.size() == 0){
-            return null;
-        }else{
+        if(this.imagenes.size() == 0)
+            return new ArrayList<Imagen>();
+        else
             return this.imagenes;
-        }
     }
 }

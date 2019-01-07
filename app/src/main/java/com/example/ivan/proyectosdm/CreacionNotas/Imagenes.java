@@ -1,6 +1,7 @@
 package com.example.ivan.proyectosdm.CreacionNotas;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,18 +25,11 @@ public class Imagenes extends AppCompatActivity {
         setContentView(R.layout.activity_imagenes);
         Bundle b = getIntent().getExtras();
 
-        if(b != null) {
-//            img = (Imagen) b.getSerializable(FragmentAdjuntos.OBJETO_IMAGEN);
-            ImageView imgV = (ImageView) findViewById(R.id.imageView3);
-            Bitmap bitmap = (Bitmap) getIntent().getParcelableExtra("BitmapImage");
-            setTitle(getIntent().getStringExtra("title"));
-            imgV.setImageBitmap(bitmap);
-//            imgV.setImageBitmap(img.getBitmap());
-//            if(img.getBitmap() == null){
-//                Log.d("JAJ","ASDAS");
-//            }
-//            setTitle(img.getNombre());
-        }
+
+        img = (Imagen) b.getSerializable(FragmentAdjuntos.OBJETO_IMAGEN);
+        ImageView imgV = (ImageView) findViewById(R.id.imageView3);
+        imgV.setImageBitmap(img.getBitmap());
+        setTitle(img.getNombre());
     }
 
 

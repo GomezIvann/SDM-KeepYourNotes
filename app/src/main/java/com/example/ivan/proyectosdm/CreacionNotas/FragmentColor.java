@@ -181,6 +181,7 @@ public class FragmentColor extends Fragment {
         super.onCreate(savedInstanceState);
         if(getArguments() != null){
             nota = (Nota) getArguments().getSerializable(MainActivity.OBJETO_NOTA);
+            color=nota.getColor();
         }
     }
 }

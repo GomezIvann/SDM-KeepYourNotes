@@ -61,7 +61,6 @@ public class CrearNota extends AppCompatActivity {
                 int color = fragment2.getColor();
                 if (color == 0)
                     color = colorAleatorio();
-
                 Nota nota = new Nota(titulo, descripcion, color);
                 List<Imagen> imagenes = fragment3.getImagenes();
                 nota.setImagenes(imagenes);
@@ -136,7 +135,7 @@ public class CrearNota extends AppCompatActivity {
     };
 
     private void crearFragmentAdjuntos() {
-        setTitle("Archivos adjuntos");
+        setTitle("Imágenes");
         FragmentTransaction fragmentTransaction3 = getSupportFragmentManager().beginTransaction();
         fragmentTransaction3.replace(R.id.frame, fragment3,"Adjunto" );
         fragmentTransaction3.commit();

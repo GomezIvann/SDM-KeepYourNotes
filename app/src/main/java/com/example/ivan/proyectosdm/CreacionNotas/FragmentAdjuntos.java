@@ -152,15 +152,15 @@ public class FragmentAdjuntos extends Fragment {
             @Override
             public void onClick(View view, int position) {
                 Intent intent = new Intent(getActivity(), Imagenes.class);
-                Bundle bundle = new Bundle();
-                Imagen imgAdapter = null;
+                Imagen img = null;
                 for (int i1 = 0; i1 < imagenes.size(); i1++) {
-                    Imagen imagen = imagenes.get(i1);
-                    if(adapter.getImagenes().get(position).getNombre().equals(imagen.getNombre()))
-                        imgAdapter = adapter.getImagenes().get(position);
+                    Imagen imagene = imagenes.get(i1);
+                    if(adapter.getImagenes().get(position).getNombre().equals(imagene.getNombre())){
+                        img = adapter.getImagenes().get(position);
+                    }
                 }
-                bundle.putSerializable(OBJETO_IMAGEN, imgAdapter);
-                intent.putExtras(bundle);
+                intent.putExtra("BitmapImage", img.getBitmap());
+                intent.putExtra("title",img.getNombre());
                 startActivity(intent);
             }
 

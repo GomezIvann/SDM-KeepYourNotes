@@ -18,18 +18,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Imagenes extends AppCompatActivity {
-    private Imagen img;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_imagenes);
         Bundle b = getIntent().getExtras();
-
-
-        img = (Imagen) b.getSerializable(FragmentAdjuntos.OBJETO_IMAGEN);
-        ImageView imgV = (ImageView) findViewById(R.id.imageView3);
-        imgV.setImageBitmap(img.getBitmap());
-        setTitle(img.getNombre());
+        if(b != null) {
+            ImageView imgV = (ImageView) findViewById(R.id.imageView3);
+            Bitmap bitmap = (Bitmap) getIntent().getParcelableExtra("BitmapImage");
+            setTitle(getIntent().getStringExtra("title"));
+            imgV.setImageBitmap(bitmap);
+        }
     }
 
 

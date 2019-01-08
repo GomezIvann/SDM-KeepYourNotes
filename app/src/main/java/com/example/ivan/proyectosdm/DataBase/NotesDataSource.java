@@ -216,4 +216,31 @@ public class NotesDataSource {
         return imagesList;
     }
 
+    public List<Nota> searchNotes(String text) {
+        List<Nota> noteList = new ArrayList<Nota>();
+        Cursor cursor = database.rawQuery("SELECT * FROM " + MyDBHelper.TABLE_NOTES +
+            " WHERE " + MyDBHelper.COLUMN_TITULO + " LIKE '%" + text + "%' OR " +
+                MyDBHelper.COLUMN_CONTENIDO + " LIKE '%" + text + "%'", null);
+        cursor.moveToFirst();
+
+        long id = 0;
+        String titulo, contenido = "",coordenada = "";
+        int color = 0;
+        List<Imagen> imagenes = null;
+        while (!cursor.isAfterLast()) {
+            id = cursor.getLong(0);
+            titulo = cursor.getString(1);
+            contenido = cursor.getString(2);
+            color = cursor.getInt(3);
+            coordenada = cursor.getString(4);
+            final Nota note = new Nota(titulo,contenido,color,id);
+            note.setCoordenadas(coordenada);
+            note.setImagenes(getImagesFromNote(id));
+            noteList.add(note);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        return noteList;
+    }
+
 }

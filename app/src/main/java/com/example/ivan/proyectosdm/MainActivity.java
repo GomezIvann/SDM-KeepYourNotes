@@ -7,11 +7,13 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,7 +26,8 @@ import com.example.ivan.proyectosdm.Notas.NotaAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity
+        implements SearchView.OnQueryTextListener{
 
     public static final String OBJETO_NOTA = "nota";
 
@@ -125,7 +128,31 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {//este metodo te añade el menú al layout
         getMenuInflater().inflate(R.menu.menukeep,menu); //aqui simplemente metes el id del menu que has creado para poder mostrarlo
-        return super.onCreateOptionsMenu(menu);
+        MenuItem searchItem = menu.findItem(R.id.idBuscar);
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+        searchView.setOnQueryTextListener(this);
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        buscar(query);
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        buscar(newText);
+        return true;
+    }
+
+    private void buscar(String text) {
+        List<Nota> notasBusqueda = new ArrayList<Nota>();
+        nds.open();
+        notasBusqueda = nds.searchNotes(text);
+        nds.close();
+        adapter = new NotaAdapter(notasBusqueda);
+        mRVNotas.setAdapter(adapter);
     }
 
     public void nuevaNota(View view) {

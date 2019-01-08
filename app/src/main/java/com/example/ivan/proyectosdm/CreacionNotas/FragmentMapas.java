@@ -3,7 +3,10 @@ package com.example.ivan.proyectosdm.CreacionNotas;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -11,12 +14,15 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.ivan.proyectosdm.MainActivity;
@@ -29,10 +35,16 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 
 import static android.Manifest.permission.CAMERA;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
@@ -51,6 +63,8 @@ public class FragmentMapas extends Fragment implements OnMapReadyCallback {
     private Nota nota;
     private String coordenada = "";
     private Context context;
+    private EditText editText;
+    private FloatingActionButton floatingActionButton;
 
     public FragmentMapas() {
         // Required empty public constructor
@@ -74,6 +88,14 @@ public class FragmentMapas extends Fragment implements OnMapReadyCallback {
         if(nota == null){
             nota = new Nota("asd","asd",0);
         }
+        editText =(EditText) view.findViewById(R.id.editText3);
+        floatingActionButton =(FloatingActionButton) view.findViewById(R.id.floatingActionButton3);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Busqueda(editText.getText().toString());
+            }
+        });
         return view;
     }
 
@@ -109,18 +131,7 @@ public class FragmentMapas extends Fragment implements OnMapReadyCallback {
             gmap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
                 @Override
                 public void onMapClick(LatLng latLng) {
-                    coordenada = latLng.latitude + "," + latLng.longitude;
-                    MarkerOptions marcadorOpciones = new MarkerOptions().position(latLng).title(latLng.latitude + ", " + latLng.longitude);
-                    if(posUsuario != null){
-                        posUsuario.remove();
-                    }
-                    posUsuario = gmap.addMarker(marcadorOpciones);
-                    posUsuario.showInfoWindow();
-                    CameraPosition cameraPosition = new CameraPosition.Builder()
-                            .target(latLng).zoom(14)
-                            .build();
-                    CameraUpdate cu = CameraUpdateFactory.newCameraPosition(cameraPosition);
-                    gmap.animateCamera(cu);
+                    CargarMarker(latLng);
                 }
             });
             if(!coordenada.equals("")){
@@ -128,21 +139,66 @@ public class FragmentMapas extends Fragment implements OnMapReadyCallback {
                 double latitud = Double.parseDouble(aux[0]);
                 double longitud = Double.parseDouble(aux[1]);
                 LatLng latLng = new LatLng(latitud,longitud);
-                MarkerOptions marcadorOpciones = new MarkerOptions().position(latLng).title(latLng.latitude + ", " + latLng.longitude);
-                if(posUsuario != null){
-                    posUsuario.remove();
-                }
-                posUsuario = gmap.addMarker(marcadorOpciones);
-                posUsuario.showInfoWindow();
-                CameraPosition cameraPosition = new CameraPosition.Builder()
-                        .target(latLng).zoom(14)
-                        .build();
-                CameraUpdate cu = CameraUpdateFactory.newCameraPosition(cameraPosition);
-                gmap.animateCamera(cu);
+                CargarMarker(latLng);
             }
+
 
         }
 
+    }
+
+    private void Busqueda(String busqueda){
+            gmap.clear();
+            Geocoder geocoder = new Geocoder(getContext());
+            List<Address> posiblesDirecciones = null;
+            MarkerOptions markerOptions = new MarkerOptions();
+            try {
+                posiblesDirecciones = geocoder.getFromLocationName(busqueda.toUpperCase(),1);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            for (int i = 0; i < posiblesDirecciones.size(); i++) {
+                Address posiblesDireccione = posiblesDirecciones.get(i);
+                LatLng latLng = new LatLng(posiblesDireccione.getLatitude(),posiblesDireccione.getLongitude());
+                CargarMarker(latLng);
+            }
+    }
+
+    private void CargarMarker(LatLng latLng){
+        coordenada = latLng.latitude + "," + latLng.longitude;
+        Geocoder geocoder = new Geocoder(getContext(),Locale.getDefault());
+        List<Address> addresses = null;
+        try {
+            addresses = geocoder.getFromLocation(
+                    latLng.latitude,
+                    latLng.longitude,
+                    1);
+        } catch (IOException ioException) {
+            Log.e("ERROR", "IO", ioException);
+        } catch (IllegalArgumentException illegalArgumentException) {
+            Log.e("ERROR", "ILEGALARGUMENT", illegalArgumentException);
+        }
+        Address address = addresses.get(0);
+        ArrayList<String> addressFragments = new ArrayList<String>();
+        if (addresses == null || addresses.size()  == 0) {
+            Toast.makeText(getContext(),"No se han encontrado resultados.",Toast.LENGTH_LONG).show();
+        } else {
+
+            for(int i = 0; i <= address.getMaxAddressLineIndex(); i++) {
+                addressFragments.add(address.getAddressLine(i));
+            }
+        }
+        MarkerOptions marcadorOpciones = new MarkerOptions().position(latLng).title(addressFragments.get(0));
+        if(posUsuario != null){
+            posUsuario.remove();
+        }
+        posUsuario = gmap.addMarker(marcadorOpciones);
+        posUsuario.showInfoWindow();
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(latLng).zoom(14)
+                .build();
+        CameraUpdate cu = CameraUpdateFactory.newCameraPosition(cameraPosition);
+        gmap.animateCamera(cu);
     }
 
     private boolean validaPermisos() {

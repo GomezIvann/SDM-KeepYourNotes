@@ -17,6 +17,13 @@
         <item name="colorControlActivated">@android:color/transparent</item>
     </style>
 
+    <style name="EditTextMapa" parent="AppTheme">
+        <!-- cursor y línea normal-->
+        <item name="colorControlNormal">@android:color/holo_orange_light</item>
+        <!-- cursor y línea con foco-->
+        <item name="colorControlActivated">@android:color/holo_orange_light</item>
+    </style>
+
     <style name="switchAzul">
         <item name="colorControlActivated">@color/azul</item>
     </style>

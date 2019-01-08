@@ -84,6 +84,7 @@ public class FragmentMapas extends Fragment implements OnMapReadyCallback {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        context = getContext();
         view = inflater.inflate(R.layout.fragment_mapas, container, false);
         if(nota == null){
             nota = new Nota("asd","asd",0);
@@ -118,7 +119,7 @@ public class FragmentMapas extends Fragment implements OnMapReadyCallback {
         gmap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
         if (validaPermisos()) {
             if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
+                AlertDialog.Builder dialog = new AlertDialog.Builder(context);
                 dialog.setTitle("Aviso: Permisos Desactivados");
                 dialog.setMessage("Debe aceptar los permisos para el correcto funcionamiento de la App");
                 dialog.create().show();
@@ -149,7 +150,7 @@ public class FragmentMapas extends Fragment implements OnMapReadyCallback {
 
     private void Busqueda(String busqueda){
             gmap.clear();
-            Geocoder geocoder = new Geocoder(getContext());
+            Geocoder geocoder = new Geocoder(context);
             List<Address> posiblesDirecciones = null;
             MarkerOptions markerOptions = new MarkerOptions();
             try {
@@ -166,7 +167,7 @@ public class FragmentMapas extends Fragment implements OnMapReadyCallback {
 
     private void CargarMarker(LatLng latLng){
         coordenada = latLng.latitude + "," + latLng.longitude;
-        Geocoder geocoder = new Geocoder(getContext(),Locale.getDefault());
+        Geocoder geocoder = new Geocoder(context,Locale.getDefault());
         List<Address> addresses = null;
         try {
             addresses = geocoder.getFromLocation(
@@ -181,7 +182,7 @@ public class FragmentMapas extends Fragment implements OnMapReadyCallback {
         Address address = addresses.get(0);
         ArrayList<String> addressFragments = new ArrayList<String>();
         if (addresses == null || addresses.size()  == 0) {
-            Toast.makeText(getContext(),"No se han encontrado resultados.",Toast.LENGTH_LONG).show();
+            Toast.makeText(context,"No se han encontrado resultados.",Toast.LENGTH_LONG).show();
         } else {
 
             for(int i = 0; i <= address.getMaxAddressLineIndex(); i++) {
@@ -224,7 +225,7 @@ public class FragmentMapas extends Fragment implements OnMapReadyCallback {
                 permisos = true;
             }else{
                 permisos = false;
-                AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
+                AlertDialog.Builder dialog = new AlertDialog.Builder(context);
                 dialog.setTitle("Aviso: Permisos Desactivados");
                 dialog.setMessage("Debe aceptar los permisos para el correcto funcionamiento de la App");
                 dialog.create().show();

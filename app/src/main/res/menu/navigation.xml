@@ -16,8 +16,8 @@
         android:icon="@drawable/ic_camera_alt_white_24dp"
         android:title="@string/imagenes" />
     <item
-        android:id="@+id/navitacion_dibujo"
-        android:icon="@drawable/ic_gesture_white_24dp"
-        android:title="@string/dibujar" />
+        android:id="@+id/navitacion_mapa"
+        android:icon="@drawable/ic_map_white_24dp"
+        android:title="@string/mapa" />
 
 </menu>

@@ -33,8 +33,8 @@ public class NotesDataSource {
      * Columnas de la tabla notas
      */
     private final String[] allColumns = { MyDBHelper.COLUMN_ID, MyDBHelper.COLUMN_TITULO,
-            MyDBHelper.COLUMN_CONTENIDO, MyDBHelper.COLUMN_COLOR };
-    
+            MyDBHelper.COLUMN_CONTENIDO, MyDBHelper.COLUMN_COLOR, MyDBHelper.COLUMN_COORDENADA};
+
     /**
      * Constructor
      * @param context
@@ -69,11 +69,9 @@ public class NotesDataSource {
         values.put(MyDBHelper.COLUMN_TITULO, note.getTitulo());
         values.put(MyDBHelper.COLUMN_CONTENIDO, note.getContenido());
         values.put(MyDBHelper.COLUMN_COLOR, note.getColor());
-
+        values.put(MyDBHelper.COLUMN_COORDENADA, note.getCoordenadas());
         long insertId = database.insert(MyDBHelper.TABLE_NOTES, null, values);
-
         createImages(note, insertId);
-
         return insertId;
     }
 
@@ -159,7 +157,7 @@ public class NotesDataSource {
         values.put(MyDBHelper.COLUMN_TITULO, note.getTitulo());
         values.put(MyDBHelper.COLUMN_CONTENIDO, note.getContenido());
         values.put(MyDBHelper.COLUMN_COLOR, note.getColor());
-
+        values.put(MyDBHelper.COLUMN_COORDENADA, note.getCoordenadas());
         database.update(MyDBHelper.TABLE_NOTES, values, MyDBHelper.COLUMN_ID+"="+note.getId(), null);
 
         //actualizamos tambien sus fotos (borrar y reinsertar)
@@ -179,7 +177,7 @@ public class NotesDataSource {
         cursor.moveToFirst();
 
         long id = 0;
-        String titulo, contenido = "";
+        String titulo, contenido = "",coordenada = "";
         int color = 0;
         List<Imagen> imagenes = null;
         while (!cursor.isAfterLast()) {
@@ -187,10 +185,10 @@ public class NotesDataSource {
             titulo = cursor.getString(1);
             contenido = cursor.getString(2);
             color = cursor.getInt(3);
+            coordenada = cursor.getString(4);
             final Nota note = new Nota(titulo,contenido,color,id);
-
+            note.setCoordenadas(coordenada);
             note.setImagenes(getImagesFromNote(id));
-
             noteList.add(note);
             cursor.moveToNext();
         }

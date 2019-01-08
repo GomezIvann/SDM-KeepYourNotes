@@ -20,6 +20,7 @@ public class MyDBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_COLOR = "color";
     public static final String COLUMN_ID_NOTA = "note_id";
     public static final String COLUMN_IMG_NOMBRE = "name";
+    public static final String COLUMN_COORDENADA = "coord";
 
 
 
@@ -27,10 +28,11 @@ public class MyDBHelper extends SQLiteOpenHelper {
      * Sentencia de creacion de la tabla de las notas
      */
     private static final String DATABASE_CREATE_NOTES = "create table " + TABLE_NOTES
-            + "( " + COLUMN_ID + " " +
-            "integer primary key autoincrement, " + COLUMN_TITULO
-            + " text not null, " + COLUMN_CONTENIDO + " text not null, " + COLUMN_COLOR +
-            " integer not null );";
+            + "( " + COLUMN_ID + " " + "integer primary key autoincrement, "
+            + COLUMN_TITULO + " text not null, "
+            + COLUMN_CONTENIDO + " text not null, "
+            + COLUMN_COLOR + " integer not null, "
+            + COLUMN_COORDENADA +" text not null );";
 
     /**
      * Sentencia de creacion de la tabla de las imagenes
@@ -41,6 +43,7 @@ public class MyDBHelper extends SQLiteOpenHelper {
             + " integer not null, " + COLUMN_IMG_NOMBRE + " text not null );";
 
     /**
+    /*
      * Sentencia para borrar las tablas
      */
     private static final String DATABASE_DROP_NOTES = "DROP TABLE IF EXISTS " + TABLE_NOTES;

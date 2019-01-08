@@ -1,6 +1,7 @@
 package com.example.ivan.proyectosdm.CreacionNotas;
 
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
 import android.support.v4.app.FragmentTransaction;
@@ -36,6 +37,7 @@ public class CrearNota extends AppCompatActivity {
     private FragmentTituloContenido fragment = new FragmentTituloContenido();
     private FragmentColor fragment2 = new FragmentColor();
     private FragmentAdjuntos fragment3 = new FragmentAdjuntos();
+    private FragmentMapas fragment4 = new FragmentMapas();
     private Nota notaAModificar;
     private NotesDataSource nds;
     private Nota notaActual; //nota que hay en el momento de girar la pantalla
@@ -65,6 +67,7 @@ public class CrearNota extends AppCompatActivity {
                 List<Imagen> imagenes = fragment3.getImagenes();
                 nota.setImagenes(imagenes);
                 nota.setContext(getApplicationContext());
+                nota.setCoordenadas(fragment4.getCoordenada());
                 nds.createNote(nota); // creamos el objeto y lo añadimos a la bbdd
                 finish();
             }
@@ -74,6 +77,7 @@ public class CrearNota extends AppCompatActivity {
                 notaAModificar.setColor(fragment2.getColor());
                 notaAModificar.setContext(getApplicationContext());
                 notaAModificar.setImagenes(fragment3.getImagenes());
+                notaAModificar.setCoordenadas(fragment4.getCoordenada());
                 nds.updateNote(notaAModificar); //actualizamos el objeto en la bbdd
                 Toast.makeText(getApplicationContext(),
                         "La nota ha sido modificada correctamente", Toast.LENGTH_SHORT).show();
@@ -127,6 +131,10 @@ public class CrearNota extends AppCompatActivity {
                     crearFragmentAdjuntos();
 //                    menuItem.setVisible(false);
                     return true;
+                case R.id.navitacion_mapa:
+                    crearFragmentMapa();
+//                    menuItem.setVisible(false);
+                    return true;
             }
             return false;
         }
@@ -139,6 +147,7 @@ public class CrearNota extends AppCompatActivity {
         FragmentTransaction fragmentTransaction3 = getSupportFragmentManager().beginTransaction();
         fragmentTransaction3.replace(R.id.frame, fragment3,"Adjunto" );
         fragmentTransaction3.commit();
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
     }
 
     private void crearFragmentColor() {
@@ -146,6 +155,7 @@ public class CrearNota extends AppCompatActivity {
         FragmentTransaction fragmentTransaction2 = getSupportFragmentManager().beginTransaction();
         fragmentTransaction2.replace(R.id.frame, fragment2,"Color" );
         fragmentTransaction2.commit();
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
     }
 
     private void crearFragmentNota() {
@@ -153,6 +163,14 @@ public class CrearNota extends AppCompatActivity {
         FragmentTransaction fragmentTransaction1 = getSupportFragmentManager().beginTransaction();
         fragmentTransaction1.replace(R.id.frame, fragment,"Nota" );
         fragmentTransaction1.commit();
+    }
+
+    private void crearFragmentMapa() {
+        setTitle("Mapa");
+        FragmentTransaction fragmentTransaction4 = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction4.replace(R.id.frame, fragment4,"Mapa" );
+        fragmentTransaction4.commit();
+
     }
 
     @Override
@@ -172,6 +190,7 @@ public class CrearNota extends AppCompatActivity {
             fragment.setArguments(b);
             fragment2.setArguments(b);
             fragment3.setArguments(b);
+            fragment4.setArguments(b);
         }
         crearFragmentNota();
     }
@@ -184,6 +203,7 @@ public class CrearNota extends AppCompatActivity {
         int color = fragment2.getColor();
         notaActual = new Nota(titulo, descripcion, color);
         notaActual.setImagenes(fragment3.getImagenes());
+        notaActual.setCoordenadas(fragment4.getCoordenada());
         if (notaAModificar != null)
             notaActual.setId(notaAModificar.getId());
         outState.putSerializable(OBJETO_NOTA, notaActual);
@@ -204,6 +224,9 @@ public class CrearNota extends AppCompatActivity {
             case R.id.navigation_adjunto:
                 crearFragmentAdjuntos();
                 break;
+            case R.id.navitacion_mapa:
+                crearFragmentMapa();
+                break;
         }
         notaActual = (Nota) savedInstanceState.getSerializable(OBJETO_NOTA);
         TextView mContent = (TextView) findViewById(R.id.descripcion);
@@ -212,5 +235,6 @@ public class CrearNota extends AppCompatActivity {
         mTitle.setText(notaActual.getTitulo());
         fragment2.setArguments(savedInstanceState);
         fragment3.setArguments(savedInstanceState);
+        fragment4.setArguments(savedInstanceState);
     }
 }

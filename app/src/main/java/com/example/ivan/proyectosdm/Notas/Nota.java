@@ -17,6 +17,7 @@ public class Nota<T> implements Serializable {
     private List<Imagen> imagenes;
     private int color;
     private Context context;
+    private String coordenadas = "";
 
     public Nota(String titulo, String contenido, int color) {
         this.titulo = titulo;
@@ -39,6 +40,7 @@ public class Nota<T> implements Serializable {
         titulo = in.readString();
         contenido = in.readString();
         color = in.readInt();
+        coordenadas = in.readString();
     }
 
     public void addImagen (Imagen img){
@@ -81,6 +83,14 @@ public class Nota<T> implements Serializable {
             }
         }
         return -1;
+    }
+
+    public String getCoordenadas() {
+        return coordenadas;
+    }
+
+    public void setCoordenadas(String coordenadas) {
+        this.coordenadas = coordenadas;
     }
 
     public Imagen getImagen(int index) { return imagenes.get(index); }

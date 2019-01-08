@@ -71,6 +71,7 @@ public class FragmentAdjuntos extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if(getArguments() != null){
             nota = (Nota) getArguments().getSerializable(MainActivity.OBJETO_NOTA);
             this.imagenes = new ArrayList<>(nota.getImagenes());

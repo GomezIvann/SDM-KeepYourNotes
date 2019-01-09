@@ -65,6 +65,7 @@ public class FragmentMapas extends Fragment implements OnMapReadyCallback {
     private Context context;
     private EditText editText;
     private FloatingActionButton floatingActionButton;
+    private String direccion = "";
 
     public FragmentMapas() {
         // Required empty public constructor
@@ -120,8 +121,8 @@ public class FragmentMapas extends Fragment implements OnMapReadyCallback {
         if (validaPermisos()) {
             if (ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(context, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-                dialog.setTitle("Aviso: Permisos Desactivados");
-                dialog.setMessage("Debe aceptar los permisos para el correcto funcionamiento de la App");
+                dialog.setTitle(R.string.nopermisos);
+                dialog.setMessage(R.string.nopermisos2);
                 dialog.create().show();
                 return;
             }
@@ -192,6 +193,7 @@ public class FragmentMapas extends Fragment implements OnMapReadyCallback {
             }
         }
         MarkerOptions marcadorOpciones = new MarkerOptions().position(latLng).title(addressFragments.get(0));
+        direccion = addressFragments.get(0);
         if(posUsuario != null){
             posUsuario.remove();
         }
@@ -228,8 +230,8 @@ public class FragmentMapas extends Fragment implements OnMapReadyCallback {
             }else{
                 permisos = false;
                 AlertDialog.Builder dialog = new AlertDialog.Builder(context);
-                dialog.setTitle("Aviso: Permisos Desactivados");
-                dialog.setMessage("Debe aceptar los permisos para el correcto funcionamiento de la App");
+                dialog.setTitle(R.string.nopermisos);
+                dialog.setMessage(R.string.nopermisos2);
                 dialog.create().show();
             }
         }
@@ -240,4 +242,7 @@ public class FragmentMapas extends Fragment implements OnMapReadyCallback {
         return coordenada;
     }
 
+    public String getDireccion() {
+        return direccion;
+    }
 }

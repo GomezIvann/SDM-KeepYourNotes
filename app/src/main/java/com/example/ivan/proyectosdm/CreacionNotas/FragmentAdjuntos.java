@@ -92,7 +92,9 @@ public class FragmentAdjuntos extends Fragment {
         mRVImagen = (RecyclerView) v.findViewById(R.id.rvImagenes);
         if(nota == null){
             nota = new Nota("asd","asd",0);
-            this.imagenes = new ArrayList<Imagen>();
+            if(imagenes == null){
+                this.imagenes = new ArrayList<Imagen>();
+            }
         }
         cargarImagenes();
         fabSettings = (FloatingActionButton) v.findViewById(R.id.fabAdjuntos);
@@ -135,7 +137,7 @@ public class FragmentAdjuntos extends Fragment {
 
     public void borrarImagen(final int i){
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext(),R.style.CustomDialogTheme);
-        builder.setTitle(R.string.borrar);
+        builder.setTitle(R.string.borrari);
         builder.setPositiveButton(R.string.aceptar, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 for (int i1 = 0; i1 < imagenes.size(); i1++) {
@@ -295,4 +297,9 @@ public class FragmentAdjuntos extends Fragment {
         else
             return this.nuevasImagenes;
     }
+
+
+
+
+
 }

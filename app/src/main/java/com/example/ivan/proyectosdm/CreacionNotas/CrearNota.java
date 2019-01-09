@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -56,6 +57,9 @@ public class CrearNota extends AppCompatActivity {
                 String titulo = fragment.getTitulo().getText().toString();
                 String descripcion = fragment.getDescripcion().getText().toString();
                 int color = fragment2.getColor();
+                if(titulo.equals("")){
+                    titulo = fragment4.getDireccion();
+                }
                 if (color == 0)
                     color = colorAleatorio();
                 Nota nota = new Nota(titulo, descripcion, color);
@@ -70,7 +74,11 @@ public class CrearNota extends AppCompatActivity {
                 finish();
             }
             else {
-                notaAModificar.setTitulo(fragment.getTitulo().getText().toString());
+                String titulo1 = fragment.getTitulo().getText().toString();
+                if(titulo1.equals("")){
+                    titulo1 = fragment4.getDireccion();
+                }
+                notaAModificar.setTitulo(titulo1);
                 notaAModificar.setContenido(fragment.getDescripcion().getText().toString());
                 if (fragment2.getColor() != 0)
                     notaAModificar.setColor(fragment2.getColor());
@@ -215,7 +223,7 @@ public class CrearNota extends AppCompatActivity {
         notaActual.setCoordenadas(fragment4.getCoordenada());
         if (notaAModificar != null) {
             notaActual.setId(notaAModificar.getId());
-            notaActual.setImagenes(fragment3.getNuevasImagenes());
+//            notaActual.setImagenes(fragment3.getNuevasImagenes());
         }
         outState.putSerializable(OBJETO_NOTA, notaActual);
         outState.putInt("CurrentTab", currentTab);

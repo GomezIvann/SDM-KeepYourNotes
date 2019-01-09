@@ -145,8 +145,8 @@ public class FragmentAdjuntos extends Fragment {
 
     public void borrarImagen(final int i){
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext(),R.style.CustomDialogTheme);
-        builder.setTitle("¿Deseas borrar la nota?");
-        builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+        builder.setTitle(R.string.borrar);
+        builder.setPositiveButton(R.string.aceptar, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 for (int i1 = 0; i1 < imagenes.size(); i1++) {
                     Imagen imagene = imagenes.get(i1);
@@ -157,7 +157,7 @@ public class FragmentAdjuntos extends Fragment {
                 cargarImagenes();
             }
         });
-        builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.cancelar, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
             }
         });
@@ -193,8 +193,8 @@ public class FragmentAdjuntos extends Fragment {
             }else{
                 permisos = false;
                 AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
-                dialog.setTitle("Aviso: Permisos Desactivados");
-                dialog.setMessage("Debe aceptar los permisos para el correcto funcionamiento de la App");
+                dialog.setTitle(R.string.nopermisos);
+                dialog.setMessage(R.string.nopermisos2);
                 dialog.create().show();
             }
         }
@@ -203,7 +203,7 @@ public class FragmentAdjuntos extends Fragment {
     private void cargarImagen() {
         final CharSequence[] opciones={"Tomar Foto","Cargar Imagen","Cancelar"};
         final AlertDialog.Builder alertOpciones=new AlertDialog.Builder(getContext());
-        alertOpciones.setTitle("Seleccione una Opción");
+        alertOpciones.setTitle(R.string.seleccioneopcion);
         alertOpciones.setItems(opciones,
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {

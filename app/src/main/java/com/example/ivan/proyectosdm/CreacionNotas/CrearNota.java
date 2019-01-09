@@ -80,7 +80,7 @@ public class CrearNota extends AppCompatActivity {
                 notaAModificar.setCoordenadas(fragment4.getCoordenada());
                 nds.updateNote(notaAModificar); //actualizamos el objeto en la bbdd
                 Toast.makeText(getApplicationContext(),
-                        "La nota ha sido modificada correctamente", Toast.LENGTH_SHORT).show();
+                        R.string.modificacionnota, Toast.LENGTH_SHORT).show();
             }
             nds.close();
             return true;
@@ -143,7 +143,7 @@ public class CrearNota extends AppCompatActivity {
     };
 
     private void crearFragmentAdjuntos() {
-        setTitle("Imágenes");
+        setTitle(R.string.imagenes);
         FragmentTransaction fragmentTransaction3 = getSupportFragmentManager().beginTransaction();
         fragmentTransaction3.replace(R.id.frame, fragment3,"Adjunto" );
         fragmentTransaction3.commit();
@@ -151,7 +151,7 @@ public class CrearNota extends AppCompatActivity {
     }
 
     private void crearFragmentColor() {
-        setTitle("Color");
+        setTitle(R.string.color);
         FragmentTransaction fragmentTransaction2 = getSupportFragmentManager().beginTransaction();
         fragmentTransaction2.replace(R.id.frame, fragment2,"Color" );
         fragmentTransaction2.commit();
@@ -159,14 +159,14 @@ public class CrearNota extends AppCompatActivity {
     }
 
     private void crearFragmentNota() {
-        setTitle("Nota");
+        setTitle(R.string.Nota);
         FragmentTransaction fragmentTransaction1 = getSupportFragmentManager().beginTransaction();
         fragmentTransaction1.replace(R.id.frame, fragment,"Nota" );
         fragmentTransaction1.commit();
     }
 
     private void crearFragmentMapa() {
-        setTitle("Mapa");
+        setTitle(R.string.Mapa);
         FragmentTransaction fragmentTransaction4 = getSupportFragmentManager().beginTransaction();
         fragmentTransaction4.replace(R.id.frame, fragment4,"Mapa" );
         fragmentTransaction4.commit();

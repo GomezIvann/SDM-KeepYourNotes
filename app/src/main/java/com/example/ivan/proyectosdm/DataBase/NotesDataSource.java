@@ -51,7 +51,7 @@ public class NotesDataSource {
      */
     public void open() throws SQLException {
         database = dbHelper.getWritableDatabase();
-//        dbHelper.onUpgrade(database, 0, 1); //decomentad esta linea si cambias la base de datos o no esta en la ultima version MUCHO CUIDADO BORRA LA BASE DEL MOVIL
+        dbHelper.onUpgrade(database, 0, 1); //decomentad esta linea si cambias la base de datos o no esta en la ultima version MUCHO CUIDADO BORRA LA BASE DEL MOVIL
     }
 
     /**

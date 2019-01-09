@@ -137,7 +137,7 @@ public class FragmentAdjuntos extends Fragment {
 
     public void borrarImagen(final int i){
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext(),R.style.CustomDialogTheme);
-        builder.setTitle(R.string.borrari);
+        builder.setTitle("¿Desea borrar esta imagen?");
         builder.setPositiveButton(R.string.aceptar, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 for (int i1 = 0; i1 < imagenes.size(); i1++) {

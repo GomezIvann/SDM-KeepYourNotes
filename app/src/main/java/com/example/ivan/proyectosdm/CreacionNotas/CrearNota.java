@@ -141,7 +141,7 @@ public class CrearNota extends AppCompatActivity {
     };
 
     private void crearFragmentAdjuntos() {
-        setTitle("Imágenes");
+        setTitle(R.string.imagenes);
         FragmentTransaction fragmentTransaction3 = getSupportFragmentManager().beginTransaction();
         fragmentTransaction3.replace(R.id.frame, fragment3,"Adjunto" );
         fragmentTransaction3.commit();
@@ -149,7 +149,7 @@ public class CrearNota extends AppCompatActivity {
     }
 
     private void crearFragmentColor() {
-        setTitle("Color");
+        setTitle(R.string.color);
         FragmentTransaction fragmentTransaction2 = getSupportFragmentManager().beginTransaction();
         fragmentTransaction2.replace(R.id.frame, fragment2,"Color" );
         fragmentTransaction2.commit();
@@ -157,14 +157,14 @@ public class CrearNota extends AppCompatActivity {
     }
 
     private void crearFragmentNota() {
-        setTitle("Nota");
+        setTitle(R.string.nota);
         FragmentTransaction fragmentTransaction1 = getSupportFragmentManager().beginTransaction();
         fragmentTransaction1.replace(R.id.frame, fragment,"Nota" );
         fragmentTransaction1.commit();
     }
 
     private void crearFragmentMapa() {
-        setTitle("Mapa");
+        setTitle(R.string.mapa);
         FragmentTransaction fragmentTransaction4 = getSupportFragmentManager().beginTransaction();
         fragmentTransaction4.replace(R.id.frame, fragment4,"Mapa" );
         fragmentTransaction4.commit();

@@ -215,7 +215,7 @@ public class CrearNota extends AppCompatActivity {
         notaActual.setCoordenadas(fragment4.getCoordenada());
         if (notaAModificar != null) {
             notaActual.setId(notaAModificar.getId());
-            notaActual.setImagenes(fragment3.getNuevasImagenes());
+           // notaActual.setImagenes(fragment3.getNuevasImagenes());
         }
         outState.putSerializable(OBJETO_NOTA, notaActual);
         outState.putInt("CurrentTab", currentTab);

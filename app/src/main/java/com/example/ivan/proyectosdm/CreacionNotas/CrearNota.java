@@ -72,7 +72,8 @@ public class CrearNota extends AppCompatActivity {
             else {
                 notaAModificar.setTitulo(fragment.getTitulo().getText().toString());
                 notaAModificar.setContenido(fragment.getDescripcion().getText().toString());
-                notaAModificar.setColor(fragment2.getColor());
+                if (fragment2.getColor() != 0)
+                    notaAModificar.setColor(fragment2.getColor());
                 notaAModificar.setContext(getApplicationContext());
                 notaAModificar.setImagenes(fragment3.getImagenes());
                 notaAModificar.setCoordenadas(fragment4.getCoordenada());

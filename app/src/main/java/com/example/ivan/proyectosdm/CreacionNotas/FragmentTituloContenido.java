@@ -66,28 +66,6 @@ public class FragmentTituloContenido extends Fragment implements TextToSpeech.On
         return v;
     }
 
-//    @Override
-//    public void onPause() {
-//        super.onPause();
-//        nota = new Nota(titulo.getText().toString(),descripcion.getText().toString(),0);
-//
-//    }
-//
-//    @Override
-//    public void onDestroy() {
-//        super.onDestroy();
-//        nota = new Nota(titulo.getText().toString(),descripcion.getText().toString(),0);
-//    }
-//
-//    @Override
-//    public void onStop() {
-//        super.onStop();
-//        Bundle b = new Bundle();
-//        b.putString("t",titulo.getText().toString());
-//        b.putString("d",descripcion.getText().toString());
-//        onSaveInstanceState(b);
-//    }
-
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
@@ -124,10 +102,18 @@ public class FragmentTituloContenido extends Fragment implements TextToSpeech.On
         if (resultCode == RESULT_OK){
             ArrayList<String> matches = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
             // añade el texto en el campo de texto sobre el que está el cursor del usuario
-            if ( descripcion.hasFocus() )
-                descripcion.setText(matches.get(0));
-            else
-                titulo.setText(matches.get(0));
+            if ( descripcion.hasFocus() ){
+                if ( descripcion.getText().toString().equals("") )
+                    descripcion.setText(matches.get(0));
+                else
+                    descripcion.setText(descripcion.getText()+" "+matches.get(0));
+            }
+            else {
+                if (titulo.getText().toString().equals(""))
+                    titulo.setText(matches.get(0));
+                else
+                    titulo.setText(titulo.getText() + " " + matches.get(0));
+            }
         }
     }
 

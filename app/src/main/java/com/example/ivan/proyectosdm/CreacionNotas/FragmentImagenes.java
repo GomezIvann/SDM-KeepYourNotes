@@ -47,14 +47,13 @@ import static android.support.v4.content.ContextCompat.checkSelfPermission;
 public class FragmentImagenes extends Fragment {
     private Nota nota;
     private FloatingActionButton fabSettings;
-    String path;
     final int COD_FOTO_SELECCION=10;
     final int COD_FOTO_CAPTURA=20;
     private boolean permisos;
     private Save save;
 
     private List<Imagen> imagenes = new ArrayList<Imagen>();
-    // lista que contiene todas las imagenes nuevas sin guardar. Tendra la finalidad de en caso de no guardar, seran borradas del sistema.
+    // lista que contiene las nuevas imagenes insertadas pero sin guardar. Tendra la finalidad de, en caso de no darle a guardar, seran borradas del sistema.
     private List<Imagen> nuevasImagenes = new ArrayList<Imagen>();
     private RecyclerView mRVImagen;
     private ArchivoAdapter adapter;

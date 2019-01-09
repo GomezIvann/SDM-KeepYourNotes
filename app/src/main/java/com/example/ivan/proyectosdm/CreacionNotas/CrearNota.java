@@ -31,9 +31,9 @@ public class CrearNota extends AppCompatActivity {
     private FragmentColor fragment2 = new FragmentColor();
     private FragmentImagenes fragment3 = new FragmentImagenes();
     private FragmentMapas fragment4 = new FragmentMapas();
-    private Nota notaAModificar;
+    private Nota notaAModificar; // nota ya existente (se modifica)
     private NotesDataSource nds;
-    private Nota notaActual; //nota que hay en el momento de girar la pantalla
+    private Nota notaActual; // nota que hay en el momento de girar la pantalla
     private int currentTab;
     private MenuItem menuItem;
     private boolean saved;

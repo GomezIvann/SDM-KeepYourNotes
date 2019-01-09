@@ -24,11 +24,13 @@ public class Nota<T> implements Serializable {
         this.contenido = contenido;
         this.color = color;
         this.imagenes = new ArrayList<Imagen>();
+        this.coordenadas = "";
     }
 
     public Nota(String titulo, String contenido, int color, long id) {
         this(titulo, contenido, color);
         this.id = id;
+        this.coordenadas = "";
     }
 
     protected Nota(Parcel in) {

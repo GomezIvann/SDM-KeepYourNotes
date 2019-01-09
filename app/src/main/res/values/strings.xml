@@ -32,6 +32,7 @@
     <string name="capturar">Capturar</string>
     <string name="tomar">Tomar foto</string>
     <string name="modificacionnota">La nota ha sido modificada correctamente</string>
+    <string name="nuevaNota">La nota ha sido creada correctamente</string>
 
     <string name="borrar">¿Deseas borrar la nota?</string>
     <string name="aceptar">Aceptar</string>

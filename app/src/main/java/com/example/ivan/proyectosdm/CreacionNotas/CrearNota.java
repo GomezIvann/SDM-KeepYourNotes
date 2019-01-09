@@ -1,25 +1,19 @@
 package com.example.ivan.proyectosdm.CreacionNotas;
 
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.speech.RecognizerIntent;
-import android.speech.tts.TextToSpeech;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.ivan.proyectosdm.DataBase.NotesDataSource;
+import com.example.ivan.proyectosdm.DataBase.Save;
 import com.example.ivan.proyectosdm.MainActivity;
 import com.example.ivan.proyectosdm.Notas.Imagen;
 import com.example.ivan.proyectosdm.Notas.Nota;
@@ -43,6 +37,7 @@ public class CrearNota extends AppCompatActivity {
     private Nota notaActual; //nota que hay en el momento de girar la pantalla
     private int currentTab;
     private MenuItem menuItem;
+    private boolean saved;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -69,6 +64,9 @@ public class CrearNota extends AppCompatActivity {
                 nota.setContext(getApplicationContext());
                 nota.setCoordenadas(fragment4.getCoordenada());
                 nds.createNote(nota); // creamos el objeto y lo añadimos a la bbdd
+                Toast.makeText(getApplicationContext(),
+                        R.string.nuevaNota, Toast.LENGTH_SHORT).show();
+                saved = true;
                 finish();
             }
             else {
@@ -81,6 +79,7 @@ public class CrearNota extends AppCompatActivity {
                 nds.updateNote(notaAModificar, getApplicationContext()); //actualizamos el objeto en la bbdd
                 Toast.makeText(getApplicationContext(),
                         R.string.modificacionnota, Toast.LENGTH_SHORT).show();
+                saved = true;
                 finish();
             }
             nds.close();
@@ -130,11 +129,9 @@ public class CrearNota extends AppCompatActivity {
                     return true;
                 case R.id.navigation_adjunto:
                     crearFragmentAdjuntos();
-//                    menuItem.setVisible(false);
                     return true;
                 case R.id.navitacion_mapa:
                     crearFragmentMapa();
-//                    menuItem.setVisible(false);
                     return true;
             }
             return false;
@@ -194,6 +191,16 @@ public class CrearNota extends AppCompatActivity {
             fragment4.setArguments(b);
         }
         crearFragmentNota();
+    }
+
+    @Override
+    public void onBackPressed() {
+        Save save = new Save(getApplicationContext());
+        if (!saved){
+            for (int i = 0; i < fragment3.getNuevasImagenes().size(); i++)
+                save.deleteImagen(fragment3.getNuevasImagenes().get(i));
+        }
+        super.onBackPressed();
     }
 
     @Override

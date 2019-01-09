@@ -7,7 +7,6 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -20,7 +19,6 @@ import com.example.ivan.proyectosdm.Notas.Imagen;
 import com.example.ivan.proyectosdm.Notas.Nota;
 import com.example.ivan.proyectosdm.R;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -31,7 +29,7 @@ public class CrearNota extends AppCompatActivity {
     private TextView mTextMessage;
     private FragmentTituloContenido fragment = new FragmentTituloContenido();
     private FragmentColor fragment2 = new FragmentColor();
-    private FragmentAdjuntos fragment3 = new FragmentAdjuntos();
+    private FragmentImagenes fragment3 = new FragmentImagenes();
     private FragmentMapas fragment4 = new FragmentMapas();
     private Nota notaAModificar;
     private NotesDataSource nds;

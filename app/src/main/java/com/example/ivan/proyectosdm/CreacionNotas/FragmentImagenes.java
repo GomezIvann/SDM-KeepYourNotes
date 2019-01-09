@@ -44,7 +44,7 @@ import static android.support.v4.content.ContextCompat.checkSelfPermission;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FragmentAdjuntos extends Fragment {
+public class FragmentImagenes extends Fragment {
     private Nota nota;
     private FloatingActionButton fabSettings;
     String path;
@@ -60,7 +60,7 @@ public class FragmentAdjuntos extends Fragment {
     private ArchivoAdapter adapter;
     private GridLayoutManager glm;
 
-    public FragmentAdjuntos() {
+    public FragmentImagenes() {
         // Required empty public constructor
     }
 

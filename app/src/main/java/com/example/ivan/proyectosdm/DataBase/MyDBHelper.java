@@ -40,7 +40,7 @@ public class MyDBHelper extends SQLiteOpenHelper {
     private static final String DATABASE_CREATE_IMAGES = "create table " + TABLE_IMAGES
             + "( " + COLUMN_ID + " " +
             "integer primary key autoincrement, " + COLUMN_ID_NOTA
-            + " integer not null, " + COLUMN_IMG_NOMBRE + " text not null );";
+            + " integer not null, " + COLUMN_IMG_NOMBRE + " text not null unique );";
 
     /**
     /*

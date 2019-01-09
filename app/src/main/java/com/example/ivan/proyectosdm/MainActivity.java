@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity
         builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 nds.open();
-                nds.deleteNote(notaABorrar);
+                nds.deleteNote(notaABorrar, getApplicationContext());
                 nds.close();
                 onResume();
             }

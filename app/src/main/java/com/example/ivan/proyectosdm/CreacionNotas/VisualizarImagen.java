@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.ivan.proyectosdm.DataBase.Save;
 import com.example.ivan.proyectosdm.Notas.Imagen;
 import com.example.ivan.proyectosdm.Notas.Nota;
 import com.example.ivan.proyectosdm.R;
@@ -17,20 +18,24 @@ import com.example.ivan.proyectosdm.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Imagenes extends AppCompatActivity {
+public class VisualizarImagen extends AppCompatActivity {
+
+    private Imagen imgAMostrar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_imagenes);
-        Bundle b = getIntent().getExtras();
-        if(b != null) {
-            ImageView imgV = (ImageView) findViewById(R.id.imageView3);
-            Bitmap bitmap = (Bitmap) getIntent().getParcelableExtra("BitmapImage");
-            setTitle(getIntent().getStringExtra("title"));
-            imgV.setImageBitmap(bitmap);
-        }
-    }
 
+        imgAMostrar = (Imagen) getIntent().getExtras().getSerializable("imagen");
+
+        ImageView imgV = (ImageView) findViewById(R.id.imageView3);
+        Save save = new Save(getApplicationContext());
+        if(imgAMostrar != null)
+            imgAMostrar.setBitmap(save.getImagen(imgAMostrar.getNombre()));
+        setTitle(imgAMostrar.getNombre());
+        imgV.setImageBitmap(imgAMostrar.getBitmap());
+    }
 
 
     @Override

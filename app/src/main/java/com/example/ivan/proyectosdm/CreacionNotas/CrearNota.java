@@ -78,9 +78,10 @@ public class CrearNota extends AppCompatActivity {
                 notaAModificar.setContext(getApplicationContext());
                 notaAModificar.setImagenes(fragment3.getImagenes());
                 notaAModificar.setCoordenadas(fragment4.getCoordenada());
-                nds.updateNote(notaAModificar); //actualizamos el objeto en la bbdd
+                nds.updateNote(notaAModificar, getApplicationContext()); //actualizamos el objeto en la bbdd
                 Toast.makeText(getApplicationContext(),
                         "La nota ha sido modificada correctamente", Toast.LENGTH_SHORT).show();
+                finish();
             }
             nds.close();
             return true;

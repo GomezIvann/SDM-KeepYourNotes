@@ -10,7 +10,9 @@ import android.widget.Toast;
 
 import com.example.ivan.proyectosdm.Notas.Imagen;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -18,13 +20,77 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class Save {
-    private Context TheThis;
+    private Context context;
     private String NameOfFolder = "/NotasPics";
     private String NameOfFile = "IMG";
 
-    public void SaveImage(Context context, Bitmap ImageToSave,String fileName) {
+    public Save(Context context){
+        this.context = context;
+    }
 
-        TheThis = context;
+    public void saveImage(Bitmap imageToSave, String fileName){
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        imageToSave.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        byte[] byteArray = stream.toByteArray();
+        try {
+            FileOutputStream outputStream = context.openFileOutput(fileName, Context.MODE_PRIVATE);
+            outputStream.write(byteArray);
+            outputStream.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e2) {
+            e2.printStackTrace();
+        }
+    }
+
+    public void deleteImagen(Imagen img){
+        String file_path = getPathImages();
+        File dir = new File(file_path);
+        File file = new File(dir, img.getNombre());
+        if (file.exists())
+            file.delete();
+    }
+
+    public String getPathImages() {
+        return context.getFilesDir().getPath();
+    }
+
+    public String setFileName(){
+        return NameOfFile + getCurrentDateAndTime()+ ".jpg";
+    }
+
+    private String getCurrentDateAndTime() {
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+        String formattedDate = df.format(c.getTime());
+        return formattedDate;
+    }
+
+    public boolean existImage(String fileName){
+        String file_path = getPathImages();
+        File dir = new File(file_path);
+        if (!dir.exists()) {
+            dir.mkdirs();
+        }
+        File file = new File(dir, fileName);
+        return file.exists();
+    }
+
+    public Bitmap getImagen(String nameOfFile){
+        Bitmap bitmap = null;
+        if (existImage(nameOfFile)){
+            try {
+                FileInputStream fileInputStream =
+                        new FileInputStream(getPathImages() +"/"+ nameOfFile);
+                bitmap = BitmapFactory.decodeStream(fileInputStream);
+            } catch (IOException io) {
+                io.printStackTrace();
+            }
+        }
+        return bitmap;
+    }
+
+    public void saveOnGallery(Bitmap ImageToSave,String fileName){
         String file_path = Environment.getExternalStorageDirectory().getAbsolutePath() + NameOfFolder;
         File dir = new File(file_path);
 
@@ -40,7 +106,6 @@ public class Save {
             fOut.flush();
             fOut.close();
             MakeSureFileWasCreatedThenMakeAvabile(file);
-            AbleToSave();
         }
 
         catch(FileNotFoundException e) {
@@ -51,23 +116,8 @@ public class Save {
         }
     }
 
-    public void deleteImagen(Imagen img){
-        String file_path = Environment.getExternalStorageDirectory().getAbsolutePath() + NameOfFolder;
-        File dir = new File(file_path);
-        File file = new File(dir, img.getNombre());
-        file.delete();
-    }
-
-    public String setFileName(){
-        return NameOfFile + getCurrentDateAndTime()+ ".jpg";
-    }
-
-    public String getImagen(){
-        return Environment.getExternalStorageDirectory().getAbsolutePath() + NameOfFolder;
-    }
-
     private void MakeSureFileWasCreatedThenMakeAvabile(File file){
-        MediaScannerConnection.scanFile(TheThis,
+        MediaScannerConnection.scanFile(context,
                 new String[] { file.toString() } , null,
                 new MediaScannerConnection.OnScanCompletedListener() {
 
@@ -76,30 +126,8 @@ public class Save {
                 });
     }
 
-    private String getCurrentDateAndTime() {
-        Calendar c = Calendar.getInstance();
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
-        String formattedDate = df.format(c.getTime());
-        return formattedDate;
-    }
-
     private void UnableToSave() {
-        Toast.makeText(TheThis, "No se ha podido guardar la imagen.", Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, "No se ha podido guardar la imagen.", Toast.LENGTH_SHORT).show();
     }
 
-    private void AbleToSave() {
-        Toast.makeText(TheThis, "Imagen guardada en la galería.", Toast.LENGTH_SHORT).show();
-    }
-
-
-
-    public boolean existImage(String fileName){
-        String file_path = Environment.getExternalStorageDirectory().getAbsolutePath() + NameOfFolder;
-        File dir = new File(file_path);
-        if (!dir.exists()) {
-            dir.mkdirs();
-        }
-        File file = new File(dir, fileName);
-        return file.exists();
-    }
 }

@@ -6,9 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.media.Image;
-import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,11 +19,9 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import com.example.ivan.proyectosdm.DataBase.Save;
 import com.example.ivan.proyectosdm.MainActivity;
@@ -36,7 +31,6 @@ import com.example.ivan.proyectosdm.Notas.Nota;
 import com.example.ivan.proyectosdm.R;
 import com.example.ivan.proyectosdm.RecyclerTouchListener;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -57,9 +51,11 @@ public class FragmentAdjuntos extends Fragment {
     final int COD_FOTO_SELECCION=10;
     final int COD_FOTO_CAPTURA=20;
     private boolean permisos;
-    private Save save = new Save();
+    private Save save;
 
     private List<Imagen> imagenes = new ArrayList<Imagen>();
+    // lista que contiene todas las imagenes nuevas sin guardar. Tendra la finalidad de en caso de no guardar, seran borradas del sistema.
+    private List<Imagen> nuevasImagenes = new ArrayList<Imagen>();
     private RecyclerView mRVImagen;
     private ArchivoAdapter adapter;
     private GridLayoutManager glm;
@@ -72,23 +68,17 @@ public class FragmentAdjuntos extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        save = new Save(getContext());
+
         if(getArguments() != null){
             nota = (Nota) getArguments().getSerializable(MainActivity.OBJETO_NOTA);
             this.imagenes = new ArrayList<>(nota.getImagenes());
-            Save save = new Save();
-            File dir = new File(save.getImagen());
+            File dir = new File(save.getPathImages());
             if (dir.exists()) {
                 for (int i = 0; i<this.imagenes.size();i++) {
-                    Imagen img = this.imagenes.get(i);
-                   if(img != null){
-                       File file = new File(dir, img.getNombre());
-                       if (file.exists()) {
-                           String filePath = file.getPath();
-                           Bitmap bitmap = BitmapFactory.decodeFile(filePath);
-                           img.setBitmap(bitmap);
-                       }
-
-                   }
+                   Imagen img = this.imagenes.get(i);
+                   if(img != null)
+                       img.setBitmap(save.getImagen(img.getNombre()));
                 }
             }
         }
@@ -116,16 +106,16 @@ public class FragmentAdjuntos extends Fragment {
         mRVImagen.addOnItemTouchListener(new RecyclerTouchListener(getContext(), mRVImagen, new RecyclerTouchListener.ClickListener() {
             @Override
             public void onClick(View view, int position) {
-                Intent intent = new Intent(getActivity(), Imagenes.class);
-                Imagen img = null;
+                Intent intent = new Intent(getActivity(), VisualizarImagen.class);
+                Imagen imgAdapter = null;
                 for (int i1 = 0; i1 < imagenes.size(); i1++) {
-                    Imagen imagene = imagenes.get(i1);
-                    if(adapter.getImagenes().get(position).getNombre().equals(imagene.getNombre())){
-                        img = adapter.getImagenes().get(position);
+                    Imagen imagen = imagenes.get(i1);
+                    if(adapter.getImagenes().get(position).getNombre().equals(imagen.getNombre())){
+                        imgAdapter = adapter.getImagenes().get(position);
                     }
                 }
-                intent.putExtra("BitmapImage", img.getBitmap());
-                intent.putExtra("title",img.getNombre());
+
+                intent.putExtra("imagen", imgAdapter);
                 startActivity(intent);
             }
 
@@ -149,9 +139,9 @@ public class FragmentAdjuntos extends Fragment {
         builder.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 for (int i1 = 0; i1 < imagenes.size(); i1++) {
-                    Imagen imagene = imagenes.get(i1);
-                    if(adapter.getImagenes().get(i).getNombre().equals(imagene.getNombre())){
-                        imagene.borrarFoto();
+                    Imagen imagen = imagenes.get(i1);
+                    if(adapter.getImagenes().get(i).getNombre().equals(imagen.getNombre())){
+                        imagen.borrarFoto();
                     }
                 }
                 cargarImagenes();
@@ -167,18 +157,18 @@ public class FragmentAdjuntos extends Fragment {
     private boolean validaPermisos() {
 
         if(Build.VERSION.SDK_INT<Build.VERSION_CODES.M){
-            cargarImagen();
+            cargarOpcionesImagen();
             return true;
         }
 
         if((checkSelfPermission(getContext(),CAMERA)==PackageManager.PERMISSION_GRANTED)&&
                 (checkSelfPermission(getContext(),WRITE_EXTERNAL_STORAGE)==PackageManager.PERMISSION_GRANTED)){
-            cargarImagen();
+            cargarOpcionesImagen();
             return true;
         }
         requestPermissions(new String[]{WRITE_EXTERNAL_STORAGE,CAMERA},100);
         if(permisos){
-            cargarImagen();
+            cargarOpcionesImagen();
         }
         return false;
     }
@@ -200,7 +190,7 @@ public class FragmentAdjuntos extends Fragment {
         }
     }
 
-    private void cargarImagen() {
+    private void cargarOpcionesImagen() {
         final CharSequence[] opciones={"Tomar Foto","Cargar Imagen","Cancelar"};
         final AlertDialog.Builder alertOpciones=new AlertDialog.Builder(getContext());
         alertOpciones.setTitle("Seleccione una Opción");
@@ -228,30 +218,52 @@ public class FragmentAdjuntos extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode==RESULT_OK){
-            if(requestCode == COD_FOTO_SELECCION){
-                Uri miPath=data.getData();
-                Bitmap bitmap = null;
-                try {
-                    bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(),miPath);
-                } catch (IOException e) {
-                    AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
-                    dialog.setTitle("Aviso: Error");
-                    dialog.setMessage("Vuelve a seleccionar la foto");
-                    dialog.create().show();
-                }
-                String fileName = save.setFileName();
-                Imagen imagen = new Imagen(fileName,bitmap);
-                imagenes.add(imagen);
-                cargarImagenes();
 
-            }else if(requestCode == COD_FOTO_CAPTURA){
-                Bundle extras = data.getExtras();
-                Bitmap bitmap1 = (Bitmap) extras.get("data");
-                String fileName1 = save.setFileName();
-                Imagen imagen1 = new Imagen(fileName1,bitmap1);
-                imagenes.add(imagen1);
-                cargarImagenes();
+        /*Puede que salga de la galeria o camara dando para atras, evitamos que rompa la app*/
+        if (data!=null) {
+            String fileName = null;
+            Imagen imagen = null;
+            Uri miPath=data.getData();
+            Bitmap bitmap = null;
+
+            if (resultCode==RESULT_OK)
+            {
+                if(requestCode == COD_FOTO_SELECCION)
+                {
+                    try {
+                        bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(),miPath);
+                    } catch (IOException e) {
+                        AlertDialog.Builder dialog = new AlertDialog.Builder(getContext());
+                        dialog.setTitle("Aviso: Error");
+                        dialog.setMessage("Vuelve a seleccionar la foto");
+                        dialog.create().show();
+                    }
+                    fileName = save.setFileName();
+                    imagen = new Imagen(fileName,bitmap);
+                    imagenes.add(imagen);
+                    cargarImagenes();
+
+                    nuevasImagenes.add(imagen);
+                    if (!save.existImage(fileName))
+                        save.saveImage(bitmap,fileName);
+
+                }
+                else if(requestCode == COD_FOTO_CAPTURA){
+                    Bundle extras = data.getExtras();
+                    bitmap = (Bitmap) extras.get("data");
+                    fileName = save.setFileName();
+                    imagen = new Imagen(fileName,bitmap);
+                    imagenes.add(imagen);
+                    cargarImagenes();
+
+                    // Como es una imagen nueva la guardamos en la galeria
+                    save.saveOnGallery(bitmap, fileName);
+
+                    nuevasImagenes.add(imagen);
+                    if (!save.existImage(fileName))
+                        save.saveImage(bitmap, fileName);
+
+                }
             }
         }
     }
@@ -275,5 +287,12 @@ public class FragmentAdjuntos extends Fragment {
             return new ArrayList<Imagen>();
         else
             return this.imagenes;
+    }
+
+    public List<Imagen> getNuevasImagenes(){
+        if(this.nuevasImagenes.size() == 0)
+            return new ArrayList<Imagen>();
+        else
+            return this.nuevasImagenes;
     }
 }

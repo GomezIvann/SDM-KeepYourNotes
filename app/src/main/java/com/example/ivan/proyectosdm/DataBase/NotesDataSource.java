@@ -86,14 +86,11 @@ public class NotesDataSource {
         ContentValues values = null;
 
         for( int i = 0; i < note.getImagenes().size(); i++ ) {
-            Save save = new Save();
             img = note.getImagen(i);
-            if(!save.existImage(img.getNombre()) && !img.isBorrado()){
+            if(!img.isBorrado()){
                 values = new ContentValues();
                 values.put(MyDBHelper.COLUMN_ID_NOTA, insertId);
                 values.put(MyDBHelper.COLUMN_IMG_NOMBRE, img.getNombre());
-                /*Almacena en una carpeta local las imagenes, en la base de datos solo almacena la referencia a la nota*/
-                save.SaveImage(note.getContext(),img.getBitmap(),img.getNombre());
                 database.insert(MyDBHelper.TABLE_IMAGES, null, values);
             }
         }
@@ -104,10 +101,9 @@ public class NotesDataSource {
      *
      * @return devuelve un valor booleano indicando el éxito o no de la operación
      */
-    public void deleteNote(Nota note) {
-        deleteImagesFromNote(note);
+    public void deleteNote(Nota note, Context context) {
+        deleteImagesFromNote(note, context);
         database.delete(MyDBHelper.TABLE_NOTES, MyDBHelper.COLUMN_ID + "=" + note.getId(), null);
-        //OJO esto implica eliminar las imagenes de una nota tambien
     }
 
     /**
@@ -115,9 +111,9 @@ public class NotesDataSource {
      *
      * @param note
      */
-    public void deleteImagesFromNote(Nota note){
+    public void deleteImagesFromNote(Nota note, Context context){
         List<Imagen> imagenes = note.getImagenes();
-        Save save = new Save();
+        Save save = new Save(context);
         Cursor c = database.rawQuery(" SELECT _id , name FROM " +MyDBHelper.TABLE_IMAGES+" WHERE note_id="+note.getId(),null);
         c.moveToFirst();
         long id = 0;
@@ -152,7 +148,7 @@ public class NotesDataSource {
     /**
      * Método que me actualiza una nota
      */
-    public void updateNote(Nota note) {
+    public void updateNote(Nota note, Context context) {
         ContentValues values = new ContentValues();
         values.put(MyDBHelper.COLUMN_TITULO, note.getTitulo());
         values.put(MyDBHelper.COLUMN_CONTENIDO, note.getContenido());
@@ -161,7 +157,7 @@ public class NotesDataSource {
         database.update(MyDBHelper.TABLE_NOTES, values, MyDBHelper.COLUMN_ID+"="+note.getId(), null);
 
         //actualizamos tambien sus fotos (borrar y reinsertar)
-        deleteImagesFromNote(note);
+        deleteImagesFromNote(note, context);
         createImages(note, note.getId());
     }
 

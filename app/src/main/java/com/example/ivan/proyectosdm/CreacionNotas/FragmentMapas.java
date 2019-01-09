@@ -149,20 +149,22 @@ public class FragmentMapas extends Fragment implements OnMapReadyCallback {
     }
 
     private void Busqueda(String busqueda){
+        if (busqueda != null && busqueda.trim().length() != 0) {
             gmap.clear();
             Geocoder geocoder = new Geocoder(context);
             List<Address> posiblesDirecciones = null;
             MarkerOptions markerOptions = new MarkerOptions();
             try {
-                posiblesDirecciones = geocoder.getFromLocationName(busqueda.toUpperCase(),1);
+                posiblesDirecciones = geocoder.getFromLocationName(busqueda.toUpperCase(), 1);
             } catch (IOException e) {
                 e.printStackTrace();
             }
             for (int i = 0; i < posiblesDirecciones.size(); i++) {
                 Address posiblesDireccione = posiblesDirecciones.get(i);
-                LatLng latLng = new LatLng(posiblesDireccione.getLatitude(),posiblesDireccione.getLongitude());
+                LatLng latLng = new LatLng(posiblesDireccione.getLatitude(), posiblesDireccione.getLongitude());
                 CargarMarker(latLng);
             }
+        }
     }
 
     private void CargarMarker(LatLng latLng){

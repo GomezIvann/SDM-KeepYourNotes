@@ -4,12 +4,12 @@
     <item
         android:id="@+id/navigation_nota"
         android:icon="?attr/actionModeCopyDrawable"
-        android:title="@string/Nota" />
+        android:title="@string/nota" />
 
     <item
         android:id="@+id/navigation_color"
         android:icon="@android:drawable/ic_menu_edit"
-        android:title="@string/Color" />
+        android:title="@string/color" />
 
     <item
         android:id="@+id/navigation_adjunto"

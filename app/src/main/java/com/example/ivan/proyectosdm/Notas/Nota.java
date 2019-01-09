@@ -17,7 +17,7 @@ public class Nota<T> implements Serializable {
     private List<Imagen> imagenes;
     private int color;
     private Context context;
-    private transient String coordenadas = "";
+    private String coordenadas = "";
 
     public Nota(String titulo, String contenido, int color) {
         this.titulo = titulo;

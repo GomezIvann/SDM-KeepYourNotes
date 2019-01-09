@@ -90,9 +90,9 @@ public class FragmentAdjuntos extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_fragment_adjuntos, container, false);
         mRVImagen = (RecyclerView) v.findViewById(R.id.rvImagenes);
-        if(nota == null){
-            nota = new Nota("asd","asd",0);
-            if(imagenes == null){
+        if(nota == null) {
+            nota = new Nota("asd", "asd", 0);
+            if (imagenes == null) {
                 this.imagenes = new ArrayList<Imagen>();
             }
         }
